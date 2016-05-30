@@ -1,0 +1,11 @@
+<project name="FreeNASMonitor" basedir=".">
+	<property name="CommonBuild" value="../ant/common.ant"/> 
+	<property name="this.project" value="${ant.project.name}" />
+	<property name="main-class"		value="fnmcore.app.FreeNASMonitor" />
+	<ant target="deployed" antfile="${CommonBuild}" inheritAll="true"/>
+	
+	<!-- deployment -->
+	<copy todir="../deployed/Tools/Apps/bat">
+		<fileset file="./freenas.ico"/>
+	</copy>
+</project>
