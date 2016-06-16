@@ -93,7 +93,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 		
 		skimmers.put( AC.DISK_SCRUB_STATUS, line -> {
 			String l = line.trim();
-			if ( l.startsWith(  "pool" ) ) {
+			if ( l.startsWith(  "pool:" ) ) {
 				setCurrentDisk( l.substring( l.indexOf( ":" ) + 2 ) );	
 				if ( !scrubs.containsKey( currentDisk ) ) {
 					scrubs.put( currentDisk, new ScrubInfo( currentDisk ) );
