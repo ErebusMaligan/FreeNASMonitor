@@ -12,7 +12,6 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import modules.disk.module.DiskModule;
-import modules.disk.state.data.DiskData;
 import modules.disk.state.data.DiskIOInfo;
 import modules.disk.state.data.RealtimeDiskData;
 import statics.UIUtils;
@@ -96,7 +95,7 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 		if ( add ) {
 			io.put( r.getFullName(), r );
 		}
-		if ( cc == ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getLocations().size() - ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getPoolCount()  ) {
+		if ( cc == 0 ) {
 			sortAndAdd();
 		}
 	}
