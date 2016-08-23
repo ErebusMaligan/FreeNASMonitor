@@ -23,7 +23,9 @@ public class SmartInfoRenderer extends DiskTableCellRenderer {
 	
 	protected static final Color ORANGE = new Color( 255, 153, 0 );
 	
-	protected static final Color BLUE = new Color( 51, 102, 255 );
+	protected static final Color BLUE = new Color( 51, 102, 200 );
+	
+	protected static final Color SILVER = new Color( 185, 185, 185 );
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column ) {
 		Component c = super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );

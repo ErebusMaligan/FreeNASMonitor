@@ -102,6 +102,9 @@ public class SmartInfo {
 	}
 	
 	private String table( String line ) {
+		if ( line.contains( "Min/Max" ) ) {
+			line = line.substring( 0, line.lastIndexOf( "(" ) -1  ); //fixes an issue where one of my new drives reports (Min/Max 25/47) after the normal temperature value - maybe part of SMART that only some drives support?
+		}
 		return line.substring( line.lastIndexOf( " " ) ).trim();
 	}
 	

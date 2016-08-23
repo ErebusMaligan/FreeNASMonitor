@@ -43,7 +43,7 @@ public class MonitorFrame extends JFrame {
 						state.getMonitorManager().stopAllMonitors();
 						if ( !state.getMonitorManager().monitorsHalted() ) {
 							try {
-								Thread.sleep( 2500 );  //give 2.5 seconds to shutdown normally... then force shutdown
+								Thread.sleep( 3500 );  //give 3.5 seconds to shutdown normally... then force shutdown
 							} catch ( InterruptedException e1 ) {
 								e1.printStackTrace();
 							}

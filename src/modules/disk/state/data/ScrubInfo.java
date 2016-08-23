@@ -98,7 +98,7 @@ public class ScrubInfo {
 				time = "Canceled";
 				errors = -1;
 				done = -1f;
-			} else if ( l.contains( "resilvered" ) ) {
+			} else if ( l.contains( "resilvered" ) ) {  //this is for last thing run that completed is resilvered
 				type = RESILVER;
 				inProgress = false;
 				String amt = p[ 2 ];
@@ -109,6 +109,9 @@ public class ScrubInfo {
 				time = p[ 4 ];
 				errors = Integer.parseInt( p[ 6 ] );
 				done = 100f;
+			} else if ( l.contains( "resilver" ) ) {  //this if for resilver is currently in progress
+				type = RESILVER;
+				inProgress = true;
 			} else {
 				inProgress = true;
 			}
