@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import fnmcore.module.spi.FNMModuleSPI;
 import modules.control.module.ControlModule;
 import modules.cpu.module.CPUModule;
 import modules.disk.module.DiskModule;
@@ -15,7 +15,6 @@ import modules.log.module.LogModule;
 import modules.mem.module.MemModule;
 import modules.net.module.NetModule;
 import modules.system.module.SysModule;
-import fnmcore.module.spi.FNMModuleSPI;
 
 /**
  * @author Daniel J. Rivers
@@ -37,7 +36,13 @@ public class FNMModuleManager {
 	
 	@SuppressWarnings("unchecked")
 	public <T extends FNMModuleSPI> List<T> getModulesBySPIType( Class<T> spi ) {
-		return (List<T>)modules.values().stream().filter( m -> spi.isInstance( m ) ).collect( Collectors.toList() );
+		List<T> ret = new ArrayList<>();
+		modules.values().forEach( m -> {
+			if ( spi.isInstance( m ) ) {
+				ret.add( (T)m );
+			}
+		} );
+		return ret;//(List<T>)modules.values().stream().filter( m -> spi.isInstance( m ) ).collect( Collectors.toList() );
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -1,0 +1,19 @@
+apply plugin: 'java'
+
+dependencies {
+	compile fileTree( dir: "../libs", include: ['JUtils.jar', 'SpreadSheetUtils.jar', 'StatWrapper.jar', 'TerminalWindow.jar'] )
+	compile fileTree( dir: "../libs/jfreechart/jfreechart", include: '*.jar' )
+	compile fileTree( dir: "../libs/jfreechart/jcommon", include: '*.jar' )
+}
+
+ext {
+	copyLibs = true
+	deployedLibDir = "Apps/run"
+	libDest = "deployed/Tools/libs"
+	jarPathPrefix = "../../libs/"
+	
+	mainClass = "fnmcore.app.FreeNASMonitor"
+	iconFile = 'freenas.ico'
+}
+
+apply from: '../gradle/utilapp.gradle'
