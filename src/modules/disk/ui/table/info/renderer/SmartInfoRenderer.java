@@ -6,6 +6,8 @@ import java.awt.Component;
 import javax.swing.JTable;
 
 import fnmcore.constants.AC;
+import fnmcore.state.ApplicationState;
+import statics.UIUtils;
 
 /**
  * @author Daniel J. Rivers
@@ -26,12 +28,16 @@ public class SmartInfoRenderer extends DiskTableCellRenderer {
 	protected static final Color BLUE = new Color( 51, 102, 200 );
 	
 	protected static final Color SILVER = new Color( 185, 185, 185 );
+	
+	public SmartInfoRenderer( ApplicationState state ) {
+		super( state );
+	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column ) {
 		Component c = super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
 		if ( !isSelected ) {
-			c.setBackground( AC.BACKGROUND );
-			c.setForeground( AC.FOREGROUND );
+			c.setBackground( lightsOff ? UIUtils.lightsOff( AC.BACKGROUND, AC.LIGHTS_OFF ) : AC.BACKGROUND );
+			c.setForeground( lightsOff ? UIUtils.lightsOff( AC.FOREGROUND, AC.LIGHTS_OFF ) : AC.FOREGROUND );
 		}
 		return c;
 	}

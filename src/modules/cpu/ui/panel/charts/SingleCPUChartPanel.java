@@ -31,7 +31,7 @@ public class SingleCPUChartPanel extends AbstractDynamicTimeSeriesChartPanel {
 	private static final String CPU = "CPU ";
 	
 	public SingleCPUChartPanel( ApplicationState state, int cpu ) {
-		super( state, "[" + CPU + cpu + "] Temperature", "Temperature (°C)", state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ), AC.CPU_INTERVAL );
+		super( state, "[" + CPU + cpu + "] Temperature", "Temperature (" + AC.DEGREE + "C)", state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ), AC.CPU_INTERVAL );
 		GU.setSizes( this, new Dimension( 100, 350 ) );
 		this.cpu = cpu;
 		c = CPU + cpu;

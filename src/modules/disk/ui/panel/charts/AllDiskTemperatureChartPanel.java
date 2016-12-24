@@ -23,7 +23,7 @@ public class AllDiskTemperatureChartPanel extends AbstractDynamicTimeSeriesChart
 	private static final long serialVersionUID = 1L;
 
 	public AllDiskTemperatureChartPanel( ApplicationState state ) {
-		super( state, "Disk Temperature", "Temperature (°C)", state.getMonitorManager().getMonitorByName( DiskModule.DISK_MONITOR ), AC.DISK_INTERVAL );
+		super( state, "Disk Temperature", "Temperature (" + AC.DEGREE + "C)", state.getMonitorManager().getMonitorByName( DiskModule.DISK_MONITOR ), AC.DISK_INTERVAL );
 	}
 	
 	@Override

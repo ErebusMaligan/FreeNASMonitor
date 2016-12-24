@@ -29,7 +29,7 @@ public class SingleDiskChartPanel extends AbstractDynamicTimeSeriesChartPanel {
 	private String dev;
 	
 	public SingleDiskChartPanel( ApplicationState state, String device ) {
-		super( state, "[" + device.substring( device.lastIndexOf( "/" ) + 1 ) + "] Temperature", "Temperature (°C)", state.getMonitorManager().getMonitorByName( DiskModule.DISK_MONITOR ), AC.DISK_INTERVAL );
+		super( state, "[" + device.substring( device.lastIndexOf( "/" ) + 1 ) + "] Temperature", "Temperature (" + AC.DEGREE + "C)", state.getMonitorManager().getMonitorByName( DiskModule.DISK_MONITOR ), AC.DISK_INTERVAL );
 		GU.setSizes( this, new Dimension( 100, 350 ) );
 		this.device = device;
 		dev = device.substring( device.lastIndexOf( "/" ) + 1 );

@@ -35,7 +35,7 @@ public class SimpleCPUChart extends SimpleChart implements BroadcastListener {
 		height = 12;
 		this.core = core;
 		usage = addJProgressBar( 0, 100, "Usage", "%" );
-		temp = addJProgressBar( 25, 80, "Temp", "(°C)" );
+		temp = addJProgressBar( 25, 80, "Temp", "(" + AC.DEGREE + "C)" );
 		setLabel( "Core " + core );
 	}
 	

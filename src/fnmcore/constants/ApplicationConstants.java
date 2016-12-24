@@ -41,6 +41,10 @@ public class ApplicationConstants implements XMLValues {
 	public static boolean AUTO = false;
 	
 	
+	//other
+	public static final String DEGREE  = "\u00b0";
+	
+	
 	//SSH
 	public static String SSH_USER = "root";
 

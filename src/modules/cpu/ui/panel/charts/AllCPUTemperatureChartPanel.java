@@ -23,7 +23,7 @@ public class AllCPUTemperatureChartPanel extends AbstractDynamicTimeSeriesChartP
 	private static final long serialVersionUID = 1L;
 
 	public AllCPUTemperatureChartPanel( ApplicationState state ) {
-		super( state, "CPU Temperature", "Temperature (°C)", state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ), AC.CPU_INTERVAL );
+		super( state, "CPU Temperature", "Temperature (" + AC.DEGREE + "C)", state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ), AC.CPU_INTERVAL );
 	}
 	
 	@Override

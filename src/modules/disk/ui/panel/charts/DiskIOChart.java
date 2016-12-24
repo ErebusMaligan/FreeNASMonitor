@@ -45,7 +45,7 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 		this.nm = nm;
 		dim = new Dimension( 75, dim.height );
 		height = 12;
-		temp = addJProgressBar( 28, 70, "Temp", "(°C)" );
+		temp = addJProgressBar( 28, 70, "Temp", "(" + AC.DEGREE + "C)" );
 //		GU.spacer( center, new Dimension( 10, 12 ) );
 		busy = addJProgressBar( 0, 100, "Busy", "%" );
 		rkbps = addJProgressBar( 0, 100, "Read", "kbps" );

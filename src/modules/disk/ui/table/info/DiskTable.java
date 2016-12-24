@@ -19,8 +19,11 @@ import modules.disk.ui.table.info.renderer.RuntimeRenderer;
 import modules.disk.ui.table.info.renderer.SmartInfoRenderer;
 import modules.disk.ui.table.info.renderer.TemperatureRenderer;
 import modules.disk.ui.table.info.renderer.TestResultRenderer;
+import statics.UIUtils;
 import fnmcore.constants.AC;
 import fnmcore.state.ApplicationState;
+import fnmcore.state.control.BroadcastEvent;
+import fnmcore.state.control.BroadcastListener;
 import gui.table.AbstractTableImplementation;
 import gui.table.renderer.DefaultHeaderCellRenderer;
 
@@ -30,28 +33,42 @@ import gui.table.renderer.DefaultHeaderCellRenderer;
  *
  * Created: Apr 25, 2015, 4:12:55 AM 
  */
-public class DiskTable extends AbstractTableImplementation implements Observer {
+public class DiskTable extends AbstractTableImplementation implements Observer, BroadcastListener {
 
 	private ApplicationState state;
 	
-	private TableCellRenderer cell = new SmartInfoRenderer();
+	private TableCellRenderer cell; 
 	
-	private TableCellRenderer result = new TestResultRenderer();
+	private TableCellRenderer result;
 	
-	private TableCellRenderer temp = new TemperatureRenderer();
+	private TableCellRenderer temp;
 	
-	private TableCellRenderer run = new RuntimeRenderer();
+	private TableCellRenderer run;
+	
+	private boolean lightsOff = false;
 	
 	public DiskTable( ApplicationState state ) {
 		this.state = state;
+		cell = new SmartInfoRenderer( state );
+		run = new RuntimeRenderer( state );
+		temp = new TemperatureRenderer( state );
+		result = new TestResultRenderer( state );
 		table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
 		table.setGridColor( AC.FOREGROUND_DARKER );
 		headerRenderer = new DefaultHeaderCellRenderer( this, AC.FOREGROUND, AC.BACKGROUND );
-		( (DefaultHeaderCellRenderer)headerRenderer ).setGradientColor( AC.BACKGROUND );
-		( (DefaultHeaderCellRenderer)headerRenderer ).setGradientBackgroundColor( AC.BACKGROUND );
-		( (DefaultHeaderCellRenderer)headerRenderer ).setIconColors( AC.FOREGROUND, AC.FOREGROUND_DARKER );
-		( (DefaultHeaderCellRenderer)headerRenderer ).setBorder( BorderFactory.createBevelBorder( BevelBorder.RAISED, AC.FOREGROUND.darker().darker(), AC.FOREGROUND.darker().darker() ) );
+		setColors();
 		init( true );
+		state.getUIManager().addBroadcastListener( this );
+	}
+	
+	private void setColors() {
+		( (DefaultHeaderCellRenderer)headerRenderer ).setGradientColor( lightsOff ? UIUtils.lightsOff( AC.BACKGROUND, AC.LIGHTS_OFF ) : AC.BACKGROUND );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setGradientBackgroundColor( lightsOff ? UIUtils.lightsOff( AC.BACKGROUND, AC.LIGHTS_OFF ) : AC.BACKGROUND  );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setIconColors( lightsOff ? UIUtils.lightsOff( AC.FOREGROUND, AC.LIGHTS_OFF ) : AC.FOREGROUND, lightsOff ? UIUtils.lightsOff( AC.FOREGROUND_DARKER, AC.LIGHTS_OFF ) : AC.FOREGROUND_DARKER );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setBorder( BorderFactory.createBevelBorder( BevelBorder.RAISED, lightsOff ? UIUtils.lightsOff( AC.FOREGROUND.darker().darker(), AC.LIGHTS_OFF ) : AC.FOREGROUND.darker().darker(), lightsOff ? UIUtils.lightsOff( AC.FOREGROUND.darker().darker(), AC.LIGHTS_OFF ) : AC.FOREGROUND.darker().darker() ) );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setTextColor( lightsOff ? UIUtils.lightsOff( AC.FOREGROUND, AC.LIGHTS_OFF ) : AC.FOREGROUND );
+		table.getTableHeader().repaint();
+		table.repaint();
 	}
 	
 	@Override
@@ -118,5 +135,18 @@ public class DiskTable extends AbstractTableImplementation implements Observer {
 	@Override
 	protected String getIDFromDataObject( Object[] data ) {
 		return (String)data[ 1 ];
+	}
+	
+	@Override
+	public void broadcastReceived( BroadcastEvent e ) {
+		if ( e.getEventType() == BroadcastEvent.EVENT_TYPE.LIGHT_STATUS ) {
+			if ( e.getEventSetting() == BroadcastEvent.EVENT_SETTING.ON ) {
+				lightsOff = false;
+				setColors();
+			} else {
+				lightsOff = true;
+				setColors();
+			}
+		}
 	}
 }
