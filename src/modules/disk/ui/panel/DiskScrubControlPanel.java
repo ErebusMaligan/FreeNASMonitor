@@ -3,10 +3,12 @@ package modules.disk.ui.panel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,16 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+import fnmcore.constants.AC;
+import fnmcore.state.ApplicationState;
+import fnmcore.state.control.BroadcastEvent;
+import fnmcore.state.control.BroadcastListener;
+import fnmcore.ui.panel.generic.charts.SimpleChart;
+import gui.layout.WrapLayout;
+import gui.progress.EnhancedJProgressBar;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.ScrubInfo;
 import statics.GU;
 import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.ui.panel.generic.charts.SimpleChart;
-import gui.layout.WrapLayout;
-import gui.progress.EnhancedJProgressBar;
 
 /**
  * @author Daniel J. Rivers
@@ -62,7 +66,7 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 	}
 	
 	
-	private class ScrubChart extends SimpleChart {
+	private class ScrubChart extends SimpleChart implements BroadcastListener {
 	
 		private static final long serialVersionUID = 1L;
 
@@ -71,6 +75,8 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 		private ScrubInfo si;
 		
 		private JButton start, stop;
+		
+		protected boolean lightsOff = false;
 		
 		public ScrubChart( ApplicationState state, ScrubInfo si ) {
 			super( state, state.getMonitorManager().getMonitorByName( DiskModule.RT_DISK_MONITOR ) );
@@ -96,7 +102,7 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 			dim = new Dimension( 50, 16 );
 			JPanel hp2 = GU.hp( this, new Dimension( 2, 2 ), new Object[] { start, dim }, new Object[] { stop, dim } );
 			UIUtils.setColors( l, start, stop, hp, hp2 );
-
+			state.getUIManager().addBroadcastListener( this );
 		}
 		
 		protected void calculateSections( EnhancedJProgressBar bar ) {
@@ -104,16 +110,16 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 		
 		private void enableStart() {
 			start.setEnabled( true );
-			start.setForeground( AC.FOREGROUND );
+			start.setForeground( lightsOff ? UIUtils.lightsOff( AC.FOREGROUND, AC.LIGHTS_OFF ) : AC.FOREGROUND );
 			stop.setEnabled( false );
-			stop.setForeground( Color.DARK_GRAY );
+			stop.setForeground( lightsOff ? UIUtils.lightsOff( Color.DARK_GRAY, AC.LIGHTS_OFF ) : Color.DARK_GRAY );
 		}
 		
 		private void enableStop() {
 			start.setEnabled( false );
-			start.setForeground( Color.DARK_GRAY );
+			start.setForeground( lightsOff ? UIUtils.lightsOff( Color.DARK_GRAY, AC.LIGHTS_OFF ) : Color.DARK_GRAY );
 			stop.setEnabled( true );
-			stop.setForeground( AC.FOREGROUND );
+			stop.setForeground( lightsOff ? UIUtils.lightsOff( AC.FOREGROUND, AC.LIGHTS_OFF ) : AC.FOREGROUND );
 		}
 
 		@Override
@@ -128,6 +134,30 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 				enableStart();
 			}
 			bar.setValue( done );
+		}
+
+		@Override
+		public void broadcastReceived( BroadcastEvent e ) {
+			if ( e.getEventType() == BroadcastEvent.EVENT_TYPE.LIGHT_STATUS ) {
+				if ( e.getEventSetting() == BroadcastEvent.EVENT_SETTING.ON ) {
+					UIUtils.setColorsRecursive( this );
+					for ( JButton b : Arrays.asList( start, stop ) ) {
+						b.setForeground( UIUtils.lightsOn( b.getForeground(), AC.LIGHTS_OFF ) );
+						b.setBackground( UIUtils.lightsOn( b.getBackground(), AC.LIGHTS_OFF ) );
+						b.setBorder( BorderFactory.createLineBorder( AC.FOREGROUND.darker().darker().darker() ) );						
+					}
+					lightsOff = false;
+				} else {
+					UIUtils.setColorsRecursiveOff( this );
+					for ( JButton b : Arrays.asList( start, stop ) ) {
+						b.setForeground( UIUtils.lightsOff( b.getForeground(), AC.LIGHTS_OFF ) );
+						b.setBackground( UIUtils.lightsOff( b.getBackground(), AC.LIGHTS_OFF ) );
+						b.setBorder( BorderFactory.createLineBorder( UIUtils.lightsOff( AC.FOREGROUND.darker().darker().darker(), AC.LIGHTS_OFF ) ) );						
+					}
+					lightsOff = true;
+				}
+
+			}
 		}
 	}
 }

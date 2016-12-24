@@ -7,7 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/libs/jfreechart/jcommon/jcommon-1.0.21.jar"/>
 	<classpathentry kind="lib" path="/libs/jfreechart/jfreechart/jfreechart-1.0.17.jar"/>
-	<classpathentry kind="lib" path="/libs/JUtils.jar"/>
+	<classpathentry kind="lib" path="/libs/JUtils.jar" sourcepath="/JUtils/src"/>
 	<classpathentry kind="lib" path="/libs/SpreadSheetUtils.jar"/>
 	<classpathentry kind="lib" path="/libs/StatWrapper.jar"/>
 	<classpathentry kind="lib" path="/libs/TerminalWindow.jar"/>
