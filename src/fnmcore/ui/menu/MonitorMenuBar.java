@@ -10,15 +10,23 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.plaf.basic.BasicMenuBarUI;
 
-import statics.LAFUtils;
-import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.ssh.SSHSession;
+import fnmcore.constants.ApplicationConstants;
 import gui.dialog.OKCancelDialog;
 import gui.menubar.GenericActionListener;
 import gui.menubar.GenericMenuBar;
 import gui.menubar.GenericMenuBarAction;
+import modules.cpu.module.CPUConstants;
+import modules.disk.module.DiskConstants;
+import ssh.SSHConstants;
+import ssh.SSHSession;
+import state.provider.ApplicationProvider;
+import state.provider.ProviderConstants;
+import statics.LAFUtils;
+import statics.UIUtils;
+import ui.log.OutputLogConstants;
+import ui.ssh.SSHDialog;
+import ui.theme.ThemeConstants;
+import ui.window.CreateTabDialog;
 
 /**
  * @author Daniel J. Rivers
@@ -30,9 +38,9 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 
 	private static final long serialVersionUID = 1L;
 
-	private ApplicationState state;
+	private ApplicationProvider state;
 
-	public MonitorMenuBar( ApplicationState state ) {
+	public MonitorMenuBar( ApplicationProvider state ) {
 		this.state = state;
 		for ( SSHSession ssh : state.getSSHManager().getSSHSessions() ) {
 			ssh.addObserver( this );
@@ -48,21 +56,21 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 		this.setUI( new BasicMenuBarUI() );
 		this.setMinimumSize( new Dimension( 0, 22 ) );
 		this.setPreferredSize( new Dimension( this.getWidth(), 22 ) );
-		LAFUtils.applyThemedUI( this, AC.BACKGROUND, AC.FOREGROUND );
+		LAFUtils.applyThemedUI( this, ThemeConstants.BACKGROUND, ThemeConstants.FOREGROUND );
 
 		UIUtils.setColors( this );
 	}
 
 	private void createSSHMenu() {
-		menu = new JMenu( AC.MB_SSH );
+		menu = new JMenu( ApplicationConstants.MB_SSH );
 		UIUtils.setColors( menu );
-		createItem( AC.MB_SSH_CONNECT, o -> {
+		createItem( ApplicationConstants.MB_SSH_CONNECT, o -> {
 			for ( SSHSession ssh : state.getSSHManager().getSSHSessions() ) {
 				ssh.connect();
 			}
 		} );
 		menu.add( new JSeparator() );
-		createItem( AC.MB_SSH_DISCONNECT, o -> {
+		createItem( ApplicationConstants.MB_SSH_DISCONNECT, o -> {
 			for ( SSHSession ssh : state.getSSHManager().getSSHSessions() ) {
 				ssh.disconnect();
 			}
@@ -71,103 +79,103 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 	}
 
 	private void createSystemMonitorMenu() {
-		menu = new JMenu( AC.MB_SYS_MONITOR );
+		menu = new JMenu( ApplicationConstants.MB_SYS_MONITOR );
 		UIUtils.setColors( menu );
-		createItem( AC.MB_SYS_MONITOR_START, o -> state.getMonitorManager().startAllMonitors() );
+		createItem( ApplicationConstants.MB_SYS_MONITOR_START, o -> state.getMonitorManager().startAllMonitors() );
 		menu.add( new JSeparator() );
-		createItem( AC.MB_SYS_MONITOR_STOP, o -> state.getMonitorManager().stopAllMonitors() );
+		createItem( ApplicationConstants.MB_SYS_MONITOR_STOP, o -> state.getMonitorManager().stopAllMonitors() );
 		this.add( menu );
 	}
 
 	private void createSettingsMenu() {
-		menu = new JMenu( AC.MB_SETTINGS );
+		menu = new JMenu( ApplicationConstants.MB_SETTINGS );
 		UIUtils.setColors( menu );
-		createCheckItem( AC.MB_AUTO_START, o -> {
-			AC.AUTO = !AC.AUTO;
+		createCheckItem( ApplicationConstants.MB_AUTO_START, o -> {
+			ProviderConstants.AUTO = !ProviderConstants.AUTO;
 			state.writeSettings();
-		}, AC.AUTO );
+		}, ProviderConstants.AUTO );
 		menu.add( new JSeparator() );
-		createItem( AC.MB_FRAME, o -> state.getUIManager().saveWindowSettings() );
-		createItem( AC.MB_SSH, o -> new SSHDialog( state ).setVisible( true ) );
-		createItem( AC.MB_COLOR, o -> new ColorDialog( state ).setVisible( true ) );
-		createItem( AC.MB_MONITOR_INTERVALS, o -> new IntervalDialog( state ).setVisible( true ) );
-		createItem( AC.MB_NETWORK_INTERFACE, o -> new NetworkInterfaceDialog( state ).setVisible( true ) );
-		menu.add( new JSeparator() );
-		createCheckItem( AC.MB_DEBUG_MODE, o -> {
-			AC.DEBUG = !AC.DEBUG;
-			state.writeSettings();
-		}, AC.DEBUG );
+		createItem( ApplicationConstants.MB_FRAME, o -> state.getFrame().saveWindowSettings( state ) );
+		createItem( ApplicationConstants.MB_SSH, o -> new SSHDialog( state.getFrame(), state ).setVisible( true ) );
+		createItem( ApplicationConstants.MB_COLOR, o -> new ColorDialog( state ).setVisible( true ) );
+		createItem( ApplicationConstants.MB_MONITOR_INTERVALS, o -> new IntervalDialog( state ).setVisible( true ) );
+		createItem( ApplicationConstants.MB_NETWORK_INTERFACE, o -> new NetworkInterfaceDialog( state ).setVisible( true ) );
+//		menu.add( new JSeparator() );  //setting debug mode works, but at the moment there is nothing that turns on as a result of the setting
+//		createCheckItem( ApplicationConstants.MB_DEBUG_MODE, o -> {
+//			ApplicationConstants.DEBUG = !ApplicationConstants.DEBUG;
+//			state.writeSettings();
+//		}, ApplicationConstants.DEBUG );
 		this.add( menu );
 	}
 
 	private void createWindowsMenu() {
-		JMenu win = menu = new JMenu( AC.MB_WINDOW_MANAGEMENT );
+		JMenu win = menu = new JMenu( ApplicationConstants.MB_WINDOW_MANAGEMENT );
 		UIUtils.setColors( menu );
-		menu = new JMenu( AC.MB_TABS );
+		menu = new JMenu( ApplicationConstants.MB_TABS );
 		UIUtils.setColors( menu );
-		createItem( AC.MB_CREATE_TAB, o -> {
-			CreateTabDialog t = new CreateTabDialog( state );
+		createItem( ApplicationConstants.MB_CREATE_TAB, o -> {
+			CreateTabDialog t = new CreateTabDialog( state.getFrame() );
 			t.setVisible( true );
 			if ( t.getResult() == OKCancelDialog.OK ) {
-				state.getUIManager().getTabManager().addTab( t.getTabName() );
+				state.getTabManager().addTab( t.getTabName() );
 			}
 		} );
-		createItem( AC.MB_REMOVE_TAB, o -> state.getUIManager().getTabManager().removeSelectedTab() );
+		createItem( ApplicationConstants.MB_REMOVE_TAB, o -> state.getTabManager().removeSelectedTab() );
 		win.add( menu );
 		win.add( new JSeparator() );
 
-		JMenu windows = menu = new JMenu( AC.MB_WINDOWS );
+		JMenu windows = menu = new JMenu( ApplicationConstants.MB_WINDOWS );
 		UIUtils.setColors( menu );
-		createWindowItem( AC.WD_OUTPUT_LOG );
+		createWindowItem( OutputLogConstants.WD_OUTPUT_LOG );
 		menu.add( new JSeparator() );
-		createWindowItem( AC.WD_CONTROL_PANEL );
+		createWindowItem( ApplicationConstants.WD_CONTROL_PANEL );
 		menu.add( new JSeparator() );
-		createWindowItem( AC.WD_SSH );
+		createWindowItem( SSHConstants.WD_SSH );
 
-		menu = new JMenu( AC.MB_SYS );
+		menu = new JMenu( ApplicationConstants.MB_SYS );
 		UIUtils.setColors( menu );
-		createWindowItem( AC.WD_SYS_INFO );
+		createWindowItem( ApplicationConstants.WD_SYS_INFO );
 		windows.add( menu );
 
-		JMenu cpu = menu = new JMenu( AC.MB_CPU );
+		JMenu cpu = menu = new JMenu( ApplicationConstants.MB_CPU );
 		UIUtils.setColors( menu );
-		createWindowItem( AC.WD_CPU_METERS );
+		createWindowItem( CPUConstants.WD_CPU_METERS );
 		windows.add( menu );
 		menu.add( new JSeparator() );
-		menu = new JMenu( AC.MB_CHARTS );
+		menu = new JMenu( ApplicationConstants.MB_CHARTS );
 		UIUtils.setColors( menu );
-		createWindowItem( AC.WD_CPU_USAGE );
-		createWindowItem( AC.WD_CPU_COMBINED_TEMP );
-		createWindowItem( AC.WD_CPU_IND_TEMP );
+		createWindowItem( ApplicationConstants.WD_CPU_USAGE );
+		createWindowItem( ApplicationConstants.WD_CPU_COMBINED_TEMP );
+		createWindowItem( ApplicationConstants.WD_CPU_IND_TEMP );
 		cpu.add( menu );
 
-		JMenu mb = menu = new JMenu( AC.MB_DISK );
+		JMenu mb = menu = new JMenu( ApplicationConstants.MB_DISK );
 		UIUtils.setColors( menu );
-		createWindowItem( AC.WD_DISK_METERS );
-		createWindowItem( AC.WD_SCRUB_CONTROL );
+		createWindowItem( DiskConstants.WD_DISK_METERS );
+		createWindowItem( ApplicationConstants.WD_SCRUB_CONTROL );
 		menu.add( new JSeparator() );
-		createWindowItem( AC.WD_DISK_INFO_TABLE );
-		createWindowItem( AC.WD_DISK_SCRUB_TABLE );
+		createWindowItem( DiskConstants.WD_DISK_INFO_TABLE );
+		createWindowItem( DiskConstants.WD_DISK_SCRUB_TABLE );
 		windows.add( menu );
 		menu.add( new JSeparator() );
-		menu = new JMenu( AC.MB_CHARTS );
+		menu = new JMenu( ApplicationConstants.MB_CHARTS );
 		UIUtils.setColors( menu );
-		createWindowItem( AC.WD_DISK_COMBINED_TEMP );
-		createWindowItem( AC.WD_DISK_IND_TEMP );
+		createWindowItem( ApplicationConstants.WD_DISK_COMBINED_TEMP );
+		createWindowItem( ApplicationConstants.WD_DISK_IND_TEMP );
 		mb.add( menu );
 
-		menu = new JMenu( AC.MB_MEM );
+		menu = new JMenu( ApplicationConstants.MB_MEM );
 		UIUtils.setColors( menu );
-		createWindowItem( AC.WD_MEM_METERS );
+		createWindowItem( ApplicationConstants.WD_MEM_METERS );
 		windows.add( menu );
 
-		JMenu net = menu = new JMenu( AC.MB_NET );
+		JMenu net = menu = new JMenu( ApplicationConstants.MB_NET );
 		UIUtils.setColors( menu );
 		windows.add( menu );
-		menu = new JMenu( AC.MB_CHARTS );
+		menu = new JMenu( ApplicationConstants.MB_CHARTS );
 		UIUtils.setColors( menu );
-		createWindowItem( AC.WD_NET_BYTES );
-		createWindowItem( AC.WD_NET_PACKETS );
+		createWindowItem( ApplicationConstants.WD_NET_BYTES );
+		createWindowItem( ApplicationConstants.WD_NET_PACKETS );
 		net.add( menu );
 
 		win.add( windows );
@@ -177,14 +185,14 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 	}
 
 	//	private void createLogMenu() {
-	//		menu = new JMenu( AC.MB_LOGS );
+	//		menu = new JMenu( ApplicationConstants.MB_LOGS );
 	//		UIUtils.setColors( menu );
-	//		createItem( AC.MB_LOGS_WARNING, o -> state.getWarningDialog().setVisible( true ) );
+	//		createItem( ApplicationConstants.MB_LOGS_WARNING, o -> state.getWarningDialog().setVisible( true ) );
 	//		this.add( menu );
 	//	}
 
 	private void createWindowItem( String command ) {
-		createItem( command, o -> state.getUIManager().getTabManager().instantiateWindow( command, null ) );
+		createItem( command, o -> state.getTabManager().instantiateWindow( command, null ) );
 	}
 
 	@Override
@@ -199,11 +207,11 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 	public void update( Observable o, Object arg ) {
 		boolean c = (Boolean)arg;
 		if ( c ) {
-			enabled( buttonMap.get( AC.MB_SSH_CONNECT ), false );
-			enabled( buttonMap.get( AC.MB_SSH_DISCONNECT ), true );
+			enabled( buttonMap.get( ApplicationConstants.MB_SSH_CONNECT ), false );
+			enabled( buttonMap.get( ApplicationConstants.MB_SSH_DISCONNECT ), true );
 		} else {
-			enabled( buttonMap.get( AC.MB_SSH_CONNECT ), true );
-			enabled( buttonMap.get( AC.MB_SSH_DISCONNECT ), false );
+			enabled( buttonMap.get( ApplicationConstants.MB_SSH_CONNECT ), true );
+			enabled( buttonMap.get( ApplicationConstants.MB_SSH_DISCONNECT ), false );
 		}
 	}
 

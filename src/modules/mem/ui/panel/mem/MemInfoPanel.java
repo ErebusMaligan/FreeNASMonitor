@@ -12,10 +12,10 @@ import javax.swing.JPanel;
 import modules.mem.module.MemModule;
 import modules.mem.state.mem.data.MemData;
 import modules.mem.ui.panel.mem.charts.SimpleMemoryChart;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
 
 /**
  * @author Daniel J. Rivers
@@ -27,18 +27,18 @@ public class MemInfoPanel extends JPanel implements Observer, BroadcastListener 
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ApplicationState state;
+	private ApplicationProvider state;
 	
 	private boolean init = false;
 	
 	private List<BroadcastListener> l = new ArrayList<>();
 	
-	public MemInfoPanel( ApplicationState state ) {
+	public MemInfoPanel( ApplicationProvider state ) {
 		this.state = state;
 		this.setLayout( new BorderLayout() );
 		UIUtils.setColors( this );
 		state.getMonitorManager().getMonitorByName( MemModule.MEM_MONITOR ).addObserver( this );
-		state.getUIManager().addBroadcastListener( this );
+		state.addBroadcastListener( this );
 	}
 
 	@Override

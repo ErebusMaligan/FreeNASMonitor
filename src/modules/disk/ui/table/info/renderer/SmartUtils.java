@@ -1,4 +1,4 @@
-package fnmcore.util;
+package modules.disk.ui.table.info.renderer;
 
 import modules.disk.state.data.RuntimeData;
 

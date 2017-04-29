@@ -9,16 +9,16 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import modules.cpu.module.CPUModule;
-import modules.cpu.state.data.CPUData;
-import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
 import gui.entry.LabelEntry;
 import gui.props.variable.IntVariable;
 import gui.props.variable.StringVariable;
+import modules.cpu.module.CPUModule;
+import modules.cpu.state.data.CPUData;
+import modules.system.module.SysConstants;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
+import state.provider.ApplicationProvider;
+import statics.UIUtils;
 
 /**
  * @author Daniel J. Rivers
@@ -40,20 +40,20 @@ public class SystemInfoPanel extends JPanel implements Observer, BroadcastListen
 	
 	private IntVariable cpuCount = new IntVariable();
 	
-	private ApplicationState state;
+	private ApplicationProvider state;
 	
-	public SystemInfoPanel( ApplicationState state ) {
+	public SystemInfoPanel( ApplicationProvider state ) {
 		this.state = state;
 		state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ).addObserver( this );
-		state.getUIManager().addBroadcastListener( this );
+		state.addBroadcastListener( this );
 		this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 		Dimension[] dim = new Dimension[] { new Dimension( 150, 18 ), new Dimension( 200, 18 ) };
 		this.add( Box.createVerticalGlue() );
-		this.add( new LabelEntry( AC.SIP_SYSTIME, sysTime, dim ) );
-		this.add( new LabelEntry( AC.SIP_UPTIME, upTime, dim ) );
-		this.add( new LabelEntry( AC.SIP_MODEL, model, dim ) );
-		this.add( new LabelEntry( AC.SIP_CPU_COUNT, cpuCount, dim ) );
-		this.add( new LabelEntry( AC.SIP_SOURCE, cpuTempSource, dim ) );
+		this.add( new LabelEntry( SysConstants.SIP_SYSTIME, sysTime, dim ) );
+		this.add( new LabelEntry( SysConstants.SIP_UPTIME, upTime, dim ) );
+		this.add( new LabelEntry( SysConstants.SIP_MODEL, model, dim ) );
+		this.add( new LabelEntry( SysConstants.SIP_CPU_COUNT, cpuCount, dim ) );
+		this.add( new LabelEntry( SysConstants.SIP_SOURCE, cpuTempSource, dim ) );
 		UIUtils.setColorsRecursive( this );
 		this.add( Box.createVerticalGlue() );
 	}
@@ -75,8 +75,8 @@ public class SystemInfoPanel extends JPanel implements Observer, BroadcastListen
 
 	@Override
 	public void broadcastReceived( BroadcastEvent e ) {
-		if ( e.getEventType() == BroadcastEvent.EVENT_TYPE.LIGHT_STATUS ) {
-			if ( e.getEventSetting() == BroadcastEvent.EVENT_SETTING.ON ) {
+		if ( e.getEventType() == BroadcastEvent.LIGHT_STATUS ) {
+			if ( e.getEventSetting() == BroadcastEvent.ON ) {
 				UIUtils.setColorsRecursive( this );
 			} else {
 				UIUtils.setColorsRecursiveOff( this );

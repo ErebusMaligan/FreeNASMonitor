@@ -1,8 +1,6 @@
 package modules.control.ui.panel;
 
 
-import icon.creator.TextIconCreator;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -14,20 +12,23 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import fnmcore.constants.ApplicationConstants;
+import gui.button.ToggleButton;
+import icon.creator.TextIconCreator;
 import modules.cpu.state.monitor.CPUMonitor;
 import modules.disk.state.monitor.DiskMonitor;
 import modules.disk.state.monitor.RealtimeDiskMonitor;
 import modules.mem.state.mem.monitor.MemMonitor;
 import modules.net.state.net.monitor.NetworkMonitor;
+import ssh.SSHSession;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
+import state.control.Broadcaster;
+import state.provider.ApplicationProvider;
+import state.provider.ProviderConstants;
 import statics.GU;
 import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
-import fnmcore.state.control.Broadcaster;
-import fnmcore.state.ssh.SSHSession;
-import gui.button.ToggleButton;
+import ui.theme.ThemeConstants;
 
 
 /**
@@ -40,41 +41,41 @@ public class ApplicationControlPanel extends JPanel implements Broadcaster {
 
 	private static final long serialVersionUID = 1L;
 	
-	private ApplicationState state;
+	private ApplicationProvider state;
 	
-	//if these aren't held here, they will stop working because they are weakreferences in applicationstate where they are really held and called to
+	//if these aren't held here, they will stop working because they are weakreferences in ApplicationProvider where they are really held and called to
 	//the only purpose of this list is to sit here... but it IS NECESSARY
 	private List<BroadcastListener> listeners = new ArrayList<>();
 
-	public ApplicationControlPanel( ApplicationState state ) {
+	public ApplicationControlPanel( ApplicationProvider state ) {
 		this.state = state;
 		this.setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 		UIUtils.setColors( this );
 		
 		//global
 		createPanel( "GLOBAL", 
-				new SwitchPanel( AC.CON_LIGHTS, e -> state.getUIManager().broadcast( new BroadcastEvent( this, BroadcastEvent.EVENT_TYPE.LIGHT_STATUS,  ( (ToggleButton)e.getSource() ).isSelected() ? BroadcastEvent.EVENT_SETTING.ON : BroadcastEvent.EVENT_SETTING.OFF ) ), true ) 
+				new SwitchPanel( ApplicationConstants.CON_LIGHTS, e -> state.broadcast( new BroadcastEvent( this, BroadcastEvent.LIGHT_STATUS,  ( (ToggleButton)e.getSource() ).isSelected() ? BroadcastEvent.ON : BroadcastEvent.OFF ) ), true ) 
 		);
 
 		//ssh
 		List<SwitchPanel> ssh = new ArrayList<>();
 		state.getSSHManager().getSSHSessions().forEach( s -> {
-			SwitchPanel ret = new SwitchPanel( s.getProcessName(), e -> state.getUIManager().broadcast( new BroadcastEvent( this, SSHSession.class, BroadcastEvent.EVENT_TYPE.SSH_SESSION_COMMAND,  ( (ToggleButton)e.getSource() ).isSelected() ? BroadcastEvent.EVENT_SETTING.CONNECT : BroadcastEvent.EVENT_SETTING.DISCONNECT, s.getProcessName() ) ), AC.AUTO );
+			SwitchPanel ret = new SwitchPanel( s.getProcessName(), e -> state.broadcast( new BroadcastEvent( this, SSHSession.class, BroadcastEvent.SSH_SESSION_COMMAND,  ( (ToggleButton)e.getSource() ).isSelected() ? BroadcastEvent.CONNECT : BroadcastEvent.DISCONNECT, s.getProcessName() ) ), ProviderConstants.AUTO );
 			BroadcastListener l = new BroadcastListener() {
 				@Override
 				public void broadcastReceived( BroadcastEvent e ) {
-					if ( e.getEventType().equals( BroadcastEvent.EVENT_TYPE.SSH_SESSION_STATE ) ) {
+					if ( e.getEventType().equals( BroadcastEvent.SSH_SESSION_STATE ) ) {
 						if ( e.getAdditional() != null && e.getAdditional().equals( s.getProcessName() ) ) {
-							if ( e.getEventSetting().equals( BroadcastEvent.EVENT_SETTING.OFF ) ) {
+							if ( e.getEventSetting().equals( BroadcastEvent.OFF ) ) {
 								ret.setState( false );							
-							} else if ( e.getEventSetting().equals( BroadcastEvent.EVENT_SETTING.ON ) ) {
+							} else if ( e.getEventSetting().equals( BroadcastEvent.ON ) ) {
 								ret.setState( true );
 							}
 						}
 					}
 				}
 			};
-			state.getUIManager().addBroadcastListener( l );
+			state.addBroadcastListener( l );
 			listeners.add( l );
 			ssh.add( ret );
 		} );
@@ -82,11 +83,11 @@ public class ApplicationControlPanel extends JPanel implements Broadcaster {
 
 		//monitors
 		createPanel( "MONITORS",
-			createMonitorSwitch( AC.CON_DISK_MON, DiskMonitor.class ),
-			createMonitorSwitch( AC.CON_RT_DISK_MON, RealtimeDiskMonitor.class ),
-			createMonitorSwitch( AC.CON_CPU_MON, CPUMonitor.class ),
-			createMonitorSwitch( AC.CON_MEM_MON, MemMonitor.class ),
-			createMonitorSwitch( AC.CON_NET_MON, NetworkMonitor.class )
+			createMonitorSwitch( ApplicationConstants.CON_DISK_MON, DiskMonitor.class ),
+			createMonitorSwitch( ApplicationConstants.CON_RT_DISK_MON, RealtimeDiskMonitor.class ),
+			createMonitorSwitch( ApplicationConstants.CON_CPU_MON, CPUMonitor.class ),
+			createMonitorSwitch( ApplicationConstants.CON_MEM_MON, MemMonitor.class ),
+			createMonitorSwitch( ApplicationConstants.CON_NET_MON, NetworkMonitor.class )
 		);
 		
 	}
@@ -94,10 +95,10 @@ public class ApplicationControlPanel extends JPanel implements Broadcaster {
 	private void createPanel( String name, Component...c ) {
 		JPanel main = new JPanel( new BorderLayout() );
 		JPanel title = new JPanel( new BorderLayout() );
-		JLabel t = new JLabel( new TextIconCreator().getOn( name, new JLabel().getFont(), AC.FOREGROUND, AC.BACKGROUND ) );
+		JLabel t = new JLabel( new TextIconCreator().getOn( name, new JLabel().getFont(), ThemeConstants.FOREGROUND, ThemeConstants.BACKGROUND ) );
 		title.add( t, BorderLayout.CENTER );
 		main.add( title, BorderLayout.NORTH );
-		main.setBorder( BorderFactory.createLineBorder( AC.FOREGROUND_DARKER ) );
+		main.setBorder( BorderFactory.createLineBorder( ThemeConstants.FOREGROUND_DARKER ) );
 		JPanel p = new JPanel();
 		p.setLayout( new BoxLayout( p, BoxLayout.X_AXIS ) );
 		for ( Component x : c ) {
@@ -110,27 +111,27 @@ public class ApplicationControlPanel extends JPanel implements Broadcaster {
 	}
 	
 	private SwitchPanel createMonitorSwitch( String text, Class<?> c ) {
-		SwitchPanel ret = new SwitchPanel( text, getMonitorEvent( c ), AC.AUTO );
+		SwitchPanel ret = new SwitchPanel( text, getMonitorEvent( c ), ProviderConstants.AUTO );
 		BroadcastListener l = new BroadcastListener() {
 			@Override
 			public void broadcastReceived( BroadcastEvent e ) {
-				if ( e.getEventType().equals( BroadcastEvent.EVENT_TYPE.MONITOR_STATE ) ) {
+				if ( e.getEventType().equals( BroadcastEvent.MONITOR_STATE ) ) {
 					if ( e.getSource().getClass().getName().equals( c.getName() ) ) {
-						if ( e.getEventSetting().equals( BroadcastEvent.EVENT_SETTING.OFF ) ) {
+						if ( e.getEventSetting().equals( BroadcastEvent.OFF ) ) {
 							ret.setState( false );							
-						} else if ( e.getEventSetting().equals( BroadcastEvent.EVENT_SETTING.ON ) ) {
+						} else if ( e.getEventSetting().equals( BroadcastEvent.ON ) ) {
 							ret.setState( true );
 						}
 					}
 				}
 			}
 		};
-		state.getUIManager().addBroadcastListener( l );
+		state.addBroadcastListener( l );
 		listeners.add( l );
 		return ret;
 	}
 	
 	private ActionListener getMonitorEvent( Class<?> c ) {
-		return e -> state.getUIManager().broadcast( new BroadcastEvent( this, c, BroadcastEvent.EVENT_TYPE.MONITOR_COMMAND,  ( (ToggleButton)e.getSource() ).isSelected() ? BroadcastEvent.EVENT_SETTING.START : BroadcastEvent.EVENT_SETTING.STOP ) );
+		return e -> state.broadcast( new BroadcastEvent( this, c, BroadcastEvent.MONITOR_COMMAND,  ( (ToggleButton)e.getSource() ).isSelected() ? BroadcastEvent.START : BroadcastEvent.STOP ) );
 	}
 }

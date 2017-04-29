@@ -3,19 +3,20 @@ package modules.net.module;
 import java.util.Arrays;
 import java.util.List;
 
+import gui.windowmanager.WindowManager;
+import module.AppModule;
+import module.spi.SPIDataMonitorProvider;
+import module.spi.SPIMonitorDataProvider;
+import module.spi.SPIWindowDefinitionProvider;
 import modules.net.state.net.data.NetworkData;
 import modules.net.state.net.monitor.NetworkMonitor;
 import modules.net.ui.window.definitions.NetBytesChartDefinition;
 import modules.net.ui.window.definitions.NetPacketsChartDefinition;
-import fnmcore.module.FNMModule;
-import fnmcore.module.spi.SPIDataMonitorProvider;
-import fnmcore.module.spi.SPIMonitorDataProvider;
-import fnmcore.module.spi.SPIWindowDefinitionProvider;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.monitor.AbstractMonitor;
-import fnmcore.state.monitor.MonitorData;
-import fnmcore.state.ssh.SSHSession;
-import gui.windowmanager.WindowManager;
+import ssh.SSHSession;
+import state.control.BroadcastManager;
+import state.monitor.AbstractMonitor;
+import state.monitor.MonitorData;
+import state.monitor.MonitorManager;
 
 /**
  * @author Daniel J. Rivers
@@ -23,7 +24,7 @@ import gui.windowmanager.WindowManager;
  *
  * Created: Apr 25, 2016, 1:42:08 PM 
  */
-public class NetModule extends FNMModule implements SPIDataMonitorProvider, SPIMonitorDataProvider, SPIWindowDefinitionProvider {
+public class NetModule extends AppModule implements SPIDataMonitorProvider, SPIMonitorDataProvider, SPIWindowDefinitionProvider {
 	
 	public static final String NET_DATA = NetworkData.class.getName();
 	
@@ -47,8 +48,8 @@ public class NetModule extends FNMModule implements SPIDataMonitorProvider, SPIM
 	}
 
 	@Override
-	public void initDataMonitors( ApplicationState state, SSHSession ssh ) {
-		monitor = new NetworkMonitor( state, data, ssh );
+	public void initDataMonitors( MonitorManager manager, BroadcastManager broadcast, SSHSession ssh ) {
+		monitor = new NetworkMonitor( manager, broadcast, data, ssh );
 	}
 
 	@Override

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fnmcore.constants.ApplicationConstants;
+import modules.mem.module.MemConstants;
 import process.ProcessManager;
 import process.io.ProcessStreamSiphon;
-import fnmcore.constants.AC;
-import fnmcore.state.monitor.MonitorData;
+import state.monitor.MonitorData;
 
 /**
  * @author Daniel J. Rivers
@@ -28,7 +29,7 @@ public class MemData extends MonitorData implements ProcessStreamSiphon {
 	private CurrentMemData cur = new CurrentMemData();
 	
 	public MemData() {
-		skimmers.put( AC.MEM_PHYS_CMD, line -> {
+		skimmers.put( MemConstants.MEM_PHYS_CMD, line -> {
 			if ( line.contains( "Size: " ) ) {
 				pmd = new PhysicalMemData();
 			} else if ( line.contains( "Speed: " ) ) {
@@ -41,7 +42,7 @@ public class MemData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		skimmers.put( AC.MEM_OVERALL_CMD, line -> {
+		skimmers.put( MemConstants.MEM_OVERALL_CMD, line -> {
 			if ( line.contains( /*"real"*/ "realmem" ) ) {
 				real = parseMem( line );
 			} else if ( line.contains( /*"avail"*/ "usermem" ) ) {
@@ -49,14 +50,14 @@ public class MemData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		skimmers.put( AC.MEM_CURRENT_CMD, line -> {
+		skimmers.put( MemConstants.MEM_CURRENT_CMD, line -> {
 			if ( line.startsWith( "Mem:" ) ) {
 				cur.skimMessage( line );
 			}
 		} );
 		
 		
-		ProcessManager.getInstance().registerSiphon( AC.SSH_MASTER_PROCESS_NAME, this );
+		ProcessManager.getInstance().registerSiphon( ApplicationConstants.SSH_MASTER_PROCESS_NAME, this );
 	}
 	
 	private int parseMem( String line ) {

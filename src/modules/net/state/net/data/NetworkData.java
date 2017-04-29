@@ -1,9 +1,10 @@
 package modules.net.state.net.data;
 
+import fnmcore.constants.ApplicationConstants;
+import modules.net.module.NetConstants;
 import process.ProcessManager;
 import process.io.ProcessStreamSiphon;
-import fnmcore.constants.AC;
-import fnmcore.state.monitor.MonitorData;
+import state.monitor.MonitorData;
 
 /**
  * @author Daniel J. Rivers
@@ -42,8 +43,8 @@ public class NetworkData extends MonitorData implements ProcessStreamSiphon {
 	private double factor = 125000;
 	
 	public NetworkData() {
-		skimmers.put( AC.NET_INFO_CMD, line -> {
-			if ( line.contains( AC.NI_NAME ) && !line.contains( "grep" ) ) {
+		skimmers.put( NetConstants.NET_INFO_CMD, line -> {
+			if ( line.contains( ApplicationConstants.NI_NAME ) && !line.contains( "grep" ) ) {
 				prevTime = curTime;
 				curTime = System.currentTimeMillis();
 				String[] param = line.trim().replaceAll( " +", " " ).split( " " );
@@ -73,16 +74,16 @@ public class NetworkData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		ProcessManager.getInstance().registerSiphon( AC.SSH_MASTER_PROCESS_NAME, this );
+		ProcessManager.getInstance().registerSiphon( ApplicationConstants.SSH_MASTER_PROCESS_NAME, this );
 	}
 	
 	public double getDoubleForKey( String key ) {
 		double ret = -1;
 		switch ( key ) {
-			case AC.NET_IN_PACKET: ret = getIPPS(); break;
-			case AC.NET_OUT_PACKET: ret = getOPPS(); break;
-			case AC.NET_IN_BYTES: ret = getIBPS(); break;
-			case AC.NET_OUT_BYTES: ret = getOBPS(); break;
+			case NetConstants.NET_IN_PACKET: ret = getIPPS(); break;
+			case NetConstants.NET_OUT_PACKET: ret = getOPPS(); break;
+			case NetConstants.NET_IN_BYTES: ret = getIBPS(); break;
+			case NetConstants.NET_OUT_BYTES: ret = getOBPS(); break;
 		}
 		return ret;
 	}

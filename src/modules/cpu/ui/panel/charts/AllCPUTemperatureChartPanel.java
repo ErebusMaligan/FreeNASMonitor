@@ -2,15 +2,15 @@ package modules.cpu.ui.panel.charts;
 
 import java.util.Observable;
 
-import modules.cpu.module.CPUModule;
-import modules.cpu.state.data.CPUData;
 import data.DataPair;
 import data.DataSet;
 import data.TimeData;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.AbstractDynamicTimeSeriesChartPanel;
 import fnmcore.util.ChartUtils;
+import modules.cpu.module.CPUModule;
+import modules.cpu.state.data.CPUData;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -22,8 +22,8 @@ public class AllCPUTemperatureChartPanel extends AbstractDynamicTimeSeriesChartP
 
 	private static final long serialVersionUID = 1L;
 
-	public AllCPUTemperatureChartPanel( ApplicationState state ) {
-		super( state, "CPU Temperature", "Temperature (" + AC.DEGREE + "C)", state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ), AC.CPU_INTERVAL );
+	public AllCPUTemperatureChartPanel( ApplicationProvider state ) {
+		super( state, "CPU Temperature", "Temperature (" + ApplicationConstants.DEGREE + "C)", state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ), ApplicationConstants.CPU_INTERVAL );
 	}
 	
 	@Override

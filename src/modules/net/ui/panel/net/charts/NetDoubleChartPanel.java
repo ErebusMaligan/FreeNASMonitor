@@ -3,20 +3,19 @@ package modules.net.ui.panel.net.charts;
 import java.awt.BorderLayout;
 import java.util.Observable;
 
-import modules.net.module.NetModule;
-import modules.net.state.net.data.NetworkData;
-
 import org.jfree.chart.ChartPanel;
 
-import visualization.chart.Chart;
 import data.DataPair;
 import data.DataSet;
 import data.TimeData;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.AbstractDynamicTimeSeriesChartPanel;
 import fnmcore.ui.panel.generic.raw.RawDataPanel;
 import fnmcore.util.ChartUtils;
+import modules.net.module.NetModule;
+import modules.net.state.net.data.NetworkData;
+import state.provider.ApplicationProvider;
+import visualization.chart.Chart;
 
 /**
  * @author Daniel J. Rivers
@@ -30,8 +29,8 @@ public class NetDoubleChartPanel extends AbstractDynamicTimeSeriesChartPanel {
 
 	private String[] values;
 	
-	public NetDoubleChartPanel( ApplicationState state, String title, String y, String[] values ) {
-		super( state, title, y, state.getMonitorManager().getMonitorByName( NetModule.NET_MONITOR ), AC.NET_INTERVAL );
+	public NetDoubleChartPanel( ApplicationProvider state, String title, String y, String[] values ) {
+		super( state, title, y, state.getMonitorManager().getMonitorByName( NetModule.NET_MONITOR ), ApplicationConstants.NET_INTERVAL );
 		this.values = values;
 	}
 	

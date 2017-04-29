@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fnmcore.constants.ApplicationConstants;
+import modules.disk.module.DiskConstants;
 import process.ProcessManager;
 import process.io.ProcessStreamSiphon;
-import fnmcore.constants.AC;
-import fnmcore.state.monitor.MonitorData;
+import state.monitor.MonitorData;
 
 /**
  * @author Daniel J. Rivers
@@ -40,7 +41,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 	private static final String LOC = "/dev/";
 	
 	public DiskData() {
-		skimmers.put( AC.DISK_LIST_CMD, line -> {
+		skimmers.put( DiskConstants.DISK_LIST_CMD, line -> {
 			if ( line.startsWith( "<" ) ) {
 				String sub = line.substring( line.indexOf( "(" ) + 1, line.indexOf( "," ) );
 				if ( sub.contains( "pass" ) ) {  //disks used to list as (da0,pass0)... but after latest update of 9.3, they are (pass0,da0).   Note this may not even be remotely the same for someone with different hardware setup.
@@ -54,7 +55,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		skimmers.put( AC.MAP_GPTID_TO_DEVICE_CMD, line -> {
+		skimmers.put( DiskConstants.MAP_GPTID_TO_DEVICE_CMD, line -> {
 			if ( line.startsWith( "gptid" ) ) {
 				line = line.trim();
 				String dev = LOC + line.substring( line.lastIndexOf( " " ) + 1, line.length() - 2 );
@@ -64,14 +65,14 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		skimmers.put( AC.POOL_LIST_CMD, line -> {
+		skimmers.put( DiskConstants.POOL_LIST_CMD, line -> {
 			line = line.trim();
 			if ( line.contains( "%" ) ) {
 				pools.add( line.substring( 0, line.indexOf( " " ) ) );
 			}
 		} );
 		
-		skimmers.put( AC.POOL_STATUS_CMD, line -> {
+		skimmers.put( DiskConstants.POOL_STATUS_CMD, line -> {
 			line = line.trim();
 			if ( line.startsWith( "gptid" ) ) {
 				String gid = line.substring( 0, line.indexOf( " " ) );
@@ -79,7 +80,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		skimmers.put( AC.DISK_SMART_INFO_CMD, line -> {
+		skimmers.put( DiskConstants.DISK_SMART_INFO_CMD, line -> {
 			if ( line.startsWith( "===" ) ) {
 				smartInfo = new ArrayList<>();
 			}
@@ -91,7 +92,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		skimmers.put( AC.DISK_SCRUB_STATUS, line -> {
+		skimmers.put( DiskConstants.DISK_SCRUB_STATUS, line -> {
 			String l = line.trim();
 			if ( l.startsWith(  "pool:" ) ) {
 				setCurrentDisk( l.substring( l.indexOf( ":" ) + 2 ) );	
@@ -103,7 +104,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		skimmers.put( AC.DISK_USAGE, line -> {
+		skimmers.put( DiskConstants.DISK_USAGE, line -> {
 			if ( line.contains( "%" ) ) {
 				DFData d = new DFData();
 				d.skimMessage( line );
@@ -111,7 +112,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		ProcessManager.getInstance().registerSiphon( AC.SSH_MASTER_PROCESS_NAME, this );
+		ProcessManager.getInstance().registerSiphon( ApplicationConstants.SSH_MASTER_PROCESS_NAME, this );
 	}
 	
 	public List<String> getLocations() {

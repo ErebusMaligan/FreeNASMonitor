@@ -5,11 +5,12 @@ import java.awt.Component;
 
 import javax.swing.JTable;
 
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import modules.disk.state.data.ScrubInfo;
 import modules.disk.ui.table.info.renderer.SmartInfoRenderer;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -33,7 +34,7 @@ public class ScrubInfoRenderer extends SmartInfoRenderer {
 
 	protected static final String CANCELED = "Canceled";
 	
-	public ScrubInfoRenderer( ApplicationState state ) {
+	public ScrubInfoRenderer( ApplicationProvider state ) {
 		super( state );
 	}
 
@@ -53,8 +54,8 @@ public class ScrubInfoRenderer extends SmartInfoRenderer {
 			if ( error != null ) {						//error condition trumps everything, show that regardless - resilver causes repair, but should never cause error unless something is broken
 				int e = Integer.parseInt( (String)error );
 				if ( e > 0 ) {
-					back = AC.FOREGROUND;
-					fore = AC.BACKGROUND;
+					back = ThemeConstants.FOREGROUND;
+					fore = ThemeConstants.BACKGROUND;
 					foundError = true;
 				}
 			}
@@ -62,38 +63,38 @@ public class ScrubInfoRenderer extends SmartInfoRenderer {
 			if ( !foundError ) {				
 				if ( type != null && type.equals( ScrubInfo.RESILVER ) && ( progress != null && Boolean.parseBoolean( (String)progress ) ) ) {  //specifically handle resilver in progress
 					back = SILVER;
-					fore = AC.BACKGROUND;
+					fore = ThemeConstants.BACKGROUND;
 				} else if ( type != null && type.equals( ScrubInfo.RESILVER ) && ( progress != null && !Boolean.parseBoolean( (String)progress ) ) ) { //specifically handle resilver last completed task for this drive
 					back = BLUE;
-					fore = AC.BACKGROUND;
+					fore = ThemeConstants.BACKGROUND;
 				} else {
 					boolean foundRepair = false;
 					if ( repair != null ) {
 						double r = Double.parseDouble( (String)repair );
 						if ( r > 0d ) {
 							back = YELLOW;
-							fore = AC.BACKGROUND;
+							fore = ThemeConstants.BACKGROUND;
 							foundRepair = true;
 						}
 					}
 	
 					if ( !foundRepair ) {
 						if ( time != null && time.equals( CANCELED ) ) {
-							back = AC.BACKGROUND;
+							back = ThemeConstants.BACKGROUND;
 							fore = YELLOW;
 						} else if ( progress != null && Boolean.parseBoolean( (String)progress ) ) {
-							back = AC.BACKGROUND;
+							back = ThemeConstants.BACKGROUND;
 							fore = GREEN;
 						} else {
-							back = AC.BACKGROUND;
-							fore = AC.FOREGROUND;
+							back = ThemeConstants.BACKGROUND;
+							fore = ThemeConstants.FOREGROUND;
 						}
 	
 					}
 				}
 			}
-			c.setBackground( lightsOff ? UIUtils.lightsOff( back, AC.LIGHTS_OFF ) : back );
-			c.setForeground( lightsOff ? UIUtils.lightsOff( fore, AC.LIGHTS_OFF ) : fore);
+			c.setBackground( lightsOff ? UIUtils.lightsOff( back, ApplicationConstants.LIGHTS_OFF ) : back );
+			c.setForeground( lightsOff ? UIUtils.lightsOff( fore, ApplicationConstants.LIGHTS_OFF ) : fore);
 		}
 		return c;
 	}

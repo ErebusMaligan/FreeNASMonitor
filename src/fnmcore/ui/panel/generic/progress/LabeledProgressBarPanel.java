@@ -11,7 +11,7 @@ import javax.swing.JProgressBar;
 
 import statics.GU;
 import statics.UIUtils;
-import fnmcore.constants.AC;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -30,7 +30,7 @@ public class LabeledProgressBarPanel extends JPanel {
 	public LabeledProgressBarPanel( JProgressBar bar, String name, String units, Integer width, Integer height ) {
 		JLabel n = getLabel( name + ": ", JLabel.RIGHT, new Dimension( width, height ) );
 		JLabel v = getLabel( "", JLabel.RIGHT, new Dimension( width, height  ) );
-		v.setBorder( BorderFactory.createLineBorder( AC.FOREGROUND_DARKER ) );
+		v.setBorder( BorderFactory.createLineBorder( ThemeConstants.FOREGROUND_DARKER ) );
 		JLabel u = getLabel( " " + units, JLabel.LEFT, new Dimension( width, height ) );
 		bar.addChangeListener( e -> { v.setText( "" + bar.getValue() ); } );
 		UIUtils.setColors( this, n, v, u );

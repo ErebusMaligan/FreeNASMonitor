@@ -8,9 +8,9 @@ import javax.swing.JSplitPane;
 
 import modules.disk.ui.table.info.DiskTable;
 import modules.disk.ui.table.scrub.ScrubTable;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -22,18 +22,18 @@ public class DiskTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	public DiskTablePanel( ApplicationState state ) {
+	public DiskTablePanel( ApplicationProvider state ) {
 		DiskTable diskTable = new DiskTable( state );
 		JPanel smart = new JPanel();
 		JScrollPane scroll = UIUtils.setJScrollPane( new JScrollPane( diskTable.getTable() ) );
-		scroll.getViewport().setBackground( AC.BACKGROUND );
+		scroll.getViewport().setBackground( ThemeConstants.BACKGROUND );
 		smart.setLayout( new BorderLayout() );
 		smart.add( scroll, BorderLayout.CENTER );
 		
 		ScrubTable scrubTable = new ScrubTable( state );
 		JPanel scrub = new JPanel();
 		JScrollPane scroll2 = UIUtils.setJScrollPane( new JScrollPane( scrubTable.getTable() ) );
-		scroll2.getViewport().setBackground( AC.BACKGROUND );
+		scroll2.getViewport().setBackground( ThemeConstants.BACKGROUND );
 		scrub.setLayout( new BorderLayout() );
 		scrub.add( scroll2, BorderLayout.CENTER );
 		

@@ -1,10 +1,12 @@
 package modules.net.state.net.monitor;
 
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.monitor.AbstractMonitor;
-import fnmcore.state.monitor.MonitorData;
-import fnmcore.state.ssh.SSHSession;
+import fnmcore.constants.ApplicationConstants;
+import modules.net.module.NetConstants;
+import ssh.SSHSession;
+import state.control.BroadcastManager;
+import state.monitor.AbstractMonitor;
+import state.monitor.MonitorData;
+import state.monitor.MonitorManager;
 
 /**
  * @author Daniel J. Rivers
@@ -14,13 +16,13 @@ import fnmcore.state.ssh.SSHSession;
  */
 public class NetworkMonitor extends AbstractMonitor {
 	
-	public NetworkMonitor( ApplicationState state, MonitorData lh, SSHSession ssh ) {
-		super( state, lh, ssh, AC.NET_INTERVAL );
+	public NetworkMonitor( MonitorManager manager, BroadcastManager broadcast, MonitorData lh, SSHSession ssh ) {
+		super( manager, broadcast, lh, ssh, ApplicationConstants.NET_INTERVAL );
 	}
 
 	@Override
 	protected void runLoop() throws InterruptedException {
-		handleCDL( createAction( AC.NET_INFO_CMD, AC.NET_INFO_CMD ) );
+		handleCDL( createAction( NetConstants.NET_INFO_CMD, NetConstants.NET_INFO_CMD ) );
 	}
 	
 	@Override

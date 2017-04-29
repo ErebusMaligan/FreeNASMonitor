@@ -1,8 +1,8 @@
 package modules.cpu.ui.window.parameters;
 
-import gui.windowmanager.WindowParameters;
-
 import java.awt.Dimension;
+
+import gui.windowmanager.WindowParameters;
 
 /**
  * @author Daniel J. Rivers

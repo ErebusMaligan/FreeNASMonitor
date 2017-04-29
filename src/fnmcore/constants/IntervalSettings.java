@@ -20,21 +20,21 @@ public class IntervalSettings implements XMLValues {
 
 	@Override
 	public void loadParamsFromXMLValues( XMLExpansion e ) {
-		AC.DISK_INTERVAL = Long.parseLong( e.get( AC.XDISK ) );
-		AC.CPU_INTERVAL = Long.parseLong( e.get( AC.XCPU ) );
-		AC.NET_INTERVAL = Long.parseLong( e.get( AC.XNET ) );
-		AC.REAL_TIME_DISK_INTERVAL = Long.parseLong( e.get( AC.XRT ) );
+		ApplicationConstants.DISK_INTERVAL = Long.parseLong( e.get( ApplicationConstants.XDISK ) );
+		ApplicationConstants.CPU_INTERVAL = Long.parseLong( e.get( ApplicationConstants.XCPU ) );
+		ApplicationConstants.NET_INTERVAL = Long.parseLong( e.get( ApplicationConstants.XNET ) );
+		ApplicationConstants.REAL_TIME_DISK_INTERVAL = Long.parseLong( e.get( ApplicationConstants.XRT ) );
 	}
 
 	@Override
 	public Map<String, Map<String, String[]>> saveParamsAsXML() {
 		Map<String, Map<String, String[]>> ret = new HashMap<String, Map<String, String[]>>();
 		Map<String, String[]> values = new HashMap<String, String[]>();
-		ret.put( AC.XINT, values );
-		values.put( AC.XDISK, new String[] { String.valueOf( AC.DISK_INTERVAL ) } );
-		values.put( AC.XCPU, new String[] { String.valueOf( AC.CPU_INTERVAL ) } );
-		values.put( AC.XNET, new String[] { String.valueOf( AC.NET_INTERVAL ) } );
-		values.put( AC.XRT, new String[] { String.valueOf(AC. REAL_TIME_DISK_INTERVAL ) } );
+		ret.put( ApplicationConstants.XINT, values );
+		values.put( ApplicationConstants.XDISK, new String[] { String.valueOf( ApplicationConstants.DISK_INTERVAL ) } );
+		values.put( ApplicationConstants.XCPU, new String[] { String.valueOf( ApplicationConstants.CPU_INTERVAL ) } );
+		values.put( ApplicationConstants.XNET, new String[] { String.valueOf( ApplicationConstants.NET_INTERVAL ) } );
+		values.put( ApplicationConstants.XRT, new String[] { String.valueOf(ApplicationConstants. REAL_TIME_DISK_INTERVAL ) } );
 		return ret;
 	}
 }

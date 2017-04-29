@@ -10,12 +10,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import statics.GU;
-import statics.UIUtils;
 import data.ChartData;
 import data.DataPair;
 import data.DataSet;
 import data.DataSetListener;
+import statics.GU;
+import statics.UIUtils;
 
 /**
  * @author Daniel J. Rivers

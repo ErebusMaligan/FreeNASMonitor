@@ -12,17 +12,18 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import fnmcore.constants.ApplicationConstants;
+import gui.table.AbstractTableImplementation;
+import gui.table.renderer.DefaultHeaderCellRenderer;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.ScrubInfo;
 import modules.disk.ui.table.scrub.renderer.ScrubInfoRenderer;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
-import gui.table.AbstractTableImplementation;
-import gui.table.renderer.DefaultHeaderCellRenderer;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -34,27 +35,27 @@ public class ScrubTable extends AbstractTableImplementation implements Observer,
 
 	private TableCellRenderer cell;
 	
-	private ApplicationState state;
+	private ApplicationProvider state;
 	
 	private boolean lightsOff = false;
 	
-	public ScrubTable( ApplicationState state ) {
+	public ScrubTable( ApplicationProvider state ) {
 		this.state = state;
 		cell = new ScrubInfoRenderer( state );
 		table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
-		table.setGridColor( AC.FOREGROUND_DARKER );
-		headerRenderer = new DefaultHeaderCellRenderer( this, AC.FOREGROUND, AC.BACKGROUND );
+		table.setGridColor( ThemeConstants.FOREGROUND_DARKER );
+		headerRenderer = new DefaultHeaderCellRenderer( this, ThemeConstants.FOREGROUND, ThemeConstants.BACKGROUND );
 		setColors();
 		init( true );
-		state.getUIManager().addBroadcastListener( this );
+		state.addBroadcastListener( this );
 	}
 	
 	private void setColors() {
-		( (DefaultHeaderCellRenderer)headerRenderer ).setGradientColor( lightsOff ? UIUtils.lightsOff( AC.BACKGROUND, AC.LIGHTS_OFF ) : AC.BACKGROUND );
-		( (DefaultHeaderCellRenderer)headerRenderer ).setGradientBackgroundColor( lightsOff ? UIUtils.lightsOff( AC.BACKGROUND, AC.LIGHTS_OFF ) : AC.BACKGROUND  );
-		( (DefaultHeaderCellRenderer)headerRenderer ).setIconColors( lightsOff ? UIUtils.lightsOff( AC.FOREGROUND, AC.LIGHTS_OFF ) : AC.FOREGROUND, lightsOff ? UIUtils.lightsOff( AC.FOREGROUND_DARKER, AC.LIGHTS_OFF ) : AC.FOREGROUND_DARKER );
-		( (DefaultHeaderCellRenderer)headerRenderer ).setBorder( BorderFactory.createBevelBorder( BevelBorder.RAISED, lightsOff ? UIUtils.lightsOff( AC.FOREGROUND.darker().darker(), AC.LIGHTS_OFF ) : AC.FOREGROUND.darker().darker(), lightsOff ? UIUtils.lightsOff( AC.FOREGROUND.darker().darker(), AC.LIGHTS_OFF ) : AC.FOREGROUND.darker().darker() ) );
-		( (DefaultHeaderCellRenderer)headerRenderer ).setTextColor( lightsOff ? UIUtils.lightsOff( AC.FOREGROUND, AC.LIGHTS_OFF ) : AC.FOREGROUND );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setGradientColor( lightsOff ? UIUtils.lightsOff( ThemeConstants.BACKGROUND, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.BACKGROUND );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setGradientBackgroundColor( lightsOff ? UIUtils.lightsOff( ThemeConstants.BACKGROUND, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.BACKGROUND  );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setIconColors( lightsOff ? UIUtils.lightsOff( ThemeConstants.FOREGROUND, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.FOREGROUND, lightsOff ? UIUtils.lightsOff( ThemeConstants.FOREGROUND_DARKER, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.FOREGROUND_DARKER );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setBorder( BorderFactory.createBevelBorder( BevelBorder.RAISED, lightsOff ? UIUtils.lightsOff( ThemeConstants.FOREGROUND.darker().darker(), ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.FOREGROUND.darker().darker(), lightsOff ? UIUtils.lightsOff( ThemeConstants.FOREGROUND.darker().darker(), ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.FOREGROUND.darker().darker() ) );
+		( (DefaultHeaderCellRenderer)headerRenderer ).setTextColor( lightsOff ? UIUtils.lightsOff( ThemeConstants.FOREGROUND, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.FOREGROUND );
 		table.getTableHeader().repaint();
 		table.repaint();
 	}
@@ -120,8 +121,8 @@ public class ScrubTable extends AbstractTableImplementation implements Observer,
 	
 	@Override
 	public void broadcastReceived( BroadcastEvent e ) {
-		if ( e.getEventType() == BroadcastEvent.EVENT_TYPE.LIGHT_STATUS ) {
-			if ( e.getEventSetting() == BroadcastEvent.EVENT_SETTING.ON ) {
+		if ( e.getEventType() == BroadcastEvent.LIGHT_STATUS ) {
+			if ( e.getEventSetting() == BroadcastEvent.ON ) {
 				lightsOff = false;
 				setColors();
 			} else {

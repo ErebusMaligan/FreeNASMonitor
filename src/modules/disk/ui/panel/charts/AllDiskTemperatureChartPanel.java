@@ -2,15 +2,15 @@ package modules.disk.ui.panel.charts;
 
 import java.util.Observable;
 
-import modules.disk.module.DiskModule;
-import modules.disk.state.data.DiskData;
 import data.DataPair;
 import data.DataSet;
 import data.TimeData;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.AbstractDynamicTimeSeriesChartPanel;
 import fnmcore.util.ChartUtils;
+import modules.disk.module.DiskModule;
+import modules.disk.state.data.DiskData;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -22,8 +22,8 @@ public class AllDiskTemperatureChartPanel extends AbstractDynamicTimeSeriesChart
 
 	private static final long serialVersionUID = 1L;
 
-	public AllDiskTemperatureChartPanel( ApplicationState state ) {
-		super( state, "Disk Temperature", "Temperature (" + AC.DEGREE + "C)", state.getMonitorManager().getMonitorByName( DiskModule.DISK_MONITOR ), AC.DISK_INTERVAL );
+	public AllDiskTemperatureChartPanel( ApplicationProvider state ) {
+		super( state, "Disk Temperature", "Temperature (" + ApplicationConstants.DEGREE + "C)", state.getMonitorManager().getMonitorByName( DiskModule.DISK_MONITOR ), ApplicationConstants.DISK_INTERVAL );
 	}
 	
 	@Override

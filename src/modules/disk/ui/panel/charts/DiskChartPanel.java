@@ -9,11 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+import fnmcore.util.ChartUtils;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.state.ApplicationState;
-import fnmcore.util.ChartUtils;
 
 /**
  * @author Daniel J. Rivers
@@ -27,11 +27,11 @@ public class DiskChartPanel extends JPanel implements Observer {
 
 	private JTabbedPane tabs = new JTabbedPane();
 	
-	protected ApplicationState state;
+	protected ApplicationProvider state;
 	
 	protected boolean init = false;
 	
-	public DiskChartPanel( ApplicationState state ) {
+	public DiskChartPanel( ApplicationProvider state ) {
 		this.state = state;
 		UIUtils.setColors( this, tabs );
 		UIUtils.setTabUI( tabs );

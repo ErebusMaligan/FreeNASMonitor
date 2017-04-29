@@ -2,10 +2,10 @@ package modules.control.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import modules.control.ui.panel.ApplicationControlPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.control.ui.panel.ApplicationControlPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +17,11 @@ public class ControlPanelDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new ApplicationControlPanel( (ApplicationState)state );
+		return new ApplicationControlPanel( (ApplicationProvider)state );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_CONTROL_PANEL;
+		return ApplicationConstants.WD_CONTROL_PANEL;
 	}
 }

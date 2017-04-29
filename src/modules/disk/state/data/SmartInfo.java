@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fnmcore.constants.AC;
+import fnmcore.constants.ApplicationConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -36,7 +36,7 @@ public class SmartInfo {
 	
 	public static final String SERIAL = "Serial #";
 	
-	public static final String TEMP = "Temperature (" + AC.DEGREE + "C)";
+	public static final String TEMP = "Temperature (" + ApplicationConstants.DEGREE + "C)";
 	
 	public static final String RUN = "Run Time";
 	

@@ -2,10 +2,11 @@ package modules.net.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import modules.net.ui.panel.net.charts.NetDoubleChartPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.net.module.NetConstants;
+import modules.net.ui.panel.net.charts.NetDoubleChartPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +18,11 @@ public class NetPacketsChartDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new NetDoubleChartPanel( (ApplicationState)state, "Packet Monitor", "Packets/sec.", new String[] { AC.NET_IN_PACKET, AC.NET_OUT_PACKET } );
+		return new NetDoubleChartPanel( (ApplicationProvider)state, "Packet Monitor", "Packets/sec.", new String[] { NetConstants.NET_IN_PACKET, NetConstants.NET_OUT_PACKET } );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_NET_PACKETS;
+		return ApplicationConstants.WD_NET_PACKETS;
 	}
 }

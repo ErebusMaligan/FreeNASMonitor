@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.state.ApplicationState;
 
 /**
  * @author Daniel J. Rivers
@@ -23,9 +23,9 @@ public class IndividualDiskTemperatureChartPanel extends JPanel implements Obser
 	
 	protected boolean init = false;
 	
-	private ApplicationState state;
+	private ApplicationProvider state;
 
-	public IndividualDiskTemperatureChartPanel( ApplicationState state ) {
+	public IndividualDiskTemperatureChartPanel( ApplicationProvider state ) {
 		this.state = state;
 		UIUtils.setColors( this );
 		this.setLayout( new GridLayout( 0, 2 ) );

@@ -5,9 +5,10 @@ import java.awt.Component;
 
 import javax.swing.JTable;
 
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -19,7 +20,7 @@ public class TemperatureRenderer extends SmartInfoRenderer {
 
 	private static final long serialVersionUID = 1L;
 	
-	public TemperatureRenderer( ApplicationState state ) {
+	public TemperatureRenderer( ApplicationProvider state ) {
 		super( state );
 	}
 	
@@ -28,7 +29,7 @@ public class TemperatureRenderer extends SmartInfoRenderer {
 		if ( !isSelected ) {
 			String s = (String)value;
 			int i = Integer.parseInt( s );
-			Color back = AC.BACKGROUND;
+			Color back = ThemeConstants.BACKGROUND;
 			Color fore;
 			if ( i <= 35 ) {
 				fore = BLUE;
@@ -39,11 +40,11 @@ public class TemperatureRenderer extends SmartInfoRenderer {
 			} else if ( i <= 49 ) {
 				fore = ORANGE;
 			} else {
-				back = AC.FOREGROUND;
-				fore = AC.BACKGROUND;
+				back = ThemeConstants.FOREGROUND;
+				fore = ThemeConstants.BACKGROUND;
 			}
-			c.setBackground( lightsOff ? UIUtils.lightsOff( back, AC.LIGHTS_OFF ) : back );
-			c.setForeground( lightsOff ? UIUtils.lightsOff( fore, AC.LIGHTS_OFF ) : fore);
+			c.setBackground( lightsOff ? UIUtils.lightsOff( back, ApplicationConstants.LIGHTS_OFF ) : back );
+			c.setForeground( lightsOff ? UIUtils.lightsOff( fore, ApplicationConstants.LIGHTS_OFF ) : fore);
 		}
 		return c;
 	}

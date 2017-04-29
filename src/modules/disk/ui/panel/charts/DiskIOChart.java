@@ -3,19 +3,19 @@ package modules.disk.ui.panel.charts;
 import java.awt.Dimension;
 import java.util.Observable;
 
+import fnmcore.constants.ApplicationConstants;
+import fnmcore.ui.panel.generic.charts.SimpleChart;
+import gui.progress.EnhancedJProgressBar;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DFData;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.DiskIOInfo;
 import modules.disk.state.data.RealtimeDiskData;
 import modules.disk.state.data.SmartInfo;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
-import fnmcore.ui.panel.generic.charts.SimpleChart;
-import gui.progress.EnhancedJProgressBar;
 
 /**
  * @author Daniel J. Rivers
@@ -39,13 +39,13 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 	
 	private boolean lightsOff = false;
 	
-	public DiskIOChart( DiskIOChartHolder holder, String nm, ApplicationState state ) {
+	public DiskIOChart( DiskIOChartHolder holder, String nm, ApplicationProvider state ) {
 		super( state, state.getMonitorManager().getMonitorByName( DiskModule.RT_DISK_MONITOR ) );
 		this.holder = holder;
 		this.nm = nm;
 		dim = new Dimension( 75, dim.height );
 		height = 12;
-		temp = addJProgressBar( 28, 70, "Temp", "(" + AC.DEGREE + "C)" );
+		temp = addJProgressBar( 28, 70, "Temp", "(" + ApplicationConstants.DEGREE + "C)" );
 //		GU.spacer( center, new Dimension( 10, 12 ) );
 		busy = addJProgressBar( 0, 100, "Busy", "%" );
 		rkbps = addJProgressBar( 0, 100, "Read", "kbps" );
@@ -119,8 +119,8 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 	@Override
 	protected void calculateSections( EnhancedJProgressBar bar ) {
 		try {
-			bar.setSectionTwo( lightsOff ? UIUtils.lightsOff( AC.PROGRESS_BAR_MID, AC.LIGHTS_OFF ) : AC.PROGRESS_BAR_MID, (int)( bar.getMaximum() * .65 ) );
-			bar.setSectionThree( lightsOff ? UIUtils.lightsOff( AC.PROGRESS_BAR_END, AC.LIGHTS_OFF ) : AC.PROGRESS_BAR_END, (int)( bar.getMaximum() * .9 ) );
+			bar.setSectionTwo( lightsOff ? UIUtils.lightsOff( ApplicationConstants.PROGRESS_BAR_MID, ApplicationConstants.LIGHTS_OFF ) : ApplicationConstants.PROGRESS_BAR_MID, (int)( bar.getMaximum() * .65 ) );
+			bar.setSectionThree( lightsOff ? UIUtils.lightsOff( ApplicationConstants.PROGRESS_BAR_END, ApplicationConstants.LIGHTS_OFF ) : ApplicationConstants.PROGRESS_BAR_END, (int)( bar.getMaximum() * .9 ) );
 		} catch ( Exception e ) {
 			e.printStackTrace();
 		}
@@ -128,8 +128,8 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 
 	@Override
 	public void broadcastReceived( BroadcastEvent e ) {
-		if ( e.getEventType() == BroadcastEvent.EVENT_TYPE.LIGHT_STATUS ) {
-			if ( e.getEventSetting() == BroadcastEvent.EVENT_SETTING.ON ) {
+		if ( e.getEventType() == BroadcastEvent.LIGHT_STATUS ) {
+			if ( e.getEventSetting() == BroadcastEvent.ON ) {
 				UIUtils.setColorsRecursive( this );
 				lightsOff = false;
 			} else {

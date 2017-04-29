@@ -1,13 +1,15 @@
 package modules.disk.state.monitor;
 
+import fnmcore.constants.ApplicationConstants;
+import modules.disk.module.DiskConstants;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.ScrubInfo;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.monitor.AbstractMonitor;
-import fnmcore.state.monitor.MonitorData;
-import fnmcore.state.ssh.SSHSession;
+import ssh.SSHSession;
+import state.control.BroadcastManager;
+import state.monitor.AbstractMonitor;
+import state.monitor.MonitorData;
+import state.monitor.MonitorManager;
 
 /**
  * @author Daniel J. Rivers
@@ -17,34 +19,34 @@ import fnmcore.state.ssh.SSHSession;
  */
 public class DiskMonitor extends AbstractMonitor {
 	
-	public DiskMonitor( ApplicationState state, MonitorData lh, SSHSession ssh ) {
-		super( state, lh, ssh, AC.DISK_INTERVAL );
+	public DiskMonitor( MonitorManager manager, BroadcastManager broadcast, MonitorData lh, SSHSession ssh ) {
+		super( manager, broadcast, lh, ssh, ApplicationConstants.DISK_INTERVAL );
 	}
 	
 	@Override
 	protected void runOnce() throws InterruptedException {
-		handleCDL( createAction( AC.DISK_LIST_CMD, AC.DISK_LIST_CMD ) );
-		handleCDL( createAction( AC.MAP_GPTID_TO_DEVICE_CMD, AC.MAP_GPTID_TO_DEVICE_CMD ) );
-		handleCDL( createAction( AC.POOL_LIST_CMD, AC.POOL_LIST_CMD ) );
-		for ( String s : ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getPools() ) {
-			( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).setCurrentDisk( s );
-			handleCDL( createAction( AC.POOL_STATUS_CMD, AC.POOL_STATUS_CMD + " " + s ) );
+		handleCDL( createAction( DiskConstants.DISK_LIST_CMD, DiskConstants.DISK_LIST_CMD ) );
+		handleCDL( createAction( DiskConstants.MAP_GPTID_TO_DEVICE_CMD, DiskConstants.MAP_GPTID_TO_DEVICE_CMD ) );
+		handleCDL( createAction( DiskConstants.POOL_LIST_CMD, DiskConstants.POOL_LIST_CMD ) );
+		for ( String s : ( (DiskData)manager.getDataByName( DiskModule.DISK_DATA ) ).getPools() ) {
+			( (DiskData)manager.getDataByName( DiskModule.DISK_DATA ) ).setCurrentDisk( s );
+			handleCDL( createAction( DiskConstants.POOL_STATUS_CMD, DiskConstants.POOL_STATUS_CMD + " " + s ) );
 		}
 	}
 
 	@Override
 	protected void runLoop() throws InterruptedException {
-		handleCDL( createAction( AC.DISK_USAGE, AC.DISK_USAGE ) );
+		handleCDL( createAction( DiskConstants.DISK_USAGE, DiskConstants.DISK_USAGE ) );
 		if ( !kill ) {
-			for ( String s : ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getLocations() ) {
-				( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).setCurrentDisk( s );
+			for ( String s : ( (DiskData)manager.getDataByName( DiskModule.DISK_DATA ) ).getLocations() ) {
+				( (DiskData)manager.getDataByName( DiskModule.DISK_DATA ) ).setCurrentDisk( s );
 				if ( kill ) { break; };
-				handleCDL( createAction( AC.DISK_SMART_INFO_CMD, AC.DISK_SMART_INFO_CMD + " " + s + AC.DISK_SMART_INFO_CMD_POST ) );
+				handleCDL( createAction( DiskConstants.DISK_SMART_INFO_CMD, DiskConstants.DISK_SMART_INFO_CMD + " " + s + DiskConstants.DISK_SMART_INFO_CMD_POST ) );
 			}
 		}
 		if ( !kill ) {
-			handleCDL( createAction( AC.DISK_SCRUB_STATUS, AC.DISK_SCRUB_STATUS ) );
-			for ( ScrubInfo s : ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getScrubs().values() ) {
+			handleCDL( createAction( DiskConstants.DISK_SCRUB_STATUS, DiskConstants.DISK_SCRUB_STATUS ) );
+			for ( ScrubInfo s : ( (DiskData)manager.getDataByName( DiskModule.DISK_DATA ) ).getScrubs().values() ) {
 				s.mapValues();
 			}
 		}

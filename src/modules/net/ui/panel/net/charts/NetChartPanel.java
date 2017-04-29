@@ -5,10 +5,10 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
 import fnmcore.util.ChartUtils;
+import modules.net.module.NetConstants;
+import state.provider.ApplicationProvider;
+import statics.UIUtils;
 
 /**
  * @author Daniel J. Rivers
@@ -22,16 +22,16 @@ public class NetChartPanel extends JPanel {
 
 	private JTabbedPane tabs = new JTabbedPane();
 	
-	protected ApplicationState state;
+	protected ApplicationProvider state;
 
-	public NetChartPanel( ApplicationState state ) {
+	public NetChartPanel( ApplicationProvider state ) {
 		this.state = state;
 		UIUtils.setColors( this, tabs );
 		UIUtils.setTabUI( tabs );
 		ChartUtils.onceTimeFormat();
 		this.setLayout( new BorderLayout() );
-		tabs.add( "Packets", new NetDoubleChartPanel( state, "Packet Monitor", "Packets/sec.", new String[] { AC.NET_IN_PACKET, AC.NET_OUT_PACKET } ) );
-		tabs.add( "Bytes", new NetDoubleChartPanel( state, "Mbit Monitor", "Mbits./sec.", new String[] { AC.NET_IN_BYTES, AC.NET_OUT_BYTES } ) );
+		tabs.add( "Packets", new NetDoubleChartPanel( state, "Packet Monitor", "Packets/sec.", new String[] { NetConstants.NET_IN_PACKET, NetConstants.NET_OUT_PACKET } ) );
+		tabs.add( "Bytes", new NetDoubleChartPanel( state, "Mbit Monitor", "Mbits./sec.", new String[] { NetConstants.NET_IN_BYTES, NetConstants.NET_OUT_BYTES } ) );
 		this.add( tabs, BorderLayout.CENTER );
 	}
 }

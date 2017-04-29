@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 
 import modules.cpu.module.CPUModule;
 import modules.cpu.state.data.CPUData;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.state.ApplicationState;
 
 /**
  * @author Daniel J. Rivers
@@ -23,9 +23,9 @@ public class IndividualCPUTemperatureChartPanel extends JPanel implements Observ
 	
 	protected boolean init = false;
 	
-	private ApplicationState state;
+	private ApplicationProvider state;
 	
-	public IndividualCPUTemperatureChartPanel( ApplicationState state ) {
+	public IndividualCPUTemperatureChartPanel( ApplicationProvider state ) {
 		this.state = state;
 		UIUtils.setColors( this );
 		this.setLayout( new GridLayout( 0, 2 ) );

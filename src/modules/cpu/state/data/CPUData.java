@@ -1,9 +1,10 @@
 package modules.cpu.state.data;
 
+import fnmcore.constants.ApplicationConstants;
+import modules.cpu.module.CPUConstants;
 import process.ProcessManager;
 import process.io.ProcessStreamSiphon;
-import fnmcore.constants.AC;
-import fnmcore.state.monitor.MonitorData;
+import state.monitor.MonitorData;
 
 /**
  * @author Daniel J. Rivers
@@ -28,7 +29,7 @@ public class CPUData extends MonitorData implements ProcessStreamSiphon {
 	private float[] usages;
 	
 	public CPUData() {
-		skimmers.put( AC.CPU_INFO_CMD, line -> {
+		skimmers.put( CPUConstants.CPU_INFO_CMD, line -> {
 			if ( line.startsWith( "hw.model" ) ) {
 				model = sysctl( line );
 			} else if ( line.startsWith( "hw.ncpu" ) ) {
@@ -38,39 +39,39 @@ public class CPUData extends MonitorData implements ProcessStreamSiphon {
 			}
 		} );
 		
-		skimmers.put( AC.CPU_SENSOR_INFO_CMD, line -> {
+		skimmers.put( CPUConstants.CPU_SENSOR_INFO_CMD, line -> {
 			if ( line.contains( "dev" ) ) {
 				source = sysctl( line );
 			}
 		} );
 		
-		skimmers.put( AC.UPTIME_CMD, line -> {
+		skimmers.put( CPUConstants.UPTIME_CMD, line -> {
 			if ( line.contains( "load averages" ) ) {
 				uptime = line.substring( 0, line.indexOf( "load" ) -2 );
 			}
 		} );
 		
-		skimmers.put( AC.SYSTIME_CMD, line -> {
+		skimmers.put( CPUConstants.SYSTIME_CMD, line -> {
 			if ( line.matches( ".*?\\d\\d\\p{Punct}\\d\\d\\p{Punct}\\d\\d.*?" ) ) {
 				sysTime = line;
 			}
 		} );
 		
-		skimmers.put( AC.CPU_TEMP_CMD, line -> {
+		skimmers.put( CPUConstants.CPU_TEMP_CMD, line -> {
 			if ( line.startsWith( "dev.cpu" ) ) {
 				int num = cpuNum( line );
 				temps[ num ] = temp( line );
 			}
 		} );
 		
-		skimmers.put( AC.CPU_USAGE_CMD, line -> {
+		skimmers.put( CPUConstants.CPU_USAGE_CMD, line -> {
 			if ( line.startsWith( "CPU" ) ) {
 				int num = cpuUsageNum( line );
 				usages[ num ] = 100.0f - Float.parseFloat( line.trim().substring( line.lastIndexOf( "," ) + 1, line.lastIndexOf( "%" ) ).trim() );
 			}
 		} );
 		
-		ProcessManager.getInstance().registerSiphon( AC.SSH_MASTER_PROCESS_NAME, this );
+		ProcessManager.getInstance().registerSiphon( ApplicationConstants.SSH_MASTER_PROCESS_NAME, this );
 	}
 	
 	private String sysctl( String line ) {

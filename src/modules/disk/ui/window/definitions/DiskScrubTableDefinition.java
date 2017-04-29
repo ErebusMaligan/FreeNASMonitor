@@ -6,12 +6,13 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import modules.disk.ui.table.scrub.ScrubTable;
-import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.ui.panel.ClosableWindowPanel;
 import gui.windowmanager.WindowDefinition;
+import modules.disk.module.DiskConstants;
+import modules.disk.ui.table.scrub.ScrubTable;
+import state.provider.ApplicationProvider;
+import statics.UIUtils;
+import ui.theme.ThemeConstants;
+import ui.window.ClosableWindowPanel;
 
 /**
  * @author Daniel J. Rivers
@@ -23,7 +24,7 @@ public class DiskScrubTableDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		ScrubTable scrubTable = new ScrubTable( (ApplicationState)state );
+		ScrubTable scrubTable = new ScrubTable( (ApplicationProvider)state );
 		JPanel scrub = new ClosableWindowPanel() {
 			
 			private static final long serialVersionUID = 1L;
@@ -34,7 +35,7 @@ public class DiskScrubTableDefinition implements WindowDefinition {
 			}
 		};
 		JScrollPane scroll2 = UIUtils.setJScrollPane( new JScrollPane( scrubTable.getTable() ) );
-		scroll2.getViewport().setBackground( AC.BACKGROUND );
+		scroll2.getViewport().setBackground( ThemeConstants.BACKGROUND );
 		scrub.setLayout( new BorderLayout() );
 		scrub.add( scroll2, BorderLayout.CENTER );
 		return scrub;
@@ -42,6 +43,6 @@ public class DiskScrubTableDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return AC.WD_DISK_SCRUB_TABLE;
+		return DiskConstants.WD_DISK_SCRUB_TABLE;
 	}
 }

@@ -3,10 +3,11 @@ package modules.disk.state.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import fnmcore.constants.ApplicationConstants;
+import modules.disk.module.DiskConstants;
 import process.ProcessManager;
 import process.io.ProcessStreamSiphon;
-import fnmcore.constants.AC;
-import fnmcore.state.monitor.MonitorData;
+import state.monitor.MonitorData;
 
 /**
  * @author Daniel J. Rivers
@@ -21,7 +22,7 @@ public class RealtimeDiskData extends MonitorData implements ProcessStreamSiphon
 	private static final String LOC = "/dev/";
 	
 	public RealtimeDiskData() {
-		skimmers.put( AC.DISK_IO_CMD, line -> { 
+		skimmers.put( DiskConstants.DISK_IO_CMD, line -> { 
 			String l = line.trim();
 			if ( !l.equals( "" ) ) {
 				DiskIOInfo i = new DiskIOInfo( l );
@@ -31,7 +32,7 @@ public class RealtimeDiskData extends MonitorData implements ProcessStreamSiphon
 			}
 		} );
 		
-		ProcessManager.getInstance().registerSiphon( AC.SSH_RT_PROCESS_NAME, this );
+		ProcessManager.getInstance().registerSiphon( ApplicationConstants.SSH_RT_PROCESS_NAME, this );
 	}
 	
 	public Map<String, DiskIOInfo> getIOInfo() {

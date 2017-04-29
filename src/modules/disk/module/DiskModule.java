@@ -3,6 +3,12 @@ package modules.disk.module;
 import java.util.Arrays;
 import java.util.List;
 
+import gui.windowmanager.WindowManager;
+import module.AppModule;
+import module.spi.SPIDataMonitorProvider;
+import module.spi.SPIMonitorDataProvider;
+import module.spi.SPIRealTimeMonitorProvider;
+import module.spi.SPIWindowDefinitionProvider;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.RealtimeDiskData;
 import modules.disk.state.monitor.DiskMonitor;
@@ -13,16 +19,11 @@ import modules.disk.ui.window.definitions.DiskInfoTableDefinition;
 import modules.disk.ui.window.definitions.DiskMeterDefinition;
 import modules.disk.ui.window.definitions.DiskScrubControlDefinition;
 import modules.disk.ui.window.definitions.DiskScrubTableDefinition;
-import fnmcore.module.FNMModule;
-import fnmcore.module.spi.SPIDataMonitorProvider;
-import fnmcore.module.spi.SPIMonitorDataProvider;
-import fnmcore.module.spi.SPIRealTimeMonitorProvider;
-import fnmcore.module.spi.SPIWindowDefinitionProvider;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.monitor.AbstractMonitor;
-import fnmcore.state.monitor.MonitorData;
-import fnmcore.state.ssh.SSHSession;
-import gui.windowmanager.WindowManager;
+import ssh.SSHSession;
+import state.control.BroadcastManager;
+import state.monitor.AbstractMonitor;
+import state.monitor.MonitorData;
+import state.monitor.MonitorManager;
 
 /**
  * @author Daniel J. Rivers
@@ -30,7 +31,7 @@ import gui.windowmanager.WindowManager;
  *
  * Created: May 1, 2016, 6:28:14 PM 
  */
-public class DiskModule extends FNMModule implements SPIDataMonitorProvider, SPIMonitorDataProvider, SPIRealTimeMonitorProvider, SPIWindowDefinitionProvider {
+public class DiskModule extends AppModule implements SPIDataMonitorProvider, SPIMonitorDataProvider, SPIRealTimeMonitorProvider, SPIWindowDefinitionProvider {
 	
 	public static final String DISK_DATA = DiskData.class.getName();
 	
@@ -70,8 +71,8 @@ public class DiskModule extends FNMModule implements SPIDataMonitorProvider, SPI
 	}
 
 	@Override
-	public void initRTDataMonitors( ApplicationState state, SSHSession ssh ) {
-		rdm = new RealtimeDiskMonitor( state, rdd, ssh );
+	public void initRTDataMonitors( MonitorManager manager, BroadcastManager broadcast, SSHSession ssh ) {
+		rdm = new RealtimeDiskMonitor( manager, broadcast, rdd, ssh );
 	}
 
 	@Override
@@ -85,8 +86,8 @@ public class DiskModule extends FNMModule implements SPIDataMonitorProvider, SPI
 	}
 
 	@Override
-	public void initDataMonitors( ApplicationState state, SSHSession ssh ) {
-		dm = new DiskMonitor( state, dd, ssh );
+	public void initDataMonitors( MonitorManager manager, BroadcastManager broadcast, SSHSession ssh ) {
+		dm = new DiskMonitor( manager, broadcast, dd, ssh );
 	}
 
 	@Override

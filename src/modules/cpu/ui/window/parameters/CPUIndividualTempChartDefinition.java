@@ -3,11 +3,11 @@ package modules.cpu.ui.window.parameters;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 
-import modules.cpu.ui.panel.charts.IndividualCPUTemperatureChartPanel;
-import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.cpu.ui.panel.charts.IndividualCPUTemperatureChartPanel;
+import state.provider.ApplicationProvider;
+import statics.UIUtils;
 
 /**
  * @author Daniel J. Rivers
@@ -19,11 +19,11 @@ public class CPUIndividualTempChartDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return UIUtils.setJScrollPane( new JScrollPane( new IndividualCPUTemperatureChartPanel( (ApplicationState)state ) ) );
+		return UIUtils.setJScrollPane( new JScrollPane( new IndividualCPUTemperatureChartPanel( (ApplicationProvider)state ) ) );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_CPU_IND_TEMP;
+		return ApplicationConstants.WD_CPU_IND_TEMP;
 	}
 }

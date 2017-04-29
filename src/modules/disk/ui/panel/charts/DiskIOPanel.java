@@ -11,14 +11,14 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import gui.layout.WrapLayout;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskIOInfo;
 import modules.disk.state.data.RealtimeDiskData;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
-import gui.layout.WrapLayout;
 
 /**
  * @author Daniel J. Rivers
@@ -32,7 +32,7 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 
 	private Map<String, DiskIOChart> io = new HashMap<>();
 	
-	private ApplicationState state;
+	private ApplicationProvider state;
 	
 	private JPanel center = new JPanel();
 	
@@ -44,7 +44,7 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 	
 	private List<String> added = new ArrayList<String>();
 	
-	public DiskIOPanel( ApplicationState state ) {
+	public DiskIOPanel( ApplicationProvider state ) {
 		this.state = state;
 		this.setLayout( new BorderLayout() );
 //		center.setLayout( new GridLayout( 0, 6 ) );
@@ -53,7 +53,7 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 		this.add( center, BorderLayout.NORTH );
 		state.getMonitorManager().getMonitorByName( DiskModule.RT_DISK_MONITOR ).addObserver( this );
 		UIUtils.setColors( this, center );
-		state.getUIManager().addBroadcastListener( this );
+		state.addBroadcastListener( this );
 	}
 
 	@Override

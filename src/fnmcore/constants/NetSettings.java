@@ -20,15 +20,15 @@ public class NetSettings implements XMLValues {
 
 	@Override
 	public void loadParamsFromXMLValues( XMLExpansion e ) {
-		AC.NI_NAME = e.get( AC.XINTERFACE );
+		ApplicationConstants.NI_NAME = e.get( ApplicationConstants.XINTERFACE );
 	}
 
 	@Override
 	public Map<String, Map<String, String[]>> saveParamsAsXML() {
 		Map<String, Map<String, String[]>> ret = new HashMap<String, Map<String, String[]>>();
 		Map<String, String[]> values = new HashMap<String, String[]>();
-		ret.put( AC.XNET, values );
-		values.put( AC.XINTERFACE, new String[] { AC.NI_NAME } );
+		ret.put( ApplicationConstants.XNET, values );
+		values.put( ApplicationConstants.XINTERFACE, new String[] { ApplicationConstants.NI_NAME } );
 		return ret;
 	}
 }

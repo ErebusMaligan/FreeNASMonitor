@@ -11,13 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import statics.GUIUtils;
-import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.progress.LabeledProgressBarPanel;
 import gui.progress.DigitalJProgressBar;
 import gui.progress.EnhancedJProgressBar;
+import state.provider.ApplicationProvider;
+import statics.GUIUtils;
+import statics.UIUtils;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -29,7 +30,7 @@ public abstract class SimpleChart extends /*TransparentPanel*/ JPanel implements
 
 	private static final long serialVersionUID = 1L;
 
-	protected ApplicationState state;
+	protected ApplicationProvider state;
 	
 	protected Dimension dim = new Dimension( 125, 10 );
 	
@@ -41,10 +42,10 @@ public abstract class SimpleChart extends /*TransparentPanel*/ JPanel implements
 	
 	protected JPanel center = new JPanel();
 
-	public SimpleChart( ApplicationState state, Observable o ) {
+	public SimpleChart( ApplicationProvider state, Observable o ) {
 		this.state = state;
 		this.setLayout( new BorderLayout() );
-		this.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createLineBorder( AC.FOREGROUND_DARKER ), BorderFactory.createBevelBorder( BevelBorder.RAISED ) ) );
+		this.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createLineBorder( ThemeConstants.FOREGROUND_DARKER ), BorderFactory.createBevelBorder( BevelBorder.RAISED ) ) );
 		o.addObserver( this );
 		center.setLayout( new BoxLayout( center, BoxLayout.Y_AXIS ) );
 		this.add( center, BorderLayout.CENTER );
@@ -71,8 +72,8 @@ public abstract class SimpleChart extends /*TransparentPanel*/ JPanel implements
 	
 	protected void calculateSections( EnhancedJProgressBar bar ) {
 		try {
-			bar.setSectionTwo( AC.PROGRESS_BAR_MID, (int)( bar.getMaximum() * .65 ) );
-			bar.setSectionThree( AC.PROGRESS_BAR_END, (int)( bar.getMaximum() * .9 ) );
+			bar.setSectionTwo( ApplicationConstants.PROGRESS_BAR_MID, (int)( bar.getMaximum() * .65 ) );
+			bar.setSectionThree( ApplicationConstants.PROGRESS_BAR_END, (int)( bar.getMaximum() * .9 ) );
 		} catch ( Exception e ) {
 			e.printStackTrace();
 		}

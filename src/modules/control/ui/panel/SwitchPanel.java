@@ -1,11 +1,5 @@
 package modules.control.ui.panel;
 
-import fnmcore.constants.AC;
-import gui.button.ToggleButton;
-import gui.label.ToggleLabel;
-import icon.creator.SlitLightRockerSwitchIconCreator;
-import icon.creator.TextIconCreator;
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 
@@ -14,9 +8,14 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import gui.button.ToggleButton;
+import gui.label.ToggleLabel;
+import icon.creator.SlitLightRockerSwitchIconCreator;
+import icon.creator.TextIconCreator;
 import statics.ColorUtils;
 import statics.GU;
 import statics.UIUtils;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -33,8 +32,8 @@ public class SwitchPanel extends JPanel {
 	private ToggleLabel tl;
 	
 	public SwitchPanel( String title, ActionListener l, boolean on ) {
-		Icon[] i = new SlitLightRockerSwitchIconCreator().getIcons( ColorUtils.alignColor( AC.BACKGROUND, 10, 200 ), AC.FOREGROUND, 35, 70 );
-		Icon[] j = new TextIconCreator().getIcons( title, new JLabel().getFont().deriveFont( 12f ), AC.FOREGROUND, AC.BACKGROUND );
+		Icon[] i = new SlitLightRockerSwitchIconCreator().getIcons( ColorUtils.alignColor( ThemeConstants.BACKGROUND, 10, 200 ), ThemeConstants.FOREGROUND, 35, 70 );
+		Icon[] j = new TextIconCreator().getIcons( title, new JLabel().getFont().deriveFont( 12f ), ThemeConstants.FOREGROUND, ThemeConstants.BACKGROUND );
 		tb = new ToggleButton( i[ 0 ], i[ 1 ], on );
 		tl = new ToggleLabel();
 		tl.setToggles( j[ 0 ], j[ 1 ] );

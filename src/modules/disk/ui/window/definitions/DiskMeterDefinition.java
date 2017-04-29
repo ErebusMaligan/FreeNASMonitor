@@ -2,10 +2,10 @@ package modules.disk.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import modules.disk.ui.panel.charts.DiskIOPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
 import gui.windowmanager.WindowDefinition;
+import modules.disk.module.DiskConstants;
+import modules.disk.ui.panel.charts.DiskIOPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +17,11 @@ public class DiskMeterDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new DiskIOPanel( (ApplicationState)state );
+		return new DiskIOPanel( (ApplicationProvider)state );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_DISK_METERS;
+		return DiskConstants.WD_DISK_METERS;
 	}
 }

@@ -5,9 +5,10 @@ import java.awt.Component;
 
 import javax.swing.JTable;
 
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -29,15 +30,15 @@ public class SmartInfoRenderer extends DiskTableCellRenderer {
 	
 	protected static final Color SILVER = new Color( 185, 185, 185 );
 	
-	public SmartInfoRenderer( ApplicationState state ) {
+	public SmartInfoRenderer( ApplicationProvider state ) {
 		super( state );
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column ) {
 		Component c = super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
 		if ( !isSelected ) {
-			c.setBackground( lightsOff ? UIUtils.lightsOff( AC.BACKGROUND, AC.LIGHTS_OFF ) : AC.BACKGROUND );
-			c.setForeground( lightsOff ? UIUtils.lightsOff( AC.FOREGROUND, AC.LIGHTS_OFF ) : AC.FOREGROUND );
+			c.setBackground( lightsOff ? UIUtils.lightsOff( ThemeConstants.BACKGROUND, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.BACKGROUND );
+			c.setForeground( lightsOff ? UIUtils.lightsOff( ThemeConstants.FOREGROUND, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.FOREGROUND );
 		}
 		return c;
 	}

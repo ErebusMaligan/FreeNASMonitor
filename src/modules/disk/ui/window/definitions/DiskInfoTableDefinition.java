@@ -6,12 +6,13 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import modules.disk.ui.table.info.DiskTable;
-import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.ui.panel.ClosableWindowPanel;
 import gui.windowmanager.WindowDefinition;
+import modules.disk.module.DiskConstants;
+import modules.disk.ui.table.info.DiskTable;
+import state.provider.ApplicationProvider;
+import statics.UIUtils;
+import ui.theme.ThemeConstants;
+import ui.window.ClosableWindowPanel;
 
 /**
  * @author Daniel J. Rivers
@@ -23,7 +24,7 @@ public class DiskInfoTableDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		DiskTable diskTable = new DiskTable( (ApplicationState)state );
+		DiskTable diskTable = new DiskTable( (ApplicationProvider)state );
 		JPanel smart = new ClosableWindowPanel() {
 			
 			private static final long serialVersionUID = 1L;
@@ -34,7 +35,7 @@ public class DiskInfoTableDefinition implements WindowDefinition {
 			}
 		};
 		JScrollPane scroll = UIUtils.setJScrollPane( new JScrollPane( diskTable.getTable() ) );
-		scroll.getViewport().setBackground( AC.BACKGROUND );
+		scroll.getViewport().setBackground( ThemeConstants.BACKGROUND );
 		smart.setLayout( new BorderLayout() );
 		smart.add( scroll, BorderLayout.CENTER );
 		return smart;
@@ -42,6 +43,6 @@ public class DiskInfoTableDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return AC.WD_DISK_INFO_TABLE;
+		return DiskConstants.WD_DISK_INFO_TABLE;
 	}
 }

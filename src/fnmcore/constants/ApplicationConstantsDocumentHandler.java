@@ -1,6 +1,7 @@
 package fnmcore.constants;
 
 import xml.SimpleFileXMLDocumentHandler;
+import xml.XMLValues;
 
 /**
  * @author Daniel J. Rivers
@@ -9,7 +10,7 @@ import xml.SimpleFileXMLDocumentHandler;
  * Created: May 9, 2015, 11:50:53 PM 
  */
 public class ApplicationConstantsDocumentHandler extends SimpleFileXMLDocumentHandler {
-	public ApplicationConstantsDocumentHandler( ApplicationConstants con ) {
+	public ApplicationConstantsDocumentHandler( XMLValues con ) {
 		this.val = con;
 		FILE = "Settings";
 		ROOT_NODE_NAME = "FREENASMONITOR";

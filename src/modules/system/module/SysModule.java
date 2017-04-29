@@ -1,9 +1,9 @@
 package modules.system.module;
 
-import modules.system.ui.window.definitions.SystemInfoDefinition;
-import fnmcore.module.FNMModule;
-import fnmcore.module.spi.SPIWindowDefinitionProvider;
 import gui.windowmanager.WindowManager;
+import module.AppModule;
+import module.spi.SPIWindowDefinitionProvider;
+import modules.system.ui.window.definitions.SystemInfoDefinition;
 
 /**
  * @author Daniel J. Rivers
@@ -11,7 +11,7 @@ import gui.windowmanager.WindowManager;
  *
  * Created: May 2, 2016, 1:07:42 PM 
  */
-public class SysModule extends FNMModule implements SPIWindowDefinitionProvider {
+public class SysModule extends AppModule implements SPIWindowDefinitionProvider {
 
 	@Override
 	public void loadWindowDefinitions() {

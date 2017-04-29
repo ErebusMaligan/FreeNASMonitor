@@ -5,9 +5,10 @@ import java.awt.Component;
 
 import javax.swing.JTable;
 
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -20,7 +21,7 @@ public class TestResultRenderer extends SmartInfoRenderer {
 	private static final long serialVersionUID = 1L;
 	
 	
-	public TestResultRenderer( ApplicationState state ) {
+	public TestResultRenderer( ApplicationProvider state ) {
 		super( state );
 	}
 	
@@ -31,14 +32,14 @@ public class TestResultRenderer extends SmartInfoRenderer {
 			Color fore;
 			Color back;
 			if ( s.equals( "PASSED" ) ) {
-				back = AC.BACKGROUND;
+				back = ThemeConstants.BACKGROUND;
 				fore = GREEN;
 			} else {
-				back = AC.FOREGROUND;
-				fore = AC.BACKGROUND;
+				back = ThemeConstants.FOREGROUND;
+				fore = ThemeConstants.BACKGROUND;
 			}
-			c.setBackground( lightsOff ? UIUtils.lightsOff( back, AC.LIGHTS_OFF ) : back );
-			c.setForeground( lightsOff ? UIUtils.lightsOff( fore, AC.LIGHTS_OFF ) : fore);
+			c.setBackground( lightsOff ? UIUtils.lightsOff( back, ApplicationConstants.LIGHTS_OFF ) : back );
+			c.setForeground( lightsOff ? UIUtils.lightsOff( fore, ApplicationConstants.LIGHTS_OFF ) : fore);
 		}
 		return c;
 	}

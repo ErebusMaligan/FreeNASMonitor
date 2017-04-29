@@ -6,11 +6,11 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.util.SmartUtils;
+import fnmcore.constants.ApplicationConstants;
 import modules.disk.state.data.RuntimeData;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -22,7 +22,7 @@ public class RuntimeRenderer extends SmartInfoRenderer {
 
 	private static final long serialVersionUID = 1L;
 	
-	public RuntimeRenderer( ApplicationState state ) {
+	public RuntimeRenderer( ApplicationProvider state ) {
 		super( state );
 	}
 	
@@ -34,7 +34,7 @@ public class RuntimeRenderer extends SmartInfoRenderer {
 		Color back;
 		Color fore;
 		if ( !isSelected ) {
-			back = AC.BACKGROUND;
+			back = ThemeConstants.BACKGROUND;
 			if ( d.years < 1 ) {
 				fore = BLUE;
 			} else if ( d.years < 2 ) {
@@ -44,11 +44,11 @@ public class RuntimeRenderer extends SmartInfoRenderer {
 			} else if ( d.years < 4 ) {
 				fore = ORANGE;
 			} else {
-				back = AC.FOREGROUND;
-				fore = AC.BACKGROUND;
+				back = ThemeConstants.FOREGROUND;
+				fore = ThemeConstants.BACKGROUND;
 			}
-			c.setBackground( lightsOff ? UIUtils.lightsOff( back, AC.LIGHTS_OFF ) : back );
-			c.setForeground( lightsOff ? UIUtils.lightsOff( fore, AC.LIGHTS_OFF ) : fore);
+			c.setBackground( lightsOff ? UIUtils.lightsOff( back, ApplicationConstants.LIGHTS_OFF ) : back );
+			c.setForeground( lightsOff ? UIUtils.lightsOff( fore, ApplicationConstants.LIGHTS_OFF ) : fore);
 		}
 		return c;
 	}

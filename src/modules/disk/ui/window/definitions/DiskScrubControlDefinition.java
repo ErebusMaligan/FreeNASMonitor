@@ -2,10 +2,10 @@ package modules.disk.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import modules.disk.ui.panel.DiskScrubControlPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.disk.ui.panel.DiskScrubControlPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +17,11 @@ public class DiskScrubControlDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new DiskScrubControlPanel( (ApplicationState)state );
+		return new DiskScrubControlPanel( (ApplicationProvider)state );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_SCRUB_CONTROL;
+		return ApplicationConstants.WD_SCRUB_CONTROL;
 	}
 }

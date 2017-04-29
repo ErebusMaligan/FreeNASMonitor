@@ -6,17 +6,17 @@ import java.util.Observable;
 import javax.swing.BoxLayout;
 import javax.swing.JProgressBar;
 
-import modules.mem.module.MemModule;
-import modules.mem.state.mem.data.CurrentMemData;
-import modules.mem.state.mem.data.MemData;
-import statics.UIUtils;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
+import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.SimpleChart;
 import gui.progress.DigitalJProgressBar;
 import gui.progress.EnhancedJProgressBar;
+import modules.mem.module.MemModule;
+import modules.mem.state.mem.data.CurrentMemData;
+import modules.mem.state.mem.data.MemData;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
+import state.provider.ApplicationProvider;
+import statics.UIUtils;
 
 /**
  * @author Daniel J. Rivers
@@ -32,7 +32,7 @@ public class SimpleMemoryChart extends SimpleChart implements BroadcastListener 
 	
 	private boolean lightsOff = false;
 	
-	public SimpleMemoryChart( ApplicationState state ) {
+	public SimpleMemoryChart( ApplicationProvider state ) {
 		super( state, state.getMonitorManager().getMonitorByName( MemModule.MEM_MONITOR ) );
 		int max = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getAvailableMemory();
 		CurrentMemData cm = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getCurrentMem();
@@ -55,8 +55,8 @@ public class SimpleMemoryChart extends SimpleChart implements BroadcastListener 
 	@Override
 	protected void calculateSections( EnhancedJProgressBar bar ) {
 		try {
-			bar.setSectionTwo( lightsOff ? UIUtils.lightsOff( AC.PROGRESS_BAR_MID, AC.LIGHTS_OFF ) : AC.PROGRESS_BAR_MID, (int)( bar.getMaximum() * .65 ) );
-			bar.setSectionThree( lightsOff ? UIUtils.lightsOff( AC.PROGRESS_BAR_END, AC.LIGHTS_OFF ) : AC.PROGRESS_BAR_END, (int)( bar.getMaximum() * .9 ) );
+			bar.setSectionTwo( lightsOff ? UIUtils.lightsOff( ApplicationConstants.PROGRESS_BAR_MID, ApplicationConstants.LIGHTS_OFF ) : ApplicationConstants.PROGRESS_BAR_MID, (int)( bar.getMaximum() * .65 ) );
+			bar.setSectionThree( lightsOff ? UIUtils.lightsOff( ApplicationConstants.PROGRESS_BAR_END, ApplicationConstants.LIGHTS_OFF ) : ApplicationConstants.PROGRESS_BAR_END, (int)( bar.getMaximum() * .9 ) );
 		} catch ( Exception e ) {
 			e.printStackTrace();
 		}
@@ -74,8 +74,8 @@ public class SimpleMemoryChart extends SimpleChart implements BroadcastListener 
 
 	@Override
 	public void broadcastReceived( BroadcastEvent e ) {
-		if ( e.getEventType() == BroadcastEvent.EVENT_TYPE.LIGHT_STATUS ) {
-			if ( e.getEventSetting() == BroadcastEvent.EVENT_SETTING.ON ) {
+		if ( e.getEventType() == BroadcastEvent.LIGHT_STATUS ) {
+			if ( e.getEventSetting() == BroadcastEvent.ON ) {
 				UIUtils.setColorsRecursive( this );
 				lightsOff = false;
 			} else {

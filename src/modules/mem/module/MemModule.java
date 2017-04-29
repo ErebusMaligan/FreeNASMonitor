@@ -3,18 +3,19 @@ package modules.mem.module;
 import java.util.Arrays;
 import java.util.List;
 
+import gui.windowmanager.WindowManager;
+import module.AppModule;
+import module.spi.SPIDataMonitorProvider;
+import module.spi.SPIMonitorDataProvider;
+import module.spi.SPIWindowDefinitionProvider;
 import modules.mem.state.mem.data.MemData;
 import modules.mem.state.mem.monitor.MemMonitor;
 import modules.mem.ui.window.definitions.MemoryMeterDefinition;
-import fnmcore.module.FNMModule;
-import fnmcore.module.spi.SPIDataMonitorProvider;
-import fnmcore.module.spi.SPIMonitorDataProvider;
-import fnmcore.module.spi.SPIWindowDefinitionProvider;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.monitor.AbstractMonitor;
-import fnmcore.state.monitor.MonitorData;
-import fnmcore.state.ssh.SSHSession;
-import gui.windowmanager.WindowManager;
+import ssh.SSHSession;
+import state.control.BroadcastManager;
+import state.monitor.AbstractMonitor;
+import state.monitor.MonitorData;
+import state.monitor.MonitorManager;
 
 /**
  * @author Daniel J. Rivers
@@ -22,7 +23,7 @@ import gui.windowmanager.WindowManager;
  *
  * Created: May 1, 2016, 7:21:00 PM 
  */
-public class MemModule extends FNMModule implements SPIMonitorDataProvider, SPIDataMonitorProvider, SPIWindowDefinitionProvider {
+public class MemModule extends AppModule implements SPIMonitorDataProvider, SPIDataMonitorProvider, SPIWindowDefinitionProvider {
 	
 	public static final String MEM_DATA = MemData.class.getName();
 	
@@ -46,8 +47,8 @@ public class MemModule extends FNMModule implements SPIMonitorDataProvider, SPID
 	}
 
 	@Override
-	public void initDataMonitors( ApplicationState state, SSHSession ssh ) {
-		monitor = new MemMonitor( state, data, ssh );
+	public void initDataMonitors( MonitorManager manager, BroadcastManager broadcast, SSHSession ssh ) {
+		monitor = new MemMonitor( manager, broadcast, data, ssh );
 	}
 
 	@Override

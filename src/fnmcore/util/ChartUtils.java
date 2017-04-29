@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 
 import org.jfree.chart.ChartPanel;
 
-import visualization.module.jfreechart.JFreeChartEnhancer;
 import data.ChartData;
 import data.TimeData;
-import fnmcore.constants.AC;
 import fnmcore.constants.ApplicationConstants;
+import ui.theme.ThemeConstants;
+import visualization.module.jfreechart.JFreeChartEnhancer;
 
 /**
  * @author Daniel J. Rivers
@@ -24,8 +24,8 @@ public class ChartUtils {
 	}
 	
 	public static void enhanceChart( ChartPanel cp ) {
-		JFreeChartEnhancer.setStandardChartColors( cp, ApplicationConstants.FOREGROUND, ApplicationConstants.BACKGROUND, ApplicationConstants.BACKGROUND, Color.WHITE );
-		JFreeChartEnhancer.setPlotAxisColor( cp, ApplicationConstants.FOREGROUND );
+		JFreeChartEnhancer.setStandardChartColors( cp, ThemeConstants.FOREGROUND, ThemeConstants.BACKGROUND, ThemeConstants.BACKGROUND, Color.WHITE );
+		JFreeChartEnhancer.setPlotAxisColor( cp, ThemeConstants.FOREGROUND );
 		JFreeChartEnhancer.setPlotShowShapes( cp, JFreeChartEnhancer.getStandardShape() );
 	}
 	
@@ -47,7 +47,7 @@ public class ChartUtils {
 	 */
 	private static int calculateTickInterval( long interval ) {
 			//seconds between refresh * 1.5 (amount times the interval it actually takes for a refresh cycle to fully complete ) * points that will be viewed on a chart / 8
-		return (int)( ( interval / 1000 ) * 1.5 * ( AC.CHART_VIEW_POINTS  / 8 ) );
+		return (int)( ( interval / 1000 ) * 1.5 * ( ApplicationConstants.CHART_VIEW_POINTS  / 8 ) );
 	}
 	
 	public static void autoRange( ChartPanel cp ) {

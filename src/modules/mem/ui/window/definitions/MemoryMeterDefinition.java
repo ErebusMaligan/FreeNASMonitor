@@ -2,10 +2,10 @@ package modules.mem.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import modules.mem.ui.panel.mem.MemInfoPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.mem.ui.panel.mem.MemInfoPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +17,11 @@ public class MemoryMeterDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new MemInfoPanel( (ApplicationState)state );
+		return new MemInfoPanel( (ApplicationProvider)state );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_MEM_METERS;
+		return ApplicationConstants.WD_MEM_METERS;
 	}
 }

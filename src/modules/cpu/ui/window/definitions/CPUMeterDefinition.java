@@ -2,10 +2,10 @@ package modules.cpu.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import modules.cpu.ui.panel.charts.SimpleCPUChartPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
 import gui.windowmanager.WindowDefinition;
+import modules.cpu.module.CPUConstants;
+import modules.cpu.ui.panel.charts.SimpleCPUChartPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +17,11 @@ public class CPUMeterDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new SimpleCPUChartPanel( (ApplicationState)state );
+		return new SimpleCPUChartPanel( (ApplicationProvider)state );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_CPU_METERS;
+		return CPUConstants.WD_CPU_METERS;
 	}
 }

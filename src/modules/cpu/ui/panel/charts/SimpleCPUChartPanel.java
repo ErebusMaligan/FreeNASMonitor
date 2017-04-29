@@ -8,13 +8,13 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import gui.layout.WrapLayout;
 import modules.cpu.module.CPUModule;
 import modules.cpu.state.data.CPUData;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
+import state.provider.ApplicationProvider;
 import statics.UIUtils;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
-import gui.layout.WrapLayout;
 
 /**
  * @author Daniel J. Rivers
@@ -28,13 +28,13 @@ public class SimpleCPUChartPanel extends JPanel implements Observer, BroadcastLi
 
 	private JPanel center = new JPanel();
 	
-	private ApplicationState state;
+	private ApplicationProvider state;
 	
 	private boolean init = false;
 	
 	private List<BroadcastListener> l = new ArrayList<>();
 	
-	public SimpleCPUChartPanel( ApplicationState state ) {
+	public SimpleCPUChartPanel( ApplicationProvider state ) {
 		this.state = state;
 		this.setLayout( new BorderLayout() );
 //		center.setLayout( new GridLayout( 0, 6 ) );
@@ -43,7 +43,7 @@ public class SimpleCPUChartPanel extends JPanel implements Observer, BroadcastLi
 //		this.add( new JScrollPane( center ), BorderLayout.NORTH );
 		this.add( center, BorderLayout.CENTER );
 		state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ).addObserver( this );
-		state.getUIManager().addBroadcastListener( this );
+		state.addBroadcastListener( this );
 		UIUtils.setColors( this, center );
 	}
 

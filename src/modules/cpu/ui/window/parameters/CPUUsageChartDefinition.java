@@ -2,10 +2,10 @@ package modules.cpu.ui.window.parameters;
 
 import javax.swing.JComponent;
 
-import modules.cpu.ui.panel.charts.AllCPUUsageChartPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.cpu.ui.panel.charts.AllCPUUsageChartPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +17,11 @@ public class CPUUsageChartDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new AllCPUUsageChartPanel( (ApplicationState)state );
+		return new AllCPUUsageChartPanel( (ApplicationProvider)state );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_CPU_USAGE;
+		return ApplicationConstants.WD_CPU_USAGE;
 	}
 }

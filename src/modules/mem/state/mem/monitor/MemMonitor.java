@@ -1,10 +1,12 @@
 package modules.mem.state.mem.monitor;
 
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
-import fnmcore.state.monitor.AbstractMonitor;
-import fnmcore.state.monitor.MonitorData;
-import fnmcore.state.ssh.SSHSession;
+import fnmcore.constants.ApplicationConstants;
+import modules.mem.module.MemConstants;
+import ssh.SSHSession;
+import state.control.BroadcastManager;
+import state.monitor.AbstractMonitor;
+import state.monitor.MonitorData;
+import state.monitor.MonitorManager;
 
 /**
  * @author Daniel J. Rivers
@@ -14,18 +16,18 @@ import fnmcore.state.ssh.SSHSession;
  */
 public class MemMonitor extends AbstractMonitor {
 
-	public MemMonitor( ApplicationState state, MonitorData lh, SSHSession ssh ) {
-		super( state, lh, ssh, AC.CPU_INTERVAL );
+	public MemMonitor( MonitorManager manager, BroadcastManager broadcast, MonitorData lh, SSHSession ssh ) {
+		super( manager, broadcast, lh, ssh, ApplicationConstants.CPU_INTERVAL );
 	}
 	
 	@Override
 	protected void runOnce() throws InterruptedException {
-		handleCDL( createAction( AC.MEM_PHYS_CMD, AC.MEM_PHYS_CMD ) );
-		handleCDL( createAction( AC.MEM_OVERALL_CMD, AC.MEM_OVERALL_CMD ) );
+		handleCDL( createAction( MemConstants.MEM_PHYS_CMD, MemConstants.MEM_PHYS_CMD ) );
+		handleCDL( createAction( MemConstants.MEM_OVERALL_CMD, MemConstants.MEM_OVERALL_CMD ) );
 	}
 
 	@Override
 	protected void runLoop() throws InterruptedException {
-		handleCDL( createAction( AC.MEM_CURRENT_CMD, AC.MEM_CURRENT_CMD ) );
+		handleCDL( createAction( MemConstants.MEM_CURRENT_CMD, MemConstants.MEM_CURRENT_CMD ) );
 	}
 }

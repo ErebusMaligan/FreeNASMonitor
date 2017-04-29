@@ -9,14 +9,14 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 
-import visualization.chart.Chart;
-import visualization.module.jfreechart.JFreeChartEnhancer;
 import data.ChartData;
 import data.DataSet;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.raw.RawDataPanel;
 import fnmcore.util.ChartUtils;
+import state.provider.ApplicationProvider;
+import visualization.chart.Chart;
+import visualization.module.jfreechart.JFreeChartEnhancer;
 
 /**
  * @author Daniel J. Rivers
@@ -28,7 +28,7 @@ public abstract class AbstractDynamicTimeSeriesChartPanel extends JPanel impleme
 
 	private static final long serialVersionUID = 1L;
 
-	protected ApplicationState state;
+	protected ApplicationProvider state;
 	
 	protected ChartData cd;
 	
@@ -36,13 +36,13 @@ public abstract class AbstractDynamicTimeSeriesChartPanel extends JPanel impleme
 	
 	protected boolean init = false;
 	
-	public AbstractDynamicTimeSeriesChartPanel( ApplicationState state, String title, String yAxis, Observable observable, long interval ) {
+	public AbstractDynamicTimeSeriesChartPanel( ApplicationProvider state, String title, String yAxis, Observable observable, long interval ) {
 		this.state = state;
 		this.setLayout( new BorderLayout() );
 //		this.setBorder( BorderFactory.createLineBorder( Color.DARK_GRAY ) );
 		cd = new ChartData( new ArrayList<DataSet<?, ?>>(), title, "Time", yAxis );
 		cd.setDynamic( true );
-		cd.setViewableRange( AC.CHART_VIEW_POINTS );
+		cd.setViewableRange( ApplicationConstants.CHART_VIEW_POINTS );
 		cd.setTimeGranularity( ChartData.TimeGranularity.SECOND );
 		initChartPanel( interval );
 		observable.addObserver( this );

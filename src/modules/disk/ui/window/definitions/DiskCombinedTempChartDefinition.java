@@ -2,10 +2,10 @@ package modules.disk.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import modules.disk.ui.panel.charts.AllDiskTemperatureChartPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.disk.ui.panel.charts.AllDiskTemperatureChartPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +17,11 @@ public class DiskCombinedTempChartDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new AllDiskTemperatureChartPanel( (ApplicationState)state );
+		return new AllDiskTemperatureChartPanel( (ApplicationProvider)state );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_DISK_COMBINED_TEMP;
+		return ApplicationConstants.WD_DISK_COMBINED_TEMP;
 	}
 }

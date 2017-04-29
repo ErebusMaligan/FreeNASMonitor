@@ -3,16 +3,16 @@ package modules.cpu.ui.panel.charts;
 import java.awt.Dimension;
 import java.util.Observable;
 
-import modules.cpu.module.CPUModule;
-import modules.cpu.state.data.CPUData;
-import statics.GU;
 import data.DataPair;
 import data.DataSet;
 import data.TimeData;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.AbstractDynamicTimeSeriesChartPanel;
 import fnmcore.util.ChartUtils;
+import modules.cpu.module.CPUModule;
+import modules.cpu.state.data.CPUData;
+import state.provider.ApplicationProvider;
+import statics.GU;
 
 /**
  * @author Daniel J. Rivers
@@ -30,8 +30,8 @@ public class SingleCPUChartPanel extends AbstractDynamicTimeSeriesChartPanel {
 	
 	private static final String CPU = "CPU ";
 	
-	public SingleCPUChartPanel( ApplicationState state, int cpu ) {
-		super( state, "[" + CPU + cpu + "] Temperature", "Temperature (" + AC.DEGREE + "C)", state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ), AC.CPU_INTERVAL );
+	public SingleCPUChartPanel( ApplicationProvider state, int cpu ) {
+		super( state, "[" + CPU + cpu + "] Temperature", "Temperature (" + ApplicationConstants.DEGREE + "C)", state.getMonitorManager().getMonitorByName( CPUModule.CPU_MONITOR ), ApplicationConstants.CPU_INTERVAL );
 		GU.setSizes( this, new Dimension( 100, 350 ) );
 		this.cpu = cpu;
 		c = CPU + cpu;

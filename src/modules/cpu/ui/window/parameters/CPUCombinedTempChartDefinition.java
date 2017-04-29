@@ -2,10 +2,10 @@ package modules.cpu.ui.window.parameters;
 
 import javax.swing.JComponent;
 
-import modules.cpu.ui.panel.charts.AllCPUTemperatureChartPanel;
-import fnmcore.constants.AC;
-import fnmcore.state.ApplicationState;
+import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.cpu.ui.panel.charts.AllCPUTemperatureChartPanel;
+import state.provider.ApplicationProvider;
 
 /**
  * @author Daniel J. Rivers
@@ -17,11 +17,11 @@ public class CPUCombinedTempChartDefinition implements WindowDefinition {
 
 	@Override
 	public JComponent getCenterComponent( Object state ) {
-		return new AllCPUTemperatureChartPanel( (ApplicationState)state );
+		return new AllCPUTemperatureChartPanel( (ApplicationProvider)state );
 	}
 
 	@Override
 	public String getTitle() {
-		return AC.WD_CPU_COMBINED_TEMP;
+		return ApplicationConstants.WD_CPU_COMBINED_TEMP;
 	}
 }

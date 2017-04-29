@@ -1,9 +1,9 @@
 package modules.control.module;
 
-import modules.control.ui.window.definitions.ControlPanelDefinition;
-import fnmcore.module.FNMModule;
-import fnmcore.module.spi.SPIWindowDefinitionProvider;
 import gui.windowmanager.WindowManager;
+import module.AppModule;
+import module.spi.SPIWindowDefinitionProvider;
+import modules.control.ui.window.definitions.ControlPanelDefinition;
 
 /**
  * @author Daniel J. Rivers
@@ -11,7 +11,7 @@ import gui.windowmanager.WindowManager;
  *
  * Created: May 2, 2016, 1:10:51 PM 
  */
-public class ControlModule extends FNMModule implements SPIWindowDefinitionProvider {
+public class ControlModule extends AppModule implements SPIWindowDefinitionProvider {
 
 	@Override
 	public void loadWindowDefinitions() {

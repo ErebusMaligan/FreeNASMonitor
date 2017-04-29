@@ -6,10 +6,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import modules.mem.state.mem.data.MemData;
+import state.control.BroadcastEvent;
+import state.control.BroadcastListener;
 import statics.GU;
 import statics.UIUtils;
-import fnmcore.state.control.BroadcastEvent;
-import fnmcore.state.control.BroadcastListener;
 
 /**
  * @author Daniel J. Rivers
@@ -34,8 +34,8 @@ public class TotalMemInfoPanel extends JPanel implements BroadcastListener {
 
 	@Override
 	public void broadcastReceived( BroadcastEvent e ) {
-		if ( e.getEventType() == BroadcastEvent.EVENT_TYPE.LIGHT_STATUS ) {
-			if ( e.getEventSetting() == BroadcastEvent.EVENT_SETTING.ON ) {
+		if ( e.getEventType() == BroadcastEvent.LIGHT_STATUS ) {
+			if ( e.getEventSetting() == BroadcastEvent.ON ) {
 				UIUtils.setColorsRecursive( this );
 			} else {
 				UIUtils.setColorsRecursiveOff( this );
