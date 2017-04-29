@@ -86,8 +86,8 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 			this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 			JLabel l = new JLabel( si.pool );
 			l.setHorizontalAlignment( SwingConstants.CENTER );
-			start = GU.createButton( ApplicationConstants.B_DISK_SCRUB_START, e -> state.getSSHManager().getSSHSession( ApplicationConstants.SSH_RT_PROCESS_NAME ).sendCommand( DiskConstants.DISK_SCRUB_START + si.pool ) );
-			stop = GU.createButton(  ApplicationConstants.B_DISK_SCRUB_STOP, e -> state.getSSHManager().getSSHSession( ApplicationConstants.SSH_RT_PROCESS_NAME ).sendCommand( DiskConstants.DISK_SCRUB_STOP + si.pool ) );
+			start = GU.createButton( DiskConstants.B_DISK_SCRUB_START, e -> state.getSSHManager().getSSHSession( ApplicationConstants.SSH_RT_PROCESS_NAME ).sendCommand( DiskConstants.DISK_SCRUB_START + si.pool ) );
+			stop = GU.createButton(  DiskConstants.B_DISK_SCRUB_STOP, e -> state.getSSHManager().getSSHSession( ApplicationConstants.SSH_RT_PROCESS_NAME ).sendCommand( DiskConstants.DISK_SCRUB_STOP + si.pool ) );
 			UIUtils.setJButton( start );
 			UIUtils.setJButton( stop );
 			start.addActionListener( e -> { enableStop(); si.done = -1; } );

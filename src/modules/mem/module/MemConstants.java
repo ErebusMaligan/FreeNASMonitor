@@ -17,4 +17,6 @@ public class MemConstants {
 	public static final String MEM_CURRENT_CMD = "top -b | grep Mem";
 
 	public static final String MEM_PHYS_CMD = "dmidecode -t memory | grep -E 'Bank|Type:|Speed|Size' | grep -vE 'Error|Clock'";
+
+	public static final String WD_MEM_METERS = "Memory Meters";
 }

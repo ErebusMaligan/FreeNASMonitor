@@ -3,8 +3,8 @@ package modules.cpu.ui.window.parameters;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 
-import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.cpu.module.CPUConstants;
 import modules.cpu.ui.panel.charts.IndividualCPUTemperatureChartPanel;
 import state.provider.ApplicationProvider;
 import statics.UIUtils;
@@ -24,6 +24,6 @@ public class CPUIndividualTempChartDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return ApplicationConstants.WD_CPU_IND_TEMP;
+		return CPUConstants.WD_CPU_IND_TEMP;
 	}
 }

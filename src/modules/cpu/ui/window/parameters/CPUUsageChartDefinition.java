@@ -2,8 +2,8 @@ package modules.cpu.ui.window.parameters;
 
 import javax.swing.JComponent;
 
-import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.cpu.module.CPUConstants;
 import modules.cpu.ui.panel.charts.AllCPUUsageChartPanel;
 import state.provider.ApplicationProvider;
 
@@ -22,6 +22,6 @@ public class CPUUsageChartDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return ApplicationConstants.WD_CPU_USAGE;
+		return CPUConstants.WD_CPU_USAGE;
 	}
 }

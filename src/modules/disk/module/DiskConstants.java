@@ -32,4 +32,14 @@ public class DiskConstants {
 
 	public static final String WD_DISK_SCRUB_TABLE = "Disk Scrub Table";
 
+	public static final String B_DISK_SCRUB_START = "Start";
+
+	public static final String B_DISK_SCRUB_STOP = "Stop";
+
+	public static final String WD_DISK_COMBINED_TEMP = "Disk Combined Temp.";
+
+	public static final String WD_DISK_IND_TEMP = "Disk Individual Temp.";
+
+	public static final String WD_SCRUB_CONTROL = "Scrub Control";
+
 }

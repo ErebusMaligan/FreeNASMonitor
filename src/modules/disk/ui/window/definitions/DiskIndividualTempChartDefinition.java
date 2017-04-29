@@ -3,8 +3,8 @@ package modules.disk.ui.window.definitions;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 
-import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.disk.module.DiskConstants;
 import modules.disk.ui.panel.charts.IndividualDiskTemperatureChartPanel;
 import state.provider.ApplicationProvider;
 import statics.UIUtils;
@@ -24,6 +24,6 @@ public class DiskIndividualTempChartDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return ApplicationConstants.WD_DISK_IND_TEMP;
+		return DiskConstants.WD_DISK_IND_TEMP;
 	}
 }

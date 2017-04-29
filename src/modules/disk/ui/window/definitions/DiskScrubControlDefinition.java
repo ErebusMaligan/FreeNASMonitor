@@ -2,8 +2,8 @@ package modules.disk.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.disk.module.DiskConstants;
 import modules.disk.ui.panel.DiskScrubControlPanel;
 import state.provider.ApplicationProvider;
 
@@ -22,6 +22,6 @@ public class DiskScrubControlDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return ApplicationConstants.WD_SCRUB_CONTROL;
+		return DiskConstants.WD_SCRUB_CONTROL;
 	}
 }

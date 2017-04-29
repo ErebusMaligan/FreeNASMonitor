@@ -64,8 +64,6 @@ public class ApplicationConstants {
 	
 	public static final String XRT = "REALTIME";
 	
-	public static final String XINTERFACE = "INTERFACE";
-	
 	public static final String XSETTINGS = "SETTINGS";
 	
 	
@@ -151,33 +149,9 @@ public class ApplicationConstants {
 	//frame definitions
 	public static final String WD_CONTROL_PANEL = "Control Panel";
 	
-	public static final String WD_MEM_METERS = "Memory Meters";
-	
-	public static final String WD_SCRUB_CONTROL = "Scrub Control";
-	
 	public static final String WD_SYS_INFO = "System Info";
 	
 
-	
-	public static final String WD_CPU_USAGE = "CPU Usage";
-	
-	public static final String WD_CPU_COMBINED_TEMP = "CPU Combined Temp.";
-	
-	public static final String WD_CPU_IND_TEMP = "CPU Individual Temp.";
-	
-	public static final String WD_DISK_IND_TEMP = "Disk Individual Temp.";
-	
-	public static final String WD_DISK_COMBINED_TEMP = "Disk Combined Temp.";
-	
-	public static final String WD_NET_PACKETS = "Packets";
-	
-	public static final String WD_NET_BYTES = "MBits";
-	
-
-	public static final String B_DISK_SCRUB_START = "Start";
-	
-	public static final String B_DISK_SCRUB_STOP = "Stop";
-	
 	
 	//control panel
 	public static final String CON_LIGHTS = "LIGHTS";

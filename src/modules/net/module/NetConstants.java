@@ -15,5 +15,11 @@ public class NetConstants {
 
 	public static final String NET_OUT_BYTES = "Out MBits";
 
+	public static final String XINTERFACE = "INTERFACE";
+
+	public static final String WD_NET_BYTES = "MBits";
+
+	public static final String WD_NET_PACKETS = "Packets";
+
 	
 }

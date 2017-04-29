@@ -2,8 +2,8 @@ package modules.disk.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.disk.module.DiskConstants;
 import modules.disk.ui.panel.charts.AllDiskTemperatureChartPanel;
 import state.provider.ApplicationProvider;
 
@@ -22,6 +22,6 @@ public class DiskCombinedTempChartDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return ApplicationConstants.WD_DISK_COMBINED_TEMP;
+		return DiskConstants.WD_DISK_COMBINED_TEMP;
 	}
 }

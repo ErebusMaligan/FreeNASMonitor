@@ -2,8 +2,8 @@ package modules.cpu.ui.window.parameters;
 
 import javax.swing.JComponent;
 
-import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.cpu.module.CPUConstants;
 import modules.cpu.ui.panel.charts.AllCPUTemperatureChartPanel;
 import state.provider.ApplicationProvider;
 
@@ -22,6 +22,6 @@ public class CPUCombinedTempChartDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return ApplicationConstants.WD_CPU_COMBINED_TEMP;
+		return CPUConstants.WD_CPU_COMBINED_TEMP;
 	}
 }

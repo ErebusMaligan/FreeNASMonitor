@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src">
-		<attributes>
-			<attribute name="FROM_GRADLE_MODEL" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/libs/jfreechart/jcommon/jcommon-1.0.21.jar"/>
-	<classpathentry kind="lib" path="/libs/jfreechart/jfreechart/jfreechart-1.0.17.jar"/>
-	<classpathentry kind="lib" path="/libs/JUtils.jar" sourcepath="/JUtils/src"/>
-	<classpathentry kind="lib" path="/libs/SpreadSheetUtils.jar"/>
-	<classpathentry kind="lib" path="/libs/StatWrapper.jar"/>
-	<classpathentry kind="lib" path="/libs/TerminalWindow.jar"/>
-	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry kind="lib" path="/libs/ModuleAppFramework.jar"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

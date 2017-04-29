@@ -17,6 +17,8 @@ import gui.menubar.GenericMenuBar;
 import gui.menubar.GenericMenuBarAction;
 import modules.cpu.module.CPUConstants;
 import modules.disk.module.DiskConstants;
+import modules.mem.module.MemConstants;
+import modules.net.module.NetConstants;
 import ssh.SSHConstants;
 import ssh.SSHSession;
 import state.provider.ApplicationProvider;
@@ -144,15 +146,15 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 		menu.add( new JSeparator() );
 		menu = new JMenu( ApplicationConstants.MB_CHARTS );
 		UIUtils.setColors( menu );
-		createWindowItem( ApplicationConstants.WD_CPU_USAGE );
-		createWindowItem( ApplicationConstants.WD_CPU_COMBINED_TEMP );
-		createWindowItem( ApplicationConstants.WD_CPU_IND_TEMP );
+		createWindowItem( CPUConstants.WD_CPU_USAGE );
+		createWindowItem( CPUConstants.WD_CPU_COMBINED_TEMP );
+		createWindowItem( CPUConstants.WD_CPU_IND_TEMP );
 		cpu.add( menu );
 
 		JMenu mb = menu = new JMenu( ApplicationConstants.MB_DISK );
 		UIUtils.setColors( menu );
 		createWindowItem( DiskConstants.WD_DISK_METERS );
-		createWindowItem( ApplicationConstants.WD_SCRUB_CONTROL );
+		createWindowItem( DiskConstants.WD_SCRUB_CONTROL );
 		menu.add( new JSeparator() );
 		createWindowItem( DiskConstants.WD_DISK_INFO_TABLE );
 		createWindowItem( DiskConstants.WD_DISK_SCRUB_TABLE );
@@ -160,13 +162,13 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 		menu.add( new JSeparator() );
 		menu = new JMenu( ApplicationConstants.MB_CHARTS );
 		UIUtils.setColors( menu );
-		createWindowItem( ApplicationConstants.WD_DISK_COMBINED_TEMP );
-		createWindowItem( ApplicationConstants.WD_DISK_IND_TEMP );
+		createWindowItem( DiskConstants.WD_DISK_COMBINED_TEMP );
+		createWindowItem( DiskConstants.WD_DISK_IND_TEMP );
 		mb.add( menu );
 
 		menu = new JMenu( ApplicationConstants.MB_MEM );
 		UIUtils.setColors( menu );
-		createWindowItem( ApplicationConstants.WD_MEM_METERS );
+		createWindowItem( MemConstants.WD_MEM_METERS );
 		windows.add( menu );
 
 		JMenu net = menu = new JMenu( ApplicationConstants.MB_NET );
@@ -174,8 +176,8 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 		windows.add( menu );
 		menu = new JMenu( ApplicationConstants.MB_CHARTS );
 		UIUtils.setColors( menu );
-		createWindowItem( ApplicationConstants.WD_NET_BYTES );
-		createWindowItem( ApplicationConstants.WD_NET_PACKETS );
+		createWindowItem( NetConstants.WD_NET_BYTES );
+		createWindowItem( NetConstants.WD_NET_PACKETS );
 		net.add( menu );
 
 		win.add( windows );

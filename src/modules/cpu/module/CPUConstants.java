@@ -19,4 +19,10 @@ public class CPUConstants {
 	//frame definitions
 	public static final String WD_CPU_METERS = "CPU Meters";
 
+	public static final String WD_CPU_IND_TEMP = "CPU Individual Temp.";
+
+	public static final String WD_CPU_COMBINED_TEMP = "CPU Combined Temp.";
+
+	public static final String WD_CPU_USAGE = "CPU Usage";
+
 }

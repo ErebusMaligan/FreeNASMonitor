@@ -2,8 +2,8 @@ package modules.mem.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
+import modules.mem.module.MemConstants;
 import modules.mem.ui.panel.mem.MemInfoPanel;
 import state.provider.ApplicationProvider;
 
@@ -22,6 +22,6 @@ public class MemoryMeterDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return ApplicationConstants.WD_MEM_METERS;
+		return MemConstants.WD_MEM_METERS;
 	}
 }

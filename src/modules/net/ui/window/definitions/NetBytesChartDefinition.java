@@ -2,7 +2,6 @@ package modules.net.ui.window.definitions;
 
 import javax.swing.JComponent;
 
-import fnmcore.constants.ApplicationConstants;
 import gui.windowmanager.WindowDefinition;
 import modules.net.module.NetConstants;
 import modules.net.ui.panel.net.charts.NetDoubleChartPanel;
@@ -23,6 +22,6 @@ public class NetBytesChartDefinition implements WindowDefinition {
 
 	@Override
 	public String getTitle() {
-		return ApplicationConstants.WD_NET_BYTES;
+		return NetConstants.WD_NET_BYTES;
 	}
 }
