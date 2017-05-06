@@ -37,4 +37,5 @@ public class MonitorFrame extends AbstractApplicationFrame {
 	public void finishInit() {
 		UIUtils.setColors( this.getContentPane() );		
 		setVisible( true );
-	} }
+	} 
+}
