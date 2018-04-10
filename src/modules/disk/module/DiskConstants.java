@@ -15,7 +15,7 @@ public class DiskConstants {
 	
 	public static final String MAP_GPTID_TO_DEVICE_CMD = "glabel status";
 	
-	public static final String DISK_IO_CMD = "gstat -b | grep -vE 'dT|L\\(q\\)|gptid|p2|p1|eli'";
+	public static final String DISK_IO_CMD = "gstat -b | grep -vE 'dT|L\\(q\\)|gptid|p2|p1|eli|mirror'";
 	
 	public static final String DISK_SCRUB_STATUS = "zpool status | grep -E 'pool|scan|done'";
 	
