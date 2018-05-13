@@ -126,8 +126,9 @@ public class ScrubInfo {
 			repaired = Double.parseDouble( amt );
 			
 			errors = 0;
-			String pDone = p[ p.length - 2 ];
+			String pDone = p[ 2 ];
 			pDone = pDone.substring( 0, pDone.length() - 1 );
+			time = p[ 4 ] + " " + p[ 5 ] + " " + p[ 6 ];
 			done = Float.parseFloat( pDone );
 		}
 		//separate condition

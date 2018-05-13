@@ -61,7 +61,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 				if ( line.endsWith( "p2" ) ) {
 					String dev = LOC + line.substring( line.lastIndexOf( " " ) + 1, line.length() - 2 );
 					String gid = line.substring( 0, line.indexOf( " " ) );
-					System.out.println( dev + " : " + gid );
+//					System.out.println( dev + " : " + gid );
 					devMap.put( dev, gid );
 				}
 			}

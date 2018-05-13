@@ -14,7 +14,7 @@ public class CurrentMemData {
 	
 	public int w = 0;
 	
-	public int c = 0;
+	public int l = 0;
 	
 	public int f = 0;
 	
@@ -24,7 +24,7 @@ public class CurrentMemData {
 	
 	public String wu = "M";
 	
-	public String cu = "K";
+	public String lu = "K";
 	
 	public String fu = "M";
 	
@@ -34,7 +34,7 @@ public class CurrentMemData {
 	
 	public String wn = "Wired";
 	
-	public String cn = "Cache";
+	public String ln = "Laundry";
 	
 	public String fn = "Free";
 
@@ -49,31 +49,24 @@ public class CurrentMemData {
 		a = adjustToMegs( a, au );
 		au = "M";
 		an = p[ ++x ];
+		
 		i = getValue( p[ ++x ] );
 		iu = getUnit( p[ x ] );
 		i = adjustToMegs( i, iu );
 		iu = "M";
 		in = p[ ++x ];
+		
+		l = getValue( p[ ++x ] );
+		lu = getUnit( p[ x ] );
+		l = adjustToMegs( l, lu );
+		lu = "M";
+		ln = p[ ++x ];
+		
 		w = getValue( p[ ++x ] );
 		wu = getUnit( p[ x ] );
 		w = adjustToMegs( w, wu );
 		wu = "M";
 		wn = p[ ++x ];
-		
-
-		c = getValue( p[ ++x ] );
-		cu = getUnit( p[ x ] );
-		c = adjustToMegs( c, cu );
-		cu = "M";
-		cn = p[ ++x ];
-		
-		//apparently cached can just not exist sometimes - if that's the case, backtrack the index and write 0 for cache
-		if ( !cn.contains( "Cache" ) ) {
-			x = x - 2;
-			c = 0;
-			cn = "Cache";
-		}
-		
 		
 		f = getValue( p[ ++x ] );
 		fu = getUnit( p[ x ] );

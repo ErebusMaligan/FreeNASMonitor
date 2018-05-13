@@ -28,13 +28,13 @@ public class SimpleMemoryChart extends SimpleChart implements BroadcastListener 
 
 	private static final long serialVersionUID = 1L;
 
-	private EnhancedJProgressBar a, i, w, c, f;
+	private EnhancedJProgressBar a, i, w, l, f;
 	
 	private boolean lightsOff = false;
 	
 	public SimpleMemoryChart( ApplicationProvider state ) {
 		super( state, state.getMonitorManager().getMonitorByName( MemModule.MEM_MONITOR ) );
-		int max = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getAvailableMemory();
+		int max = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getRealMemory();
 		CurrentMemData cm = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getCurrentMem();
 		center.setLayout( new BoxLayout( center, BoxLayout.X_AXIS ) );
 		dim = new Dimension( 15, 80 );
@@ -42,8 +42,8 @@ public class SimpleMemoryChart extends SimpleChart implements BroadcastListener 
 		height = 18;
 		a = addJProgressBar( 0, max, cm.an, cm.au );
 		i = addJProgressBar( 0, max, cm.in, cm.iu );
+		l = addJProgressBar( 0, max, cm.ln, cm.lu );
 		w = addJProgressBar( 0, max, cm.wn, cm.wu );
-		c = addJProgressBar( 0, max, cm.cn, cm.cu );
 		f = addJProgressBar( 0, max, cm.fn, cm.fu );
 	}
 	
@@ -67,8 +67,8 @@ public class SimpleMemoryChart extends SimpleChart implements BroadcastListener 
 		CurrentMemData cm = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getCurrentMem();
 		a.setValue( cm.a );
 		i.setValue( cm.i );
+		l.setValue( cm.l );
 		w.setValue( cm.w );
-		c.setValue( cm.c / 1000 );
 		f.setValue( cm.f );
 	}
 
@@ -84,8 +84,8 @@ public class SimpleMemoryChart extends SimpleChart implements BroadcastListener 
 			}
 			calculateSections( a );
 			calculateSections( i );
+			calculateSections( l );
 			calculateSections( w );
-			calculateSections( c );
 			calculateSections( f );
 		}
 	}
