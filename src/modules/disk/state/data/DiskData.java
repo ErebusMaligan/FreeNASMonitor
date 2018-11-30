@@ -76,9 +76,12 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 		
 		skimmers.put( DiskConstants.POOL_STATUS_CMD, line -> {
 			line = line.trim();
-			if ( line.startsWith( "gptid" ) ) {
+			if ( line.startsWith( "gptid" ) ) { 
 				String gid = line.substring( 0, line.indexOf( " " ) );
 				poolMap.put( gid, currentDisk );
+			} else if ( line.startsWith( "da" ) || line.startsWith( "ada" ) ) {//TODO: the da/ada are hacks for when a disk is replaced in a pool, for some reason it doesn't display the gptid, it displays the device reference
+				String gid = line.substring( 0, line.indexOf( " " ) );
+				poolMap.put( devMap.get( gid ), currentDisk );
 			}
 		} );
 		

@@ -32,6 +32,10 @@ public class DFData {
 		}
 		used = Long.parseLong( l.get( 3 ) );
 		available = Long.parseLong( l.get( 2 ) );
-		percent = /*100l - */Integer.parseInt( l.get( 1 ).substring( 0, l.get( 1 ).length() - 1 ) );
+		String p = l.get( 1 ).substring( 0, l.get( 1 ).length() - 1 );
+		if ( p.contains( "." ) ) {
+			p = p.substring( 0, p.indexOf( "." ) );
+		}
+		percent = Integer.parseInt( p );
 	}
 }

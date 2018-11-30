@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import modules.mem.module.MemModule;
 import modules.mem.state.mem.data.MemData;
+import modules.mem.state.mem.data.PhysicalMemData;
 import modules.mem.ui.panel.mem.charts.SimpleMemoryChart;
 import state.control.BroadcastEvent;
 import state.control.BroadcastListener;
@@ -44,14 +45,17 @@ public class MemInfoPanel extends JPanel implements Observer, BroadcastListener 
 	@Override
 	public void update( Observable o, Object arg ) {
 		if ( !init ) {
-			init = true;
-			PhysicalMemInfoPanel p = new PhysicalMemInfoPanel( ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getPhysicalData() );
-			this.add( p, BorderLayout.NORTH );
-			TotalMemInfoPanel t = new TotalMemInfoPanel( ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ) );
-			this.add( t, BorderLayout.SOUTH );
-			SimpleMemoryChart c = new SimpleMemoryChart( state );
-			this.add( c, BorderLayout.CENTER );
-			l.addAll( Arrays.asList( new BroadcastListener[] { p, t, c } ) );
+			List<PhysicalMemData> list = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getPhysicalData();
+			if ( list != null && !list.isEmpty() ) {
+				init = true;
+				PhysicalMemInfoPanel p = new PhysicalMemInfoPanel( ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getPhysicalData() );
+				this.add( p, BorderLayout.NORTH );
+				TotalMemInfoPanel t = new TotalMemInfoPanel( ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ) );
+				this.add( t, BorderLayout.SOUTH );
+				SimpleMemoryChart c = new SimpleMemoryChart( state );
+				this.add( c, BorderLayout.CENTER );
+				l.addAll( Arrays.asList( new BroadcastListener[] { p, t, c } ) );
+			}
 		}
 	}
 

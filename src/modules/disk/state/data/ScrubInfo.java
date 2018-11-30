@@ -98,7 +98,7 @@ public class ScrubInfo {
 				time = "Canceled";
 				errors = -1;
 				done = -1f;
-			} else if ( l.contains( "resilvered" ) ) {  //this is for last thing run that completed is resilvered  //TODO: this will need to be changed to match new format of FreeNAS 11 next time I do a resilver
+			} else if ( l.contains( "resilvered" ) ) {  //this is for last thing run that completed is resilvered
 				type = RESILVER;
 				inProgress = false;
 				String amt = p[ 2 ];
@@ -106,8 +106,8 @@ public class ScrubInfo {
 					amt = amt.substring( 0, amt.length() - 1 );
 				}
 				repaired = Double.parseDouble( amt );
-				time = p[ 4 ];
-				errors = Integer.parseInt( p[ 6 ] );
+				time = p[ 4 ] + " " + p[ 5 ] + " " + p[ 6 ];
+				errors = Integer.parseInt( p[ 8 ] );
 				done = 100f;
 			} else if ( l.contains( "resilver" ) ) {  //this if for resilver is currently in progress
 				type = RESILVER;

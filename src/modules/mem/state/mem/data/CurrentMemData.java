@@ -56,11 +56,13 @@ public class CurrentMemData {
 		iu = "M";
 		in = p[ ++x ];
 		
-		l = getValue( p[ ++x ] );
-		lu = getUnit( p[ x ] );
-		l = adjustToMegs( l, lu );
-		lu = "M";
-		ln = p[ ++x ];
+		if ( line.toUpperCase().contains( "LAU" ) ) {  //at first startup laundry can be 0
+			l = getValue( p[ ++x ] );
+			lu = getUnit( p[ x ] );
+			l = adjustToMegs( l, lu );
+			lu = "M";
+			ln = p[ ++x ];
+		}
 		
 		w = getValue( p[ ++x ] );
 		wu = getUnit( p[ x ] );
