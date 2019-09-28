@@ -2,6 +2,8 @@ package modules.cpu.module;
 
 public class CPUConstants {
 
+	public static final String FN_VER_CMD = "uname -a";
+	
 	//static cpu stuff
 	public static final String CPU_INFO_CMD = "sysctl hw.model hw.ncpu"; //cpu type info
 	

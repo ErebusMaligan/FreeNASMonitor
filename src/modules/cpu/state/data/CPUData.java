@@ -28,6 +28,8 @@ public class CPUData extends MonitorData implements ProcessStreamSiphon {
 	
 	private float[] usages;
 	
+	private String version;
+	
 	public CPUData() {
 		skimmers.put( CPUConstants.CPU_INFO_CMD, line -> {
 			if ( line.startsWith( "hw.model" ) ) {
@@ -68,6 +70,12 @@ public class CPUData extends MonitorData implements ProcessStreamSiphon {
 			if ( line.startsWith( "CPU" ) ) {
 				int num = cpuUsageNum( line );
 				usages[ num ] = 100.0f - Float.parseFloat( line.trim().substring( line.lastIndexOf( "," ) + 1, line.lastIndexOf( "%" ) ).trim() );
+			}
+		} );
+		
+		skimmers.put( CPUConstants.FN_VER_CMD, line -> {
+			if ( line.startsWith( "FreeBSD" ) ) {
+				version = line.split( " " )[ 2 ];
 			}
 		} );
 		
@@ -134,5 +142,9 @@ public class CPUData extends MonitorData implements ProcessStreamSiphon {
 	
 	public String getUpTime() {
 		return uptime;
+	}
+	
+	public String getVersion() {
+		return version;
 	}
 }

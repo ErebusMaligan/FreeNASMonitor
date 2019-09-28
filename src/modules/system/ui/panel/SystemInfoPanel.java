@@ -40,6 +40,8 @@ public class SystemInfoPanel extends JPanel implements Observer, BroadcastListen
 	
 	private IntVariable cpuCount = new IntVariable();
 	
+	private StringVariable fnVer = new StringVariable();
+	
 	private ApplicationProvider state;
 	
 	public SystemInfoPanel( ApplicationProvider state ) {
@@ -54,6 +56,7 @@ public class SystemInfoPanel extends JPanel implements Observer, BroadcastListen
 		this.add( new LabelEntry( SysConstants.SIP_MODEL, model, dim ) );
 		this.add( new LabelEntry( SysConstants.SIP_CPU_COUNT, cpuCount, dim ) );
 		this.add( new LabelEntry( SysConstants.SIP_SOURCE, cpuTempSource, dim ) );
+		this.add( new LabelEntry( SysConstants.SIP_FN_VER, fnVer, dim ) );
 		UIUtils.setColorsRecursive( this );
 		this.add( Box.createVerticalGlue() );
 	}
@@ -66,6 +69,7 @@ public class SystemInfoPanel extends JPanel implements Observer, BroadcastListen
 		upTime.fromString( sd.getUpTime() );
 		cpuTempSource.fromString( sd.getSource() );
 		cpuCount.fromString( String.valueOf( sd.getCpuCount() ) );
+		fnVer.fromString( sd.getVersion() );
 		for ( Component c : this.getComponents() ) {
 			if ( c instanceof LabelEntry ) {
 				( (LabelEntry)c ).reload();

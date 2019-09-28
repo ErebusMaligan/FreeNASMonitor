@@ -12,5 +12,7 @@ public class SysConstants {
 	public static final String SIP_SOURCE = "CPU Temperature Sensors: ";
 	
 	public static final String SIP_CPU_COUNT = "CPU Cores: ";
+	
+	public static final String SIP_FN_VER = "FreeNAS Version: ";
 
 }

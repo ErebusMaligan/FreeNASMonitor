@@ -24,6 +24,7 @@ public class CPUMonitor extends AbstractMonitor {
 	protected void runOnce() throws InterruptedException {
 		handleCDL( createAction( CPUConstants.CPU_INFO_CMD, CPUConstants.CPU_INFO_CMD ) );
 		handleCDL( createAction( CPUConstants.CPU_SENSOR_INFO_CMD, CPUConstants.CPU_SENSOR_INFO_CMD ) );
+		handleCDL( createAction( CPUConstants.FN_VER_CMD, CPUConstants.FN_VER_CMD ) );
 	}
 
 	@Override
