@@ -30,6 +30,8 @@ public class CPUData extends MonitorData implements ProcessStreamSiphon {
 	
 	private String version;
 	
+	private String freq;
+	
 	public CPUData() {
 		skimmers.put( CPUConstants.CPU_INFO_CMD, line -> {
 			if ( line.startsWith( "hw.model" ) ) {
@@ -76,6 +78,12 @@ public class CPUData extends MonitorData implements ProcessStreamSiphon {
 		skimmers.put( CPUConstants.FN_VER_CMD, line -> {
 			if ( line.startsWith( "FreeBSD" ) ) {
 				version = line.split( " " )[ 2 ];
+			}
+		} );
+		
+		skimmers.put( CPUConstants.CPU_FREQ_CMD, line -> {
+			if ( line.contains( "freq: " ) ) {
+				freq = String.valueOf( Double.parseDouble( line.split( " " )[ 1 ] ) / 1000 );
 			}
 		} );
 		
@@ -146,5 +154,9 @@ public class CPUData extends MonitorData implements ProcessStreamSiphon {
 	
 	public String getVersion() {
 		return version;
+	}
+	
+	public String getFreq() {
+		return freq;
 	}
 }

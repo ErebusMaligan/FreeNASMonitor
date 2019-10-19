@@ -13,6 +13,8 @@ public class CPUConstants {
 	
 	public static final String CPU_USAGE_CMD = "top -P -d 2 -b | grep idle"; //cpu idle process
 
+	public static final String CPU_FREQ_CMD = "sysctl dev.cpu | grep freq:"; //cpu idle process
+	
 	//static time stuff
 	public static final String UPTIME_CMD = "uptime";
 

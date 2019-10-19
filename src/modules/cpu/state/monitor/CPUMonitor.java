@@ -33,5 +33,6 @@ public class CPUMonitor extends AbstractMonitor {
 		handleCDL( createAction( CPUConstants.SYSTIME_CMD, CPUConstants.SYSTIME_CMD ) );
 		handleCDL( createAction( CPUConstants.CPU_TEMP_CMD, CPUConstants.CPU_TEMP_CMD ) );
 		handleCDL( createAction( CPUConstants.CPU_USAGE_CMD, CPUConstants.CPU_USAGE_CMD ) );
+		handleCDL( createAction( CPUConstants.CPU_FREQ_CMD, CPUConstants.CPU_FREQ_CMD ) );
 	}
 }
