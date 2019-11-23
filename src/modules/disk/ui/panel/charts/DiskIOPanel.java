@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import gui.layout.WrapLayout;
 import modules.disk.module.DiskModule;
+import modules.disk.state.data.DiskData;
 import modules.disk.state.data.DiskIOInfo;
 import modules.disk.state.data.RealtimeDiskData;
 import state.control.BroadcastEvent;
@@ -43,6 +44,8 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 	private int cc = 0;
 	
 	private List<String> added = new ArrayList<String>();
+	
+	private Map<String, Integer> updated = new HashMap<>();
 	
 	public DiskIOPanel( ApplicationProvider state ) {
 		this.state = state;
@@ -91,13 +94,35 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 	public void removeAndSort( DiskIOChart r, boolean add ) {
 		center.remove( r );
 		cc--;
+		if ( r.getPool() != null ) {
+			updated.computeIfAbsent( r.getPool(), k -> 0 );
+			updated.put( r.getPool(), updated.get( r.getPool() ) + 1 );
+		}
 		io.remove( r.getNM() );
 		if ( add ) {
 			io.put( r.getFullName(), r );
 		}
-		if ( cc == 0 ) {
+		if ( cc == 0 || evenPools() ) {
 			sortAndAdd();
 		}
+	}
+	
+	private boolean evenPools() {
+		boolean ret = true;
+		if ( ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getPoolCount() != 0 ) {
+			List<String> pools = ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getPools();
+			for ( String s : pools ) {
+				if ( !s.equals( "freenas-boot" ) ) {
+					if ( !updated.containsKey( s ) || updated.get( s ) % 2 != 0 ) {
+						ret = false;
+						break;
+					}
+				}
+			}
+		} else {
+			ret = false;
+		}
+		return ret;
 	}
 	
 	private void sortAndAdd() {

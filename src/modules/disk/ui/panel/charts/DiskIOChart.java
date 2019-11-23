@@ -93,7 +93,7 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 		
 
 		pool = ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getPool( nm );
-//		if ( pool != null ) {
+		if ( pool != null ) {
 			if ( !updatedPool ) {
 				if ( pool != null && pool.contains( "-boot" ) ) {  //if it turns out this was the boot drive, remove this panel
 					if ( this.getParent() != null ) {
@@ -107,7 +107,7 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 				}
 				updatedPool = true;
 			}
-//		}
+		}
 		if ( updatedPool ) {
 			DFData d = ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getDiskUsage( pool );
 			if ( d != null ) {
