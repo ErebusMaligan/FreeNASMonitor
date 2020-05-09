@@ -63,7 +63,8 @@ public class SmartInfo {
 //			System.err.println( i ); //debug - prints all smart info
 			processLine( i );
 		}
-		info.clear();
+		info.clear();  //some drives (SSDs only?) don't report a temp at all, callers expect this to not be null though
+		temp = temp == null ? "0" : temp;
 		mapping.put( DEVICE, device );
 		mapping.put( SERIAL, serial );
 		mapping.put( TEMP, temp );
@@ -91,11 +92,17 @@ public class SmartInfo {
 			result = col( line, 2 );
 		} else if ( line.contains( "Power_On_Hours" ) ) {
 			runtime = table( line );
+			if ( runtime.contains( "+" ) ) {
+				runtime = runtime.substring( 0, runtime.indexOf( 'h' ) );
+			}
 		} else if ( line.contains( "Temperature_Celsius" ) ) {
 			temp = table( line );
 		} else if ( line.startsWith( "User Capacity" ) ) {
 			capacity = col( line, 1 );
-			capacity = capacity.substring( capacity.indexOf( "[" ) + 1, capacity.lastIndexOf( " " ) );
+			capacity = capacity.substring( capacity.indexOf( "[" ) + 1, capacity.lastIndexOf( "]" ) );
+			String[] parts = capacity.split( " " );
+			String units = parts[ 1 ];
+			capacity = units.equals( "GB" ) ? "." + parts[ 0 ] : parts[ 0 ];
 		}
 	}
 	
@@ -105,7 +112,7 @@ public class SmartInfo {
 	
 	private String table( String line ) {
 		if ( line.contains( "Min/Max" ) ) {
-			line = line.substring( 0, line.lastIndexOf( "(" ) -1  ); //fixes an issue where one of my new drives reports (Min/Max 25/47) after the normal temperature value - maybe part of SMART that only some drives support?
+			line = line.substring( 0, line.lastIndexOf( "(" ) -1  ).trim(); //fixes an issue where one of my new drives reports (Min/Max 25/47) after the normal temperature value - maybe part of SMART that only some drives support?
 		}
 		return line.substring( line.lastIndexOf( " " ) ).trim();
 	}
