@@ -108,6 +108,14 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 				updatedPool = true;
 			}
 		}
+		//if updates were received and this pool is still null - then it is a disk not in a pool, remove it from the panel
+		//TODO: 2020 not sure if this is ideal - may still want to see disks not in pools
+		if ( pool == null ) {
+			if ( this.getParent() != null ) {
+				holder.removeAndSort( this, false );
+			}
+		}
+		
 		if ( updatedPool ) {
 			DFData d = ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getDiskUsage( pool );
 			if ( d != null ) {

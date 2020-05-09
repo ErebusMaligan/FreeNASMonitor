@@ -61,7 +61,6 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 				if ( line.endsWith( "p2" ) ) {
 					String dev = LOC + line.substring( line.lastIndexOf( " " ) + 1, line.length() - 2 );
 					String gid = line.substring( 0, line.indexOf( " " ) );
-//					System.out.println( dev + " : " + gid );
 					devMap.put( dev, gid );
 				}
 			}
@@ -81,11 +80,12 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 				poolMap.put( gid, currentDisk );
 			} else if ( line.startsWith( "da" ) || line.startsWith( "ada" ) ) {//TODO: the da/ada are hacks for when a disk is replaced in a pool, for some reason it doesn't display the gptid, it displays the device reference
 				String gid = line.substring( 0, line.indexOf( " " ) );
-				poolMap.put( devMap.get( gid ), currentDisk );
+				poolMap.put( devMap.get( gid ) == null ? gid : devMap.get( gid ), currentDisk );
 			}
 		} );
 		
 		skimmers.put( DiskConstants.DISK_SMART_INFO_CMD, line -> {
+//			System.out.println( line );
 			if ( line.startsWith( "===" ) ) {
 				smartInfo = new ArrayList<>();
 			}
@@ -93,6 +93,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 				smartInfo.add( line );
 			}
 			if ( line.contains( "delay." ) ) {
+//				System.out.println( currentDisk + " : " + devMap.get( currentDisk ) + " : " + poolMap.get( devMap.get( currentDisk ) ) );
 				info.put( currentDisk, new SmartInfo( currentDisk, poolMap.get( devMap.get( currentDisk ) ), smartInfo ) );
 			}
 		} );
