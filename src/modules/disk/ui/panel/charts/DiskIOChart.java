@@ -39,6 +39,8 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 	
 	private boolean lightsOff = false;
 	
+	private int updateCount = 0;
+	
 	public DiskIOChart( DiskIOChartHolder holder, String nm, ApplicationProvider state ) {
 		super( state, state.getMonitorManager().getMonitorByName( DiskModule.RT_DISK_MONITOR ) );
 		this.holder = holder;
@@ -75,6 +77,9 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 	
 	@Override
 	public void update( Observable o, Object arg ) {
+		if ( updateCount < 5 ) {
+			updateCount++;
+		}
 		DiskIOInfo i = ( (RealtimeDiskData)state.getMonitorManager().getDataByName( DiskModule.RT_DISK_DATA ) ).getIOInfo().get( nm );
 		busy.setValue( new Float( i.busy  ).intValue() );
 		int r = new Float( i.rkbps ).intValue();
@@ -110,7 +115,7 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 		}
 		//if updates were received and this pool is still null - then it is a disk not in a pool, remove it from the panel
 		//TODO: 2020 not sure if this is ideal - may still want to see disks not in pools
-		if ( pool == null ) {
+		if ( pool == null && updateCount == 5 ) {
 			if ( this.getParent() != null ) {
 				holder.removeAndSort( this, false );
 			}
