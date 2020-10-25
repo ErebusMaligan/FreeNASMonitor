@@ -28,7 +28,7 @@ public class ApplicationConstants {
 	public static long NET_INTERVAL = 5 * 1000;
 	
 	//OTHER
-	public static int CHART_VIEW_POINTS = 20;
+	public static int CHART_VIEW_POINTS = 8;
 	
 	//NET
 	public static String NI_NAME = "em0";

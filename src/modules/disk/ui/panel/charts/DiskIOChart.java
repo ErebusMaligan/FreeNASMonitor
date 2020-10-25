@@ -16,6 +16,7 @@ import state.control.BroadcastEvent;
 import state.control.BroadcastListener;
 import state.provider.ApplicationProvider;
 import statics.UIUtils;
+import ui.theme.ThemeConstants;
 
 /**
  * @author Daniel J. Rivers
@@ -125,6 +126,15 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 			DFData d = ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getDiskUsage( pool );
 			if ( d != null ) {
 				used.setValue( d.percent );
+				if ( d.percent > 82 && d.percent < 90 ) {
+					n.setForeground( ThemeConstants.FOREGROUND );
+					n.setBackground( lightsOff ? UIUtils.lightsOff( ThemeConstants.FOREGROUND_DARKER, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.FOREGROUND_DARKER );
+					n.setOpaque( true );
+				} else if ( d.percent >= 90 ) {
+					n.setForeground( ThemeConstants.BACKGROUND );
+					n.setBackground( lightsOff ? UIUtils.lightsOff( ThemeConstants.FOREGROUND, ApplicationConstants.LIGHTS_OFF ) : ThemeConstants.FOREGROUND );
+					n.setOpaque( true );
+				}
 			}
 		}
 	}
