@@ -103,6 +103,7 @@ public class SmartInfo {
 			String[] parts = capacity.split( " " );
 			String units = parts[ 1 ];
 			capacity = units.equals( "GB" ) ? "." + parts[ 0 ] : parts[ 0 ];
+			capacity = String.valueOf( Double.parseDouble( capacity ) );
 		}
 	}
 	

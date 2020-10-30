@@ -1,6 +1,7 @@
 package modules.disk.ui.table.info;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,6 +16,7 @@ import javax.swing.table.TableColumn;
 import fnmcore.constants.ApplicationConstants;
 import gui.table.AbstractTableImplementation;
 import gui.table.renderer.DefaultHeaderCellRenderer;
+import gui.table.sorter.CustomizableTableSorter;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.SmartInfo;
@@ -50,6 +52,7 @@ public class DiskTable extends AbstractTableImplementation implements Observer, 
 	
 	public DiskTable( ApplicationProvider state ) {
 		this.state = state;
+		sorter = new DiskTableSorter();
 		cell = new SmartInfoRenderer( state );
 		run = new RuntimeRenderer( state );
 		temp = new TemperatureRenderer( state );
@@ -147,6 +150,47 @@ public class DiskTable extends AbstractTableImplementation implements Observer, 
 			} else {
 				lightsOff = true;
 				setColors();
+			}
+		}
+	}
+	
+	private class DiskTableSorter extends CustomizableTableSorter {
+		@Override
+		protected void specificSort() {
+			ArrayList<Integer> intKeys = null;
+			try {
+				intKeys = new ArrayList<Integer>();
+				for ( String s : keys ) {
+					intKeys.add( Integer.parseInt( s ) );
+				}
+			} catch (NumberFormatException e ) {
+				intKeys = null;
+			}
+			if ( intKeys != null ) {
+				Collections.sort( intKeys );
+				keys = new ArrayList<String>();
+				for ( Integer i : intKeys ) {
+					keys.add( String.valueOf( i ) );
+				}
+			} else {
+				ArrayList<Double> doubleKeys = null;
+				try {
+					doubleKeys = new ArrayList<Double>();
+					for ( String s : keys ) {
+						doubleKeys.add( Double.parseDouble( s ) );
+					}
+				} catch (NumberFormatException e ) {
+					doubleKeys = null;
+				}
+				if ( doubleKeys != null ) {
+					Collections.sort( doubleKeys );
+					keys = new ArrayList<String>();
+					for ( Double d : doubleKeys ) {
+						keys.add( String.valueOf( d ) );
+					}
+				} else {
+					Collections.sort( keys );
+				}
 			}
 		}
 	}
