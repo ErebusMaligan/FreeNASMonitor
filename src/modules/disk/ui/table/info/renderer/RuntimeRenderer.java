@@ -36,12 +36,14 @@ public class RuntimeRenderer extends SmartInfoRenderer {
 		if ( !isSelected ) {
 			back = ThemeConstants.BACKGROUND;
 			if ( d.years < 1 ) {
-				fore = BLUE;
+				fore = SILVER;
 			} else if ( d.years < 2 ) {
-				fore = GREEN;
+				fore = BLUE;
 			} else if ( d.years < 3 ) {
-				fore = YELLOW;
+				fore = GREEN;
 			} else if ( d.years < 4 ) {
+				fore = YELLOW;
+			} else if ( d.years < 5 ) {
 				fore = ORANGE;
 			} else {
 				back = ThemeConstants.FOREGROUND;
