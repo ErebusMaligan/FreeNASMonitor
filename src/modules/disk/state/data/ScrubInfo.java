@@ -89,8 +89,8 @@ public class ScrubInfo {
 				}
 				repaired = Double.parseDouble( amt );
 				
-				time = p[ 5 ] + " " + p[ 6 ] + " " + p[ 7 ];
-				errors = Integer.parseInt( p[ 9 ] );
+				time = p[ 5 ];
+				errors = Integer.parseInt( p[ 7 ] );
 				done = 100f;
 			} else if ( l.contains( "canceled" ) ) {
 				inProgress = false;
@@ -106,7 +106,7 @@ public class ScrubInfo {
 					amt = amt.substring( 0, amt.length() - 1 );
 				}
 				repaired = Double.parseDouble( amt );
-				time = p[ 4 ] + " " + p[ 5 ] + " " + p[ 6 ];
+				time = p[ 4 ];
 				errors = Integer.parseInt( p[ 8 ] );
 				done = 100f;
 			} else if ( l.contains( "resilver" ) ) {  //this if for resilver is currently in progress
@@ -128,7 +128,7 @@ public class ScrubInfo {
 			errors = 0;
 			String pDone = p[ 2 ];
 			pDone = pDone.substring( 0, pDone.length() - 1 );
-			time = p[ 4 ] + " " + p[ 5 ] + " " + p[ 6 ];
+			time = p[ 4 ];
 			done = Float.parseFloat( pDone );
 		}
 		//separate condition
