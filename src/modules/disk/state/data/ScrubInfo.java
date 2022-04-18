@@ -70,9 +70,8 @@ public class ScrubInfo {
 		mapping.put( ERRORS, errors );
 	}
 	
-	public void processLine( String l ) {
-		
-		System.out.println( l );
+	public void processLine( String l ) {	
+//		System.out.println( l );
 		String[] p = l.replaceAll( " +", " " ).split( " " );
 		if ( l.startsWith( "scan" ) ) {
 			if ( l.contains( "scrub" ) ) {
