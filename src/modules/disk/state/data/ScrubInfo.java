@@ -71,6 +71,8 @@ public class ScrubInfo {
 	}
 	
 	public void processLine( String l ) {
+		
+		System.out.println( l );
 		String[] p = l.replaceAll( " +", " " ).split( " " );
 		if ( l.startsWith( "scan" ) ) {
 			if ( l.contains( "scrub" ) ) {
@@ -81,17 +83,20 @@ public class ScrubInfo {
 			}
 			if ( l.contains( "repaired" ) ) {
 				inProgress = false;
-				
 				//if it's 0 it just says 0, but if it's an amount, it gives a decimal and unit amount
 				String amt = p[ 3 ];
 				if ( !p[ 3 ].equals( "0" ) ) {
 					amt = amt.substring( 0, amt.length() - 1 );
 				}
 				repaired = Double.parseDouble( amt );
-				
-				time = p[ 5 ];
-				errors = Integer.parseInt( p[ 7 ] );
-				done = 100f;
+				done = 100f;				
+				if ( l.contains( "days" ) ) { //if the scrub took longer than 24 hours it adds " X days " before the time
+					time = p[ 5 ] + " " + p[ 6 ] + " " + p[ 7 ];
+					errors = Integer.parseInt( p[ 9 ] );
+				} else {
+					time = p[ 5 ];
+					errors = Integer.parseInt( p[ 7 ] );
+				}
 			} else if ( l.contains( "canceled" ) ) {
 				inProgress = false;
 				repaired = -1;
