@@ -101,7 +101,7 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 		pool = ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getPool( nm );
 		if ( pool != null ) {
 			if ( !updatedPool ) {
-				if ( pool != null && pool.contains( "-boot" ) ) {  //if it turns out this was the boot drive, remove this panel
+				if ( pool != null && ( pool.contains( "-boot" ) || pool.contains( "boot-") ) ) {  //if it turns out this was the boot drive, remove this panel
 					if ( this.getParent() != null ) {
 						holder.removeAndSort( this, false );
 					}

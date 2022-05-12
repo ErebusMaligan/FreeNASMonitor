@@ -112,7 +112,7 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 		if ( ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getPoolCount() != 0 ) {
 			List<String> pools = ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getPools();
 			for ( String s : pools ) {
-				if ( !s.equals( "freenas-boot" ) ) {
+				if ( !s.contains( "-boot" ) && !s.contains( "boot-" ) ) {
 					if ( !updated.containsKey( s ) || updated.get( s ) % 2 != 0 ) {
 						ret = false;
 						break;
