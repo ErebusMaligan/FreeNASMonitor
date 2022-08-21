@@ -58,7 +58,7 @@ public class DiskData extends MonitorData implements ProcessStreamSiphon {
 		skimmers.put( DiskConstants.MAP_GPTID_TO_DEVICE_CMD, line -> {
 			if ( line.startsWith( "gptid" ) ) {
 				line = line.trim();
-				if ( line.endsWith( "p2" ) ) {
+				if ( line.endsWith( "p2" ) || line.endsWith( "p3" ) ) {
 					String dev = LOC + line.substring( line.lastIndexOf( " " ) + 1, line.length() - 2 );
 					String gid = line.substring( 0, line.indexOf( " " ) );
 					devMap.put( dev, gid );

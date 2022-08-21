@@ -111,7 +111,7 @@ public class ScrubInfo {
 				}
 				repaired = Double.parseDouble( amt );
 				time = p[ 4 ];
-				errors = Integer.parseInt( p[ 8 ] );
+				errors = Integer.parseInt( p[ 6 ] );
 				done = 100f;
 			} else if ( l.contains( "resilver" ) ) {  //this if for resilver is currently in progress
 				type = RESILVER;
