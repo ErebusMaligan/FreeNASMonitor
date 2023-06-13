@@ -30,9 +30,9 @@ public class MemData extends MonitorData implements ProcessStreamSiphon {
 	
 	public MemData() {
 		skimmers.put( MemConstants.MEM_PHYS_CMD, line -> {
-			if ( line.contains( "Size: " ) ) {
+			if ( line.contains( "Size: " ) && !line.contains( "No" ) ) {
 				pmd = new PhysicalMemData();
-			} else if ( line.contains( "Speed: " ) && !line.contains( "Configured" ) ) {
+			} else if ( line.contains( "Speed: " ) && !line.contains( "Configured" ) && pmd != null ) {
 				pmd.skimMessage( line );
 				phys.add( pmd );
 				pmd = null;
