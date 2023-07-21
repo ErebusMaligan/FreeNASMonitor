@@ -19,6 +19,7 @@ import modules.cpu.module.CPUConstants;
 import modules.disk.module.DiskConstants;
 import modules.mem.module.MemConstants;
 import modules.net.module.NetConstants;
+import modules.sensor.module.SensorConstants;
 import ssh.SSHConstants;
 import ssh.SSHSession;
 import state.provider.ApplicationProvider;
@@ -179,6 +180,11 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 		createWindowItem( NetConstants.WD_NET_BYTES );
 		createWindowItem( NetConstants.WD_NET_PACKETS );
 		net.add( menu );
+		
+		menu = new JMenu( ApplicationConstants.MB_SENSOR );
+		UIUtils.setColors( menu );
+		createWindowItem( SensorConstants.WD_FAN_METERS );
+		windows.add( menu );
 
 		win.add( windows );
 

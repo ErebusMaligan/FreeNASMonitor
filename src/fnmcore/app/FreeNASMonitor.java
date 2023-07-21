@@ -28,6 +28,7 @@ import modules.cpu.module.CPUModule;
 import modules.disk.module.DiskModule;
 import modules.mem.module.MemModule;
 import modules.net.module.NetModule;
+import modules.sensor.module.SensorModule;
 import modules.system.module.SysModule;
 import ssh.SSHConstants;
 import ssh.SSHSettings;
@@ -113,7 +114,7 @@ public class FreeNASMonitor extends ApplicationProvider implements XMLValues {
 
 	@Override
 	protected List<AppModule> getModuleList() {
-		return Arrays.asList( new ControlModule(), new CPUModule(), new DiskModule(), new MemModule(), new NetModule(), new SysModule() );
+		return Arrays.asList( new ControlModule(), new CPUModule(), new DiskModule(), new MemModule(), new NetModule(), new SysModule(), new SensorModule() );
 	}
 
 	@Override

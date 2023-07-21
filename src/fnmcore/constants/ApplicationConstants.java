@@ -145,6 +145,8 @@ public class ApplicationConstants {
 	
 	public static final String MB_NET = "Network";
 	
+	public static final String MB_SENSOR = "Sensor";
+	
 	
 	//frame definitions
 	public static final String WD_CONTROL_PANEL = "Control Panel";
