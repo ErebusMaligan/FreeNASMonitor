@@ -29,7 +29,7 @@ public class SimpleFanMeter extends SimpleChart implements BroadcastListener {
 		dim = new Dimension( 75, dim.height );
 		height = 12;
 		this.fanTitle = fanTitle;
-		rpm = addJProgressBar( 0, 2000, "RPM:", "/2000" );
+		rpm = addJProgressBar( 0, 2000, "RPM", "/2000" );
 		setLabel( fanTitle );
 	}
 	
