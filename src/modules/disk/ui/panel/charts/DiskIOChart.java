@@ -1,11 +1,11 @@
 package modules.disk.ui.panel.charts;
 
 import java.awt.Dimension;
-import java.util.Observable;
 
 import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.SimpleChart;
 import gui.progress.EnhancedJProgressBar;
+import listeners.BasicObservable;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DFData;
 import modules.disk.state.data.DiskData;
@@ -77,7 +77,7 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		if ( updateCount < 5 ) {
 			updateCount++;
 		}

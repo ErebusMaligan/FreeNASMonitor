@@ -3,12 +3,12 @@ package modules.cpu.ui.panel.charts;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 
 import gui.layout.WrapLayout;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.cpu.module.CPUModule;
 import modules.cpu.state.data.CPUData;
 import state.control.BroadcastEvent;
@@ -22,7 +22,7 @@ import statics.UIUtils;
  *
  * Created: May 9, 2015, 7:35:46 PM 
  */
-public class SimpleCPUChartPanel extends JPanel implements Observer, BroadcastListener {
+public class SimpleCPUChartPanel extends JPanel implements BasicObserver, BroadcastListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +48,7 @@ public class SimpleCPUChartPanel extends JPanel implements Observer, BroadcastLi
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		if ( !init ) {
 			for ( int i = 0; i < ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) ).getCpuCount(); i++ ) {
 				SimpleCPUChart c = new SimpleCPUChart( i, state );

@@ -1,7 +1,6 @@
 package modules.cpu.ui.panel.charts;
 
 import java.awt.Dimension;
-import java.util.Observable;
 
 import data.DataPair;
 import data.DataSet;
@@ -9,6 +8,7 @@ import data.TimeData;
 import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.AbstractDynamicTimeSeriesChartPanel;
 import fnmcore.util.ChartUtils;
+import listeners.BasicObservable;
 import modules.cpu.module.CPUModule;
 import modules.cpu.state.data.CPUData;
 import state.provider.ApplicationProvider;
@@ -39,7 +39,7 @@ public class SingleCPUChartPanel extends AbstractDynamicTimeSeriesChartPanel {
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		TimeData d = new TimeData( System.currentTimeMillis() );
 		@SuppressWarnings("unchecked")
 		DataSet<TimeData, Number> ds = (DataSet<TimeData, Number>)cd.getSetByName( c );

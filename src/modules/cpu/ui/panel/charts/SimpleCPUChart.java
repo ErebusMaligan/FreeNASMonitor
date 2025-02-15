@@ -1,11 +1,11 @@
 package modules.cpu.ui.panel.charts;
 
 import java.awt.Dimension;
-import java.util.Observable;
 
 import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.SimpleChart;
 import gui.progress.EnhancedJProgressBar;
+import listeners.BasicObservable;
 import modules.cpu.module.CPUModule;
 import modules.cpu.state.data.CPUData;
 import state.control.BroadcastEvent;
@@ -49,7 +49,7 @@ public class SimpleCPUChart extends SimpleChart implements BroadcastListener {
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		usage.setValue( Float.valueOf( ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) ).getUsage( core ) ).intValue() );
 		temp.setValue( Float.valueOf( ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) ).getTemp( core ) ).intValue() ); 
 	}

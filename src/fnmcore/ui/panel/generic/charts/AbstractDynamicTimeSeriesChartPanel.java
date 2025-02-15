@@ -2,8 +2,6 @@ package fnmcore.ui.panel.generic.charts;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 
@@ -14,6 +12,8 @@ import data.DataSet;
 import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.raw.RawDataPanel;
 import fnmcore.util.ChartUtils;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import state.provider.ApplicationProvider;
 import visualization.chart.Chart;
 import visualization.module.jfreechart.JFreeChartEnhancer;
@@ -24,7 +24,7 @@ import visualization.module.jfreechart.JFreeChartEnhancer;
  *
  * Created: Apr 26, 2015, 3:26:55 PM 
  */
-public abstract class AbstractDynamicTimeSeriesChartPanel extends JPanel implements Observer {
+public abstract class AbstractDynamicTimeSeriesChartPanel extends JPanel implements BasicObserver {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public abstract class AbstractDynamicTimeSeriesChartPanel extends JPanel impleme
 	
 	protected boolean init = false;
 	
-	public AbstractDynamicTimeSeriesChartPanel( ApplicationProvider state, String title, String yAxis, Observable observable, long interval ) {
+	public AbstractDynamicTimeSeriesChartPanel( ApplicationProvider state, String title, String yAxis, BasicObservable observable, long interval ) {
 		this.state = state;
 		this.setLayout( new BorderLayout() );
 //		this.setBorder( BorderFactory.createLineBorder( Color.DARK_GRAY ) );
@@ -57,7 +57,7 @@ public abstract class AbstractDynamicTimeSeriesChartPanel extends JPanel impleme
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		if ( !init ) {
 			JFreeChartEnhancer.setPlotShowShapes( cp, JFreeChartEnhancer.getStandardShape() ); //this part has to be run again because new series were added
 			init = true;

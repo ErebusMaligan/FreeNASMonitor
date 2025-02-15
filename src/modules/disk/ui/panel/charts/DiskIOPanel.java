@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 
 import gui.layout.WrapLayout;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.DiskIOInfo;
@@ -27,7 +27,7 @@ import statics.UIUtils;
  *
  * Created: May 9, 2015, 12:39:47 AM 
  */
-public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, BroadcastListener {
+public class DiskIOPanel extends JPanel implements BasicObserver, DiskIOChartHolder, BroadcastListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,7 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		maxR = 0;
 		maxW = 0;
 		for ( String s : ( (RealtimeDiskData)state.getMonitorManager().getDataByName( DiskModule.RT_DISK_DATA ) ).getIOInfo().keySet() ) {

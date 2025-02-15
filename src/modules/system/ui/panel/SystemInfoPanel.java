@@ -2,8 +2,6 @@ package modules.system.ui.panel;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -12,6 +10,8 @@ import javax.swing.JPanel;
 import gui.entry.LabelEntry;
 import gui.props.variable.IntVariable;
 import gui.props.variable.StringVariable;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.cpu.module.CPUModule;
 import modules.cpu.state.data.CPUData;
 import modules.system.module.SysConstants;
@@ -26,7 +26,7 @@ import statics.UIUtils;
  *
  * Created: Oct 13, 2015, 6:21:58 AM 
  */
-public class SystemInfoPanel extends JPanel implements Observer, BroadcastListener {
+public class SystemInfoPanel extends JPanel implements BasicObserver, BroadcastListener {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -65,7 +65,7 @@ public class SystemInfoPanel extends JPanel implements Observer, BroadcastListen
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		CPUData sd = ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) );
 		model.fromString( sd.getModel() );
 		sysTime.fromString( sd.getSysTime() );

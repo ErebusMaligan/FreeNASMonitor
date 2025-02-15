@@ -4,11 +4,11 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.mem.module.MemModule;
 import modules.mem.state.mem.data.MemData;
 import modules.mem.state.mem.data.PhysicalMemData;
@@ -24,7 +24,7 @@ import statics.UIUtils;
  *
  * Created: May 29, 2015, 8:28:37 PM 
  */
-public class MemInfoPanel extends JPanel implements Observer, BroadcastListener {
+public class MemInfoPanel extends JPanel implements BasicObserver, BroadcastListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -43,7 +43,7 @@ public class MemInfoPanel extends JPanel implements Observer, BroadcastListener 
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		if ( !init ) {
 			List<PhysicalMemData> list = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getPhysicalData();
 			if ( list != null && !list.isEmpty() ) {

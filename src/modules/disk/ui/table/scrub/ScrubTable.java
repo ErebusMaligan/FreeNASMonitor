@@ -2,8 +2,6 @@ package modules.disk.ui.table.scrub;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -15,6 +13,8 @@ import javax.swing.table.TableColumn;
 import fnmcore.constants.ApplicationConstants;
 import gui.table.AbstractTableImplementation;
 import gui.table.renderer.DefaultHeaderCellRenderer;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.ScrubInfo;
@@ -31,7 +31,7 @@ import ui.theme.ThemeConstants;
  *
  * Created: May 5, 2015, 12:40:14 AM 
  */
-public class ScrubTable extends AbstractTableImplementation implements Observer, BroadcastListener {
+public class ScrubTable extends AbstractTableImplementation implements BasicObserver, BroadcastListener {
 
 	private TableCellRenderer cell;
 	
@@ -102,7 +102,7 @@ public class ScrubTable extends AbstractTableImplementation implements Observer,
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		pullData();
 	}
 	

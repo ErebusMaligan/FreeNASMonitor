@@ -1,11 +1,11 @@
 package modules.disk.ui.panel.charts;
 
 import java.awt.GridLayout;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import state.provider.ApplicationProvider;
@@ -17,7 +17,7 @@ import statics.UIUtils;
  *
  * Created: Oct 13, 2015, 9:20:55 AM 
  */
-public class IndividualDiskTemperatureChartPanel extends JPanel implements Observer {
+public class IndividualDiskTemperatureChartPanel extends JPanel implements BasicObserver {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -33,7 +33,7 @@ public class IndividualDiskTemperatureChartPanel extends JPanel implements Obser
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		if ( !init ) {
 			for ( String loc : ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getLocations() ) {
 				if ( ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getInfo( loc ) != null ) {

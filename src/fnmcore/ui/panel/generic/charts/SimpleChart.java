@@ -2,8 +2,6 @@ package fnmcore.ui.panel.generic.charts;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -15,6 +13,8 @@ import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.progress.LabeledProgressBarPanel;
 import gui.progress.DigitalJProgressBar;
 import gui.progress.EnhancedJProgressBar;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import state.provider.ApplicationProvider;
 import statics.GUIUtils;
 import statics.UIUtils;
@@ -26,7 +26,7 @@ import ui.theme.ThemeConstants;
  *
  * Created: May 9, 2015, 9:39:28 PM 
  */
-public abstract class SimpleChart extends /*TransparentPanel*/ JPanel implements Observer {
+public abstract class SimpleChart extends /*TransparentPanel*/ JPanel implements BasicObserver {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public abstract class SimpleChart extends /*TransparentPanel*/ JPanel implements
 	
 	protected JPanel center = new JPanel();
 
-	public SimpleChart( ApplicationProvider state, Observable o ) {
+	public SimpleChart( ApplicationProvider state, BasicObservable o ) {
 		this.state = state;
 		this.setLayout( new BorderLayout() );
 		this.setBorder( BorderFactory.createCompoundBorder( BorderFactory.createLineBorder( ThemeConstants.FOREGROUND_DARKER ), BorderFactory.createBevelBorder( BevelBorder.RAISED ) ) );

@@ -3,12 +3,12 @@ package modules.sensor.ui.panel.meters;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 
 import gui.layout.WrapLayout;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.sensor.module.SensorModule;
 import modules.sensor.state.data.SensorData;
 import state.control.BroadcastEvent;
@@ -22,7 +22,7 @@ import statics.UIUtils;
  *
  * Created: May 9, 2015, 7:35:46 PM 
  */
-public class SimpleFanMeterPanel extends JPanel implements Observer, BroadcastListener {
+public class SimpleFanMeterPanel extends JPanel implements BasicObserver, BroadcastListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class SimpleFanMeterPanel extends JPanel implements Observer, BroadcastLi
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		if ( !init ) {
 			for ( String s : ( (SensorData)state.getMonitorManager().getDataByName( SensorModule.SENSOR_DATA ) ).getFanNames() ) {
 				SimpleFanMeter c = new SimpleFanMeter( s, state );

@@ -1,11 +1,11 @@
 package modules.sensor.ui.panel.meters;
 
 import java.awt.Dimension;
-import java.util.Observable;
 
 import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.SimpleChart;
 import gui.progress.EnhancedJProgressBar;
+import listeners.BasicObservable;
 import modules.cpu.module.CPUModule;
 import modules.sensor.module.SensorModule;
 import modules.sensor.state.data.SensorData;
@@ -43,7 +43,7 @@ public class SimpleFanMeter extends SimpleChart implements BroadcastListener {
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		rpm.setValue( Double.valueOf( ( (SensorData)state.getMonitorManager().getDataByName( SensorModule.SENSOR_DATA ) ).getFanRPM( fanTitle ) ).intValue() );
 	}
 

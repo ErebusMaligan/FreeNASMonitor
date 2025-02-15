@@ -1,8 +1,6 @@
 package fnmcore.ui.menu;
 
 import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.JMenu;
@@ -15,6 +13,8 @@ import gui.dialog.OKCancelDialog;
 import gui.menubar.GenericActionListener;
 import gui.menubar.GenericMenuBar;
 import gui.menubar.GenericMenuBarAction;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.cpu.module.CPUConstants;
 import modules.disk.module.DiskConstants;
 import modules.mem.module.MemConstants;
@@ -37,7 +37,7 @@ import ui.window.CreateTabDialog;
  *
  * Created: Apr 24, 2015, 8:51:30 PM 
  */
-public class MonitorMenuBar extends GenericMenuBar implements Observer {
+public class MonitorMenuBar extends GenericMenuBar implements BasicObserver {
 
 	private static final long serialVersionUID = 1L;
 
@@ -212,7 +212,7 @@ public class MonitorMenuBar extends GenericMenuBar implements Observer {
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		boolean c = (Boolean)arg;
 		if ( c ) {
 			enabled( buttonMap.get( ApplicationConstants.MB_SSH_CONNECT ), false );

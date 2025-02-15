@@ -1,7 +1,6 @@
 package modules.net.ui.panel.net.charts;
 
 import java.awt.BorderLayout;
-import java.util.Observable;
 
 import org.jfree.chart.ChartPanel;
 
@@ -12,6 +11,7 @@ import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.AbstractDynamicTimeSeriesChartPanel;
 import fnmcore.ui.panel.generic.raw.RawDataPanel;
 import fnmcore.util.ChartUtils;
+import listeners.BasicObservable;
 import modules.net.module.NetModule;
 import modules.net.state.net.data.NetworkData;
 import state.provider.ApplicationProvider;
@@ -44,7 +44,7 @@ public class NetDoubleChartPanel extends AbstractDynamicTimeSeriesChartPanel {
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		TimeData d = new TimeData( System.currentTimeMillis() ); 
 		for ( String c : values ) {
 			if ( !init ) {

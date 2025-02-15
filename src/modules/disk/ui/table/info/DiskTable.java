@@ -3,8 +3,6 @@ package modules.disk.ui.table.info;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -17,6 +15,8 @@ import fnmcore.constants.ApplicationConstants;
 import gui.table.AbstractTableImplementation;
 import gui.table.renderer.DefaultHeaderCellRenderer;
 import gui.table.sorter.CustomizableTableSorter;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import modules.disk.state.data.SmartInfo;
@@ -36,7 +36,7 @@ import ui.theme.ThemeConstants;
  *
  * Created: Apr 25, 2015, 4:12:55 AM 
  */
-public class DiskTable extends AbstractTableImplementation implements Observer, BroadcastListener {
+public class DiskTable extends AbstractTableImplementation implements BasicObserver, BroadcastListener {
 
 	private ApplicationProvider state;
 	
@@ -116,7 +116,7 @@ public class DiskTable extends AbstractTableImplementation implements Observer, 
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		pullData();
 	}
 	

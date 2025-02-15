@@ -1,11 +1,11 @@
 package modules.cpu.ui.panel.charts;
 
 import java.awt.GridLayout;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.cpu.module.CPUModule;
 import modules.cpu.state.data.CPUData;
 import state.provider.ApplicationProvider;
@@ -17,7 +17,7 @@ import statics.UIUtils;
  *
  * Created: Oct 13, 2015, 9:01:00 AM 
  */
-public class IndividualCPUTemperatureChartPanel extends JPanel implements Observer {
+public class IndividualCPUTemperatureChartPanel extends JPanel implements BasicObserver {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -33,7 +33,7 @@ public class IndividualCPUTemperatureChartPanel extends JPanel implements Observ
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		if ( !init ) {
 			for ( int i = 0; i < ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) ).getCpuCount(); i++ ) {
 				this.add( new SingleCPUChartPanel( state, i ) );

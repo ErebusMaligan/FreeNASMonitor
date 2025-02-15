@@ -1,7 +1,6 @@
 package modules.mem.ui.panel.mem.charts;
 
 import java.awt.Dimension;
-import java.util.Observable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JProgressBar;
@@ -10,6 +9,7 @@ import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.SimpleChart;
 import gui.progress.DigitalJProgressBar;
 import gui.progress.EnhancedJProgressBar;
+import listeners.BasicObservable;
 import modules.mem.module.MemModule;
 import modules.mem.state.mem.data.CurrentMemData;
 import modules.mem.state.mem.data.MemData;
@@ -63,7 +63,7 @@ public class SimpleMemoryChart extends SimpleChart implements BroadcastListener 
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		CurrentMemData cm = ( (MemData)state.getMonitorManager().getDataByName( MemModule.MEM_DATA ) ).getCurrentMem();
 		a.setValue( cm.a );
 		i.setValue( cm.i );

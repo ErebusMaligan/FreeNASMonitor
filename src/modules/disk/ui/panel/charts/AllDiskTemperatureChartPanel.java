@@ -1,13 +1,12 @@
 package modules.disk.ui.panel.charts;
 
-import java.util.Observable;
-
 import data.DataPair;
 import data.DataSet;
 import data.TimeData;
 import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.AbstractDynamicTimeSeriesChartPanel;
 import fnmcore.util.ChartUtils;
+import listeners.BasicObservable;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
 import state.provider.ApplicationProvider;
@@ -27,7 +26,7 @@ public class AllDiskTemperatureChartPanel extends AbstractDynamicTimeSeriesChart
 	}
 	
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		TimeData d = new TimeData( System.currentTimeMillis() ); 
 		for ( String loc : ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getLocations() ) {
 			String dev = loc.substring( loc.lastIndexOf( "/" ) + 1 );

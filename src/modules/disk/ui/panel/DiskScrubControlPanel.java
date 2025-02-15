@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,6 +18,8 @@ import fnmcore.constants.ApplicationConstants;
 import fnmcore.ui.panel.generic.charts.SimpleChart;
 import gui.layout.WrapLayout;
 import gui.progress.EnhancedJProgressBar;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.disk.module.DiskConstants;
 import modules.disk.module.DiskModule;
 import modules.disk.state.data.DiskData;
@@ -37,7 +37,7 @@ import ui.theme.ThemeConstants;
  *
  * Created: May 17, 2015, 1:46:56 AM 
  */
-public class DiskScrubControlPanel extends JPanel implements Observer {
+public class DiskScrubControlPanel extends JPanel implements BasicObserver {
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,7 +55,7 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		for ( String p : ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getScrubs().keySet() ) {
 			ScrubInfo si = ( (DiskData)state.getMonitorManager().getDataByName( DiskModule.DISK_DATA ) ).getScrubs().get( p );
 			if ( si != null ) {
@@ -125,7 +125,7 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 		}
 
 		@Override
-		public void update( Observable o, Object arg ) {
+		public void update( BasicObservable o, Object arg ) {
 			int done = 0;
 			if ( si.done > 0 ) {
 				done = Float.valueOf( si.done ).intValue();

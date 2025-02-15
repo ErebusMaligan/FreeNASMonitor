@@ -2,14 +2,14 @@ package modules.cpu.ui.panel.charts;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import fnmcore.util.ChartUtils;
+import listeners.BasicObservable;
+import listeners.BasicObserver;
 import modules.cpu.module.CPUModule;
 import modules.cpu.state.data.CPUData;
 import state.provider.ApplicationProvider;
@@ -21,7 +21,7 @@ import statics.UIUtils;
  *
  * Created: Apr 25, 2015, 6:09:38 PM 
  */
-public class CPUChartPanel extends JPanel implements Observer {
+public class CPUChartPanel extends JPanel implements BasicObserver {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class CPUChartPanel extends JPanel implements Observer {
 	}
 
 	@Override
-	public void update( Observable o, Object arg ) {
+	public void update( BasicObservable o, Object arg ) {
 		if ( !init ) {
 			JPanel p = new JPanel();
 			p.setLayout( new GridLayout( 0, 2 ) );
