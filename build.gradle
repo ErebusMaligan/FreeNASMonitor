@@ -1,8 +1,8 @@
 apply plugin: 'java'
 
 dependencies {
-	compile fileTree( dir: "../libs", include: ['JUtils.jar', 'SpreadSheetUtils.jar', 'StatWrapper.jar', 'ModuleAppFramework.jar', 'TerminalWindow.jar'] )
-	compile fileTree( dir: "../libs/jfreechart", include: 'jfreechart-1.5.0.jar' )
+	implementation fileTree( dir: "../libs", include: ['JUtils.jar', 'SpreadSheetUtils.jar', 'StatWrapper.jar', 'ModuleAppFramework.jar', 'TerminalWindow.jar'] )
+	implementation fileTree( dir: "../libs/jfreechart", include: 'jfreechart-1.5.0.jar' )
 }
 
 ext {

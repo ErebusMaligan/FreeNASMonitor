@@ -82,9 +82,9 @@ public class DiskIOChart extends SimpleChart implements BroadcastListener {
 			updateCount++;
 		}
 		DiskIOInfo i = ( (RealtimeDiskData)state.getMonitorManager().getDataByName( DiskModule.RT_DISK_DATA ) ).getIOInfo().get( nm );
-		busy.setValue( new Float( i.busy  ).intValue() );
-		int r = new Float( i.rkbps ).intValue();
-		int w = new Float( i.wkbps ).intValue();
+		busy.setValue( Float.valueOf( i.busy  ).intValue() );
+		int r = Float.valueOf( i.rkbps ).intValue();
+		int w = Float.valueOf( i.wkbps ).intValue();
 		int max = r > w ? r : w;
 		max = max + ( max / 10 );
 		rkbps.setValue( r );

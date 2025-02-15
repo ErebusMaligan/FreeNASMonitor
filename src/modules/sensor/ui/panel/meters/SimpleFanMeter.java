@@ -44,7 +44,7 @@ public class SimpleFanMeter extends SimpleChart implements BroadcastListener {
 	
 	@Override
 	public void update( Observable o, Object arg ) {
-		rpm.setValue( new Double( ( (SensorData)state.getMonitorManager().getDataByName( SensorModule.SENSOR_DATA ) ).getFanRPM( fanTitle ) ).intValue() );
+		rpm.setValue( Double.valueOf( ( (SensorData)state.getMonitorManager().getDataByName( SensorModule.SENSOR_DATA ) ).getFanRPM( fanTitle ) ).intValue() );
 	}
 
 	@Override

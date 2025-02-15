@@ -50,8 +50,8 @@ public class SimpleCPUChart extends SimpleChart implements BroadcastListener {
 	
 	@Override
 	public void update( Observable o, Object arg ) {
-		usage.setValue( new Float( ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) ).getUsage( core ) ).intValue() );
-		temp.setValue( new Float( ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) ).getTemp( core ) ).intValue() ); 
+		usage.setValue( Float.valueOf( ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) ).getUsage( core ) ).intValue() );
+		temp.setValue( Float.valueOf( ( (CPUData)state.getMonitorManager().getDataByName( CPUModule.CPU_DATA ) ).getTemp( core ) ).intValue() ); 
 	}
 
 	@Override

@@ -128,7 +128,7 @@ public class DiskScrubControlPanel extends JPanel implements Observer {
 		public void update( Observable o, Object arg ) {
 			int done = 0;
 			if ( si.done > 0 ) {
-				done = new Float( si.done ).intValue();
+				done = Float.valueOf( si.done ).intValue();
 			}
 			if ( done != 0 && done != 100 ) {
 				enableStop();

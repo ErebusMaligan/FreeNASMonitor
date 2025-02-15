@@ -74,8 +74,8 @@ public class DiskIOPanel extends JPanel implements Observer, DiskIOChartHolder, 
 				}
 			}
 			DiskIOInfo i = ( (RealtimeDiskData)state.getMonitorManager().getDataByName( DiskModule.RT_DISK_DATA ) ).getIOInfo().get( s );
-			int r = new Float( i.rkbps ).intValue();
-			int w = new Float( i.wkbps ).intValue();
+			int r = Float.valueOf( i.rkbps ).intValue();
+			int w = Float.valueOf( i.wkbps ).intValue();
 			if ( r > maxR ) {
 				maxR = r;
 			}
